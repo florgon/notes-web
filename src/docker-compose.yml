@@ -24,15 +24,19 @@ services:
       - .:/web/notes
     ports:
       - "8000:8000"
+    depends_on:
+      - database
     links:
       - database
     environment:
       - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+$m574w"
+      - DEBUG=1
+      - ALLOWED_HOSTS=* notes.kirillzhosul.site
       - POSTGRES_HOST=database
       - POSTGRES_PORT=5432
       - POSTGRES_NAME=notes
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    command: gunicorn notes_web.wsgi
+    command: sh -c "gunicorn --bind 0.0.0.0:8000 notes_web.wsgi"
     # For native Django (Windows):
     # command: python manage.py runserver 0.0.0.0:8000
