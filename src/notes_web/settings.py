@@ -54,6 +54,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'notes_web.wsgi.application'
 
+USE_X_FORWARDED_HOST = True
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -63,6 +65,7 @@ DATABASES = {
         'HOST': os.environ.get('POSTGRES_HOST'),
     },
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
