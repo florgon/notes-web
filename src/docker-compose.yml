@@ -1,0 +1,22 @@
+services:
+  database:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_NAME=postgres_notes
+      - POSTGRES_USER=postgres_notes
+      - POSTGRES_PASSWORD=postgres_notes
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/web/notes
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=postgres_notes
+      - POSTGRES_USER=postgres_notes
+      - POSTGRES_PASSWORD=postgres_notes
+    depends_on:
+      - database
