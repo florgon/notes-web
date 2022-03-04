@@ -50,7 +50,7 @@ Every page should contain menu with brand and these items:
 
 # How to run?
 Project uses Docker, so you should install `Docker-Compose`, then clone this repository, and run all containers via:
-```commandLine 
+```commandLine
 docker-compose up
 ```
 
@@ -72,4 +72,8 @@ Database located at `database` docker container.
 Requirements may be install via
 ```commandLine
 pip install -r src/requirements.txt
+```
+or, if you want to contribute to project, install via
+```commandLine
+pip install -r src/requirements-dev.txt
 ```
