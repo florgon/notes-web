@@ -27,7 +27,7 @@ services:
     links:
       - database
     environment:
-      - SECRET_KEY=django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+$m574w
+      - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+$m574w"
       - POSTGRES_HOST=database
       - POSTGRES_PORT=5432
       - POSTGRES_NAME=notes
