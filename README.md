@@ -3,8 +3,8 @@ This is test task for *SimbirSoft*.
 Website provides simple web interface for creating *private* user notes and working with them.
 ### [But how to run?](#how-to-run)
 
-
 # Description.
+
 ### Website consists of these pages.
 - Auth
 - - Register (sign-up)
@@ -48,11 +48,27 @@ Every page should contain menu with brand and these items:
 ### Home.
 - Message with overall user saved notes counter.
 
+
 # How to run?
-Project uses Docker, so you should install `Docker-Compose`, then clone this repository, and run all containers via:
+Install `Docker-Compose`, then clone this repository, and run all containers via:
 ```commandLine
 docker-compose up
 ```
+This will automatically install container and run database (PostgreSQL) and Django with Gunicorn WSGI server.
+#### Important! If this is your first time running project:
+Django may fall for first time (only 1 time on first run), you should create PSQL database and apply migrations by:
+Creating database table:
+```commandLine
+docker exec --it DATABASE_CONTAINER_ID /bin/sh
+psql -U postgres
+CREATE DATABASE notes;
+\q [CTRL+D]
+```
+Making migrations:
+```commandLine
+python manage.py migrate [CTRL+D]
+```
+
 
 # Technologies.
 
@@ -63,6 +79,10 @@ Utils: Docker-compose.
 
 ### Database.
 Project uses PostgreSQL as database. Database located at `database` docker container.
+
+### Server.
+Project uses Gunicorn as Django WSGI server.
+You may use native Django server in development.
 
 ### Docker environment.
 Database located at `database` docker container.
