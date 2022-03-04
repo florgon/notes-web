@@ -1,10 +1,11 @@
-
 volumes:
   database_data:
       driver: local
 
 services:
   database:
+    hostname: notes
+    restart: always
     image: postgres:14-alpine
     volumes:
       - ./database_data:/var/lib/postgresql/data
@@ -16,6 +17,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   web:
+    hostname: notes
+    restart: always
     build: .
     volumes:
       - .:/web/notes
