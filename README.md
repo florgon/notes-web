@@ -50,10 +50,11 @@ Every page should contain menu with brand and these items:
 
 
 # How to run?
-Project uses Docker, so you should install `Docker-Compose`, then clone this repository, and run all containers via:
+Install `Docker-Compose`, then clone this repository, and run all containers via:
 ```commandLine
 docker-compose up
 ```
+This will automatically install container and run database (PostgreSQL) and Django with Gunicorn WSGI server.
 #### Important! If this is your first time running project:
 Django may fall for first time (only 1 time on first run), you should create PSQL database and apply migrations by:
 Creating database table:
@@ -78,6 +79,10 @@ Utils: Docker-compose.
 
 ### Database.
 Project uses PostgreSQL as database. Database located at `database` docker container.
+
+### Server.
+Project uses Gunicorn as Django WSGI server.
+You may use native Django server in development.
 
 ### Docker environment.
 Database located at `database` docker container.

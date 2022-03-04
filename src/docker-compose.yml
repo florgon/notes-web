@@ -33,4 +33,6 @@ services:
       - POSTGRES_NAME=notes
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn notes_web.wsgi
+    # For native Django (Windows):
+    # command: python manage.py runserver 0.0.0.0:8000

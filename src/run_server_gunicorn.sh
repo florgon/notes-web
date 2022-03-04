@@ -1,0 +1,1 @@
+gunicorn notes_web.wsgi
