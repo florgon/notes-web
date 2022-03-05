@@ -1,5 +1,4 @@
 import React from 'react';
-
 import NotesList from './NotesList';
 import ApiComponent from './Api';
 
@@ -17,7 +16,6 @@ class NotesListFetched extends ApiComponent{
         const notes = result ? result.notes : [];
         return (<NotesList title="Notes" notes={notes} text={message}/>);
     }
-  }
-
+}
 
 export default NotesListFetched;
