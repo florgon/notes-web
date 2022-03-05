@@ -71,7 +71,6 @@ class ApiComponent extends React.Component{
         let message = this.empty_message;
   
         if (error){
-            
             message = Object.create(this.error_message);
             message.text += error;
         }else if (!isLoaded){
