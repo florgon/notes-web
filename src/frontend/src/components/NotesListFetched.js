@@ -14,7 +14,7 @@ class NotesListFetched extends ApiComponent{
 
     render_body(result, message){
         const notes = result ? result.notes : [];
-        return (<NotesList title="Notes" notes={notes} text={message}/>);
+        return (<NotesList title="Your notes" subtitle="(Only you see those notes!)" notes={notes} text={message}/>);
     }
 }
 

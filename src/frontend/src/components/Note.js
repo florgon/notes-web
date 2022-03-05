@@ -5,7 +5,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleString()
   
 const Note = function (props){
     return (
-      <div className="__note__ card">
+      <div className="__note__ card shadow">
         <div className="card-body">
           <div className="__note__text__ display-6">
             {props.text}
