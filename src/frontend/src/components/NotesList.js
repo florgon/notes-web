@@ -15,7 +15,7 @@ const NotesList = function(props) {
                 <div className="__notes__list__notes__ w-50 mx-auto">
                     {props.notes.map((note) =>
                         <div className="mb-4" key={note.note.id}>
-                            <Note text={note.note.text} created_at={note.note.created_at}/>
+                            <Note text={note.note.text} id={note.note.id} created_at={note.note.created_at}/>
                         </div>
                     )}
                 </div>
