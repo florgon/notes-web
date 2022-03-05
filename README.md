@@ -1,8 +1,21 @@
 # Notes taking website.
-This is test task for *SimbirSoft* (Web/Backend).
+This is monorepository with notes website, with API and Frontend servers.
 Website provides simple web interface for creating *private* user notes and working with them.
-Project uses Python (Django) + React (SPA Frontend) + Docker (Compose).
+Project uses Python (Django, REST API) + React (SPA Frontend) + Docker (Compose).
+This is test task for *SimbirSoft* (Web/Backend).
 ### [But how to run?](#how-to-run)
+
+# API Methods.
+Website backend API provides methods located under /api/:
+- Auth
+- - /api/auth/token/get
+- - /api/auth/token/resolve
+- Notes
+- - /api/notes/create/
+- - /api/notes/list/
+- - /api/notes/get/
+- - /api/notes/delete/
+- - /api/notes/edit/
 
 # Description.
 
@@ -50,6 +63,7 @@ Every page should contain menu with brand and these items:
 - Message with overall user saved notes counter.
 
 
+
 # How to run?
 Install `Docker-Compose`, then clone this repository, and run all containers via:
 ```commandLine
@@ -78,7 +92,7 @@ python manage.py createsuperuser [CTRL+D]
 # Technologies.
 
 ### Core.
-Backend: Python3 and Django as web-framework.
+Backend: Python3 and Django as web-framework for API.
 Frontend: React SPA.
 Database: PostgreSQL.
 Utils: Docker (compose).
@@ -87,7 +101,7 @@ Utils: Docker (compose).
 Project uses PostgreSQL as database. Database located at `database` docker container.
 
 ### Backend.
-Project uses Django with Python3 as backend that is run under Gunicorn as WSGI server.
+Project uses Django with Python3 as backend API that is run under Gunicorn as WSGI server.
 You may use native Django server in development.
 
 ### Frontend.
