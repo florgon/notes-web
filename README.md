@@ -1,6 +1,7 @@
 # Notes taking website.
-This is test task for *SimbirSoft*.
+This is test task for *SimbirSoft* (Web/Backend).
 Website provides simple web interface for creating *private* user notes and working with them.
+Project uses Python (Django) + React (SPA Frontend) + Docker (Compose).
 ### [But how to run?](#how-to-run)
 
 # Description.
@@ -54,7 +55,7 @@ Install `Docker-Compose`, then clone this repository, and run all containers via
 ```commandLine
 docker-compose up
 ```
-This will automatically install container and run database (PostgreSQL) and Django with Gunicorn WSGI server.
+This will automatically install containers, run database (PostgreSQL),  Django with Gunicorn WSGI server and React frontend with Node.
 #### Important! If this is your first time running project:
 Django may fall for first time (only 1 time on first run), you should create PSQL database and apply migrations by:
 Creating database table:
@@ -66,27 +67,37 @@ CREATE DATABASE notes;
 ```
 Making migrations:
 ```commandLine
+docker exec --it WEB_CONTAINER_ID /bin/sh
 python manage.py migrate [CTRL+D]
 ```
-
+And optionally, create superuser:
+```commandLine
+python manage.py createsuperuser [CTRL+D]
+```
 
 # Technologies.
 
 ### Core.
-Web: Python3 and Django as web-framework.
+Backend: Python3 and Django as web-framework.
+Frontend: React SPA.
 Database: PostgreSQL.
-Utils: Docker-compose.
+Utils: Docker (compose).
 
 ### Database.
 Project uses PostgreSQL as database. Database located at `database` docker container.
 
-### Server.
-Project uses Gunicorn as Django WSGI server.
+### Backend.
+Project uses Django with Python3 as backend that is run under Gunicorn as WSGI server.
 You may use native Django server in development.
 
+### Frontend.
+Project uses React SPA frontend that works in AJAX with API from backend.
+
 ### Docker environment.
-Database located at `database` docker container.
-`python:3.9-alpline` is being used as main image.
+Project uses alpine as core (for Python and NodeJS).
+There is 3 containers: `database`, `frontend`, `backend`
+Ports: 3000 (Frontend), 8000 (Backend), 5432 (PostgreSQL)
+Project is not have nginx under docker, you should deploy it by own.
 
 ### Python requirements.
 Requirements may be install via

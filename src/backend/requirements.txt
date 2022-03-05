@@ -1,5 +1,5 @@
 django==4.0.3
-djangorestframework
+djangorestframework==3.13.1
 
 gunicorn==20.1.0
 

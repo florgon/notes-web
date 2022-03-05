@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /web/notes
 COPY requirements.txt /web/notes/
 
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 COPY . /web/notes/

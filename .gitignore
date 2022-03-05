@@ -1,2 +1,3 @@
 /src/database_data
+migrations
 *.pyc
