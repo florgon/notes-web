@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     # Routes.
     path('api/notes', views.get_routes),

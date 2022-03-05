@@ -1,16 +1,16 @@
 from rest_framework.decorators import api_view
 
-from notes_web_services.api.error_code import ApiErrorCode
-from notes_web_services.api.response import (
+from web_services.api.error_code import ApiErrorCode
+from web_services.api.response import (
     api_error, api_success
 )
-from notes_web_services.crud.notes import (
+from web_services.crud.notes import (
     get_notes_from_user, 
     get_notes_count_for_user,
     get_note_by_id,
     user_is_note_author
 )
-from notes_web_services.utils import (
+from web_services.utils import (
     try_convert_type
 )
 
@@ -34,7 +34,7 @@ def get_note(request):
 
     note_id = request.GET.get("id", "")
     if not note_id:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`id` field required!", {"field": "id"})
+        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`id ` field is required!", {"field": "id"})
             
     note_id = try_convert_type(note_id, type=int)
     if note_id is None or note_id < 0:
@@ -82,7 +82,6 @@ def list_notes(request):
     """ Returns a list with notes (with information) of current authenticated user. """
     if not request.user.is_authenticated:
         return api_error(ApiErrorCode.AUTH_REQUIRED, "Authentication required!")
-
     notes = get_notes_from_user(request.user.id)
     return api_success({
         "notes": [note.to_api_dict() for note in notes]

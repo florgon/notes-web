@@ -8,7 +8,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split()
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', "*").split()
 
 
 INSTALLED_APPS = [
@@ -20,11 +20,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
 
+    'auth_api.apps.AuthApiConfig',
     'notes_api.apps.NotesApiConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -33,6 +36,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 ROOT_URLCONF = 'notes_web.urls'
 
@@ -55,6 +67,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'notes_web.wsgi.application'
 
 USE_X_FORWARDED_HOST = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ["*"]
 
 DATABASES = {
     'default': {

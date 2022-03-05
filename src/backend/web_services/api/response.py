@@ -1,11 +1,11 @@
 from typing import Dict, Optional
 
 from rest_framework.response import Response
-from notes_web_services.api.error_code import ApiErrorCode
-from notes_web_services.api.version import API_VERSION
+from web_services.api.error_code import ApiErrorCode
+from web_services.api.version import API_VERSION
 
 
-def api_error(api_code: ApiErrorCode, message: str, data=Optional[Dict]) -> Response:
+def api_error(api_code: ApiErrorCode, message: str, data: Optional[Dict] = None) -> Response:
     """Returns API error response. """
     if data is None:
         data = dict()
