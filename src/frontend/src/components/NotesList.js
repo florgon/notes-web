@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import Note from './Note';
 import Alert from './Alert';
 
-
 const NotesList = function(props){
     const [notes, setNotes] = useState({...props.notes});
     const [alertPopup, setAlertPopup] = useState({open: false});
@@ -20,8 +19,9 @@ const NotesList = function(props){
         //setTimeout(() => setAlertPopup({open: false}), 3000)
     }
     const onDeleteNote = function(id, e){
-        setNotes(notes.filter((item) => item.note.id !== id))
-        openPopup("Note successfully deleted!")
+        setNotes(notes.filter((item) => item.note.id !== id));
+        if (props.onDeleteNote) props.onDeleteNote(id);
+        openPopup("Note successfully deleted!");
     }
 
     return (
@@ -31,8 +31,7 @@ const NotesList = function(props){
                 <span className="__notes__list__title text-center text-muted">{props.subtitle}</span>
             </div>
             <hr className="w-25 mx-auto"/>
-
-
+     
             {
                 <div className="__notes__list__alert__ w-25 mx-auto">
                     {alertPopup.open &&
@@ -47,7 +46,8 @@ const NotesList = function(props){
                         <div className="mb-4" key={note.note.id}>
                             <Note 
                                 onDeleteNote={onDeleteNote} 
-                                text={note.note.text} id={note.note.id} created_at={note.note.created_at}
+                                text={note.note.text} id={note.note.id} 
+                                created_at={note.note.created_at} updated_at={note.note.updated_at}
                             />
                         </div>
                     )}

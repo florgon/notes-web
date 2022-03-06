@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 const API_URL = "http://127.0.0.1:8000/api/"
 
 
-function api_request(method){
+function api_request(method, params=""){
     const onError = function(error){
         console.log(`Failed to fetch API "${method}" method via api_request because of error: `);
         console.error(error);
@@ -25,7 +25,7 @@ function api_request(method){
     }
     
     console.log(`Fetching API "${method}" method via api_request...`);
-    fetch(API_URL + method, {
+    fetch(API_URL + method + "?" + params, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

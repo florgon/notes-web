@@ -1,6 +1,7 @@
 import React from 'react';
 import NotesList from './NotesList';
 import ApiComponent from './Api';
+import {api_request} from './Api';
 
 class NotesListFetched extends ApiComponent{
     constructor(props){
@@ -14,7 +15,14 @@ class NotesListFetched extends ApiComponent{
 
     render_body(result, message){
         const notes = result ? result.notes : [];
-        return (<NotesList title="Your notes" subtitle="(Only you see those notes!)" notes={notes} text={message}/>);
+        const onDeleteNote = function(id){
+            result.notes = result.notes.filter((item) => item.note.id !== id);
+            api_request("notes/delete", "id=" + id);
+        }
+        return (<NotesList 
+            onDeleteNote={onDeleteNote}
+            title="Your notes" subtitle="(Only you see those notes!)" notes={notes} text={message}
+        />);
     }
 }
 
