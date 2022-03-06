@@ -22,18 +22,19 @@ class ApiComponent extends React.Component{
     }
   
     onError(error){
-        console.log("Failed to fetch API ${props.method} method because of error: ");
+        console.log(`Failed to fetch API "${this.method}" method because of error: `);
         console.error(error);
-  
+    
+        const message = "error" in error ? error.message : "Unknown error!";
         this.setState({
             isLoaded: true, 
-            error: error.error.message,
+            error: message,
             result: null,
         });
     }
 
     onSuccess(result){
-        console.log("Successfully fetched API ${props.method} method!");
+        console.log(`Successfully fetched API "${this.method}" method!`);
   
         this.setState({
             isLoaded: true, 
@@ -51,7 +52,7 @@ class ApiComponent extends React.Component{
     }
   
     componentDidMount(){
-        console.log("Fetching API ${props.method} method...");
+        console.log(`Fetching API "${this.method}" method...`);
     
         fetch(API_URL + this.method, {
             method: "GET",
@@ -64,14 +65,13 @@ class ApiComponent extends React.Component{
         }).catch(this.onError)
     }
 
-    render_body(result, message){ throw "Render body is not inherited in chidlren!"}
+    render_body(result, message){}
     render(){
         const { error, isLoaded, result } = this.state;
   
         let message = this.empty_message;
   
         if (error){
-            
             message = Object.create(this.error_message);
             message.text += error;
         }else if (!isLoaded){
