@@ -2,15 +2,16 @@ import React from 'react';
 import NotesList from './NotesList';
 import ApiComponent from './Api';
 import {api_request} from './Api';
+import {withTranslation} from 'react-i18next';
 
 class NotesListFetched extends ApiComponent{
     constructor(props){
         super(props);
 
         this.method = "notes/list";
-        this.error_message = {text: "Error: ", className: "text-danger"};
-        this.empty_message = {text: "No notes yet!", className: "text-warning"};
-        this.loading_message = {text: "Loading...", className: "text-muted"};
+        this.error_message = {text: this.props.t("error-occured"), className: "text-danger"};
+        this.empty_message = {text: this.props.t("notes-empty"), className: "text-warning"};
+        this.loading_message = {text: this.props.t("loading"), className: "text-muted"};
     }
 
     render_body(result, message){
@@ -21,9 +22,9 @@ class NotesListFetched extends ApiComponent{
         }
         return (<NotesList 
             onDeleteNote={onDeleteNote}
-            title="Your notes" subtitle="(Only you see those notes!)" notes={notes} text={message}
+            title={this.props.t("your-notes")} subtitle={this.props.t("only-you-see-those-notes")} notes={notes} text={message}
         />);
     }
 }
 
-export default NotesListFetched;
+export default withTranslation()(NotesListFetched);

@@ -1,0 +1,46 @@
+{
+    "brand": "Заметки",
+    "author-name": "Кирилл Жосул",
+    "author-name-by": "Кириллом Жосулом",
+
+    "welcome-there": "Добро пожаловать!",
+    "website-desription": "Это сайт для заметок. Сайт позволяет создавать приватные заметки и работать с ними.",
+    "website-is-free": "Сайт абсолютно бесплатен для всех",
+    
+    "home-page": "Главная",
+    "new-note": "Новая заметка",
+    "my-notes": "Мои заметки",
+    "api": "API",
+
+    "log-in": "Войти",
+    "sign-up": "Зарегистрироваться",
+
+    "built-with-love": "Сделано с ❤️ ",
+    "source-code": "Исходный код на GitHub",
+    "copyright": "(с) 2022 ",
+    "an-owner-of": " владелец ",
+
+    "change-language": "Язык",
+    "language-ru": "Русский",
+    "language-en": "English",
+
+    "note-id": "Заметка #",
+    "note-created-at": "Создана ",
+    "note-updated-at": "Обновлена ",
+    "note-not-changed": "Не изменялась",
+    
+    "note-deleted": "Заметка успешно удалена!",
+    "delete-note": "Удалить",
+
+    "your-notes": "Ваши заметки",
+    "only-you-see-those-notes": "(Эти заметки видны только вам!)",
+
+    "error-occured": "Ошибка: ",
+    "notes-empty": "У вас ещё нет заметок!",
+    "loading": "Загрузка...", 
+
+    "error-unknown": "Неизвестная ошибка!",
+
+    "page-not-found-header": "Страница не найдена!",
+    "page-not-found-description": "Страница которую вы ищите не найдена."
+}
