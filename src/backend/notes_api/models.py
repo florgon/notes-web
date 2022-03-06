@@ -7,8 +7,8 @@ class Note(models.Model):
 
     text = models.TextField(null=False, blank=True, verbose_name="Text", help_text="Note body as text string.")
 
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name="Updated at", help_text="Time when note last update was.")
-    created_at = models.DateTimeField(auto_now=True, verbose_name="Created at", help_text="Time when note was created.")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Updated at", help_text="Time when note last update was.")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created at", help_text="Time when note was created.")
 
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author user", help_text="User who created the note.")
 
