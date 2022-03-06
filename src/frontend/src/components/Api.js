@@ -6,6 +6,36 @@ import Cookies from 'js-cookie';
 const API_URL = "http://127.0.0.1:8000/api/"
 
 
+function api_request(method, params=""){
+    const onError = function(error){
+        console.log(`Failed to fetch API "${method}" method via api_request because of error: `);
+        console.error(error);
+    }
+
+    const onSuccess = function(result){
+        console.log(`Successfully fetched API "${method}" method via api_request!`);
+    }
+
+    const onResponse = function(result){
+        if ("success" in result){
+            return onSuccess(result);
+        }
+
+        return onError(result);
+    }
+    
+    console.log(`Fetching API "${method}" method via api_request...`);
+    fetch(API_URL + method + "?" + params, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token " + Cookies.get("AUTH_TOKEN")
+        }
+    }).then(response => {
+        response.json().then(onResponse).catch(onError)
+    }).catch(onError)
+}
+
 class ApiComponent extends React.Component{
     constructor(props){
         super(props);
@@ -22,7 +52,7 @@ class ApiComponent extends React.Component{
     }
   
     onError(error){
-        console.log(`Failed to fetch API "${this.method}" method because of error: `);
+        console.log(`Failed to fetch API "${this.method}" method via ApiComponent because of error: `);
         console.error(error);
     
         const message = "error" in error ? error.message : "Unknown error!";
@@ -34,7 +64,7 @@ class ApiComponent extends React.Component{
     }
 
     onSuccess(result){
-        console.log(`Successfully fetched API "${this.method}" method!`);
+        console.log(`Successfully fetched API "${this.method}" method via ApiComponent!`);
   
         this.setState({
             isLoaded: true, 
@@ -52,7 +82,7 @@ class ApiComponent extends React.Component{
     }
   
     componentDidMount(){
-        console.log(`Fetching API "${this.method}" method...`);
+        console.log(`Fetching API "${this.method}" method via ApiComponent...`);
     
         fetch(API_URL + this.method, {
             method: "GET",
@@ -82,4 +112,5 @@ class ApiComponent extends React.Component{
     }
 }
 
+export {api_request};
 export default ApiComponent;

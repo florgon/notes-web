@@ -9,9 +9,9 @@ const Navbar = function(props) {
             <div className="navbar-nav">
                 <a className="nav-item nav-link " href="/">Home</a>
                 <a className="nav-item nav-link" href="/list">My notes</a>
-                <a className="nav-item nav-link text-reset disabled" href="#">New note</a>
-                <a className="nav-item nav-link text-reset disabled" href="#">Log in</a>
-                <a className="nav-item nav-link text-reset disabled" href="#">Sign up</a>
+                <a className="nav-item nav-link text-reset disabled" href="/">New note</a>
+                <a className="nav-item nav-link text-reset disabled" href="/">Log in</a>
+                <a className="nav-item nav-link text-reset disabled" href="/">Sign up</a>
             </div>
         </div>
     )
