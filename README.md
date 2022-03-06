@@ -3,6 +3,7 @@ This is monorepository with notes website, with API and Frontend servers.
 Website provides simple web interface for creating *private* user notes and working with them.
 Project uses Python (Django, REST API) + React (SPA Frontend) + Docker (Compose).
 This is test task for *SimbirSoft* (Web/Backend).
+### [Try it!](http://notes.kirillzhosul.site) (Open website with deployed version)
 ### [But how to run?](#how-to-run)
 
 # API Methods.
