@@ -55,7 +55,7 @@ class ApiComponent extends React.Component{
         console.log(`Failed to fetch API "${this.method}" method via ApiComponent because of error: `);
         console.error(error);
     
-        const message = "error" in error ? error.message : "Unknown error!";
+        const message = "error" in error ? error.message : this.props.t("error-unknown");
         this.setState({
             isLoaded: true, 
             error: message,

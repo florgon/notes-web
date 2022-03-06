@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 
 import Note from './Note';
 import Alert from './Alert';
+import { useTranslation } from 'react-i18next';
 
 const NotesList = function(props){
+    const {t} = useTranslation();
     const [notes, setNotes] = useState({...props.notes});
     const [alertPopup, setAlertPopup] = useState({open: false});
     React.useEffect(() => {
@@ -21,7 +23,7 @@ const NotesList = function(props){
     const onDeleteNote = function(id, e){
         setNotes(notes.filter((item) => item.note.id !== id));
         if (props.onDeleteNote) props.onDeleteNote(id);
-        openPopup("Note successfully deleted!");
+        openPopup(t("note-deleted"));
     }
 
     return (
