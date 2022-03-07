@@ -33,9 +33,9 @@ const NotesList = function(props){
                 <span className="__notes__list__title text-center text-muted">{props.subtitle}</span>
             </div>
             <hr className="w-25 mx-auto"/>
-     
+
             {
-                <div className="__notes__list__alert__ w-25 mx-auto">
+                <div className="__notes__list__alert__ w-50 mx-auto">
                     {alertPopup.open &&
                         <Alert text={alertPopup.text} type={alertPopup.type} classes=""/>
                     }
@@ -43,7 +43,7 @@ const NotesList = function(props){
             }
 
             {notes.length > 0 && 
-                <div className="__notes__list__notes__ w-50 mx-auto">
+                <div className="__notes__list__notes__ w-75 mx-auto">
                     {notes.map((note) =>
                         <div className="mb-4" key={note.note.id}>
                             <Note 

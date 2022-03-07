@@ -6,7 +6,7 @@ const Footer = function(props) {
     return (
         <footer className="__footer__ bg-light mt-auto">
           <div className="text-center p-2 border-top">
-            <div className="w-75 mx-auto row">
+            <div className="mx-auto row">
                 <span className="fw-bold text-muted col">
                     {t("built-with-love")}<a href="https://kirillzhosul.site" className="link-info">{t("author-name-by")}</a>.
                 </span>

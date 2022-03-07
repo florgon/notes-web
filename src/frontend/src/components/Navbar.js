@@ -1,21 +1,25 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import {Navbar as BootstrapNavbar, Nav} from 'react-bootstrap';
 
 const Navbar = function(props) {
     const {t} = useTranslation();
     return (
-        <div className="__navbar navbar border-bottom navbar-expand-sm container-fluid bg-light">
-            <div className="navbar-brand">
+        <BootstrapNavbar bg="light" expand="md" className="__navbar border-bottom container-fluid">
+            <BootstrapNavbar.Brand>
                 <span className="display-6 text-center">{t("brand")}</span>
-            </div>
-            <div className="navbar-nav">
-                <a className="nav-item nav-link " href="/">{t("home-page")}</a>
-                <a className="nav-item nav-link" href="/list">{t("my-notes")}</a>
-                <a className="nav-item nav-link text-reset disabled" href="/create">{t("new-note")}</a>
-                <a className="nav-item nav-link text-reset disabled" href="/auth/login">{t("log-in")}</a>
-                <a className="nav-item nav-link text-reset disabled" href="/auth/signup">{t("sign-up")}</a>
-            </div>
-        </div>
+            </BootstrapNavbar.Brand>
+            <BootstrapNavbar.Toggle aria-controls="navbarScroll" />
+            <BootstrapNavbar.Collapse id="navbarScroll">
+                <Nav navbarScroll>
+                    <Nav.Link href="/">{t("home-page")}</Nav.Link>
+                    <Nav.Link href="/list">{t("my-notes")}</Nav.Link>
+                    <Nav.Link disabled href="/create">{t("new-note")}</Nav.Link>
+                    <Nav.Link disabled href="/auth/login">{t("log-in")}</Nav.Link>
+                    <Nav.Link disabled href="/auth/signup">{t("sign-up")}</Nav.Link>
+                </Nav>
+            </BootstrapNavbar.Collapse>
+        </BootstrapNavbar>
     )
 }
 

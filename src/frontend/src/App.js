@@ -11,8 +11,6 @@ import NotesListPage from './components/pages/NotesListPage';
 // Not a secret. WIP Until there is no way to auth properly.
 Cookies.set("AUTH_TOKEN", "12d145c6f8f6dce5c4958f143de6a59557555fc6");
 
-
-
 function App() {
   return (
     <Suspense fallback={<Fragment/>}>
