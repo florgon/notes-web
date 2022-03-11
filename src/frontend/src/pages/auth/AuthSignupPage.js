@@ -1,13 +1,20 @@
 import React, {useState} from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
+import {Navigate} from 'react-router-dom';
+import {useAuth} from '../../contexts/AuthContext';
 
 const AuthSignupPage = function() {
     const {t} = useTranslation();
+    const {isAuthenticated} = useAuth();
     const [isLoading, setIsLoading] = useState(false);
 
     const signup = function(e){
         e.preventDefault();
         setIsLoading(true);
+    }
+
+    if (isAuthenticated){
+        return (<Navigate to="/list"/>)
     }
 
     return (

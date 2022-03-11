@@ -1,7 +1,8 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dropdown } from 'react-bootstrap'
+import {useTranslation} from 'react-i18next';
+import {Dropdown} from 'react-bootstrap'
 import i18next from 'i18next';
+import {useAuth} from '../contexts/AuthContext';
 
 const LanguageDropdown = function(){
     const {t} = useTranslation();
@@ -21,6 +22,7 @@ const LanguageDropdown = function(){
 
 const HomePage = function(props) {
     const {t} = useTranslation();
+    const {isAuthenticated} = useAuth();
     return (
         <div className="__home__page">
             <div className="__description w-75 mx-auto text-center">
@@ -30,9 +32,16 @@ const HomePage = function(props) {
             </div>
 
             <div className="row text-center justify-content-center">
-                <div className="col-auto mb-2">
-                    <a className="btn btn-lg btn-outline-primary" href="/list">{t("my-notes")}</a>
-                </div>
+                {isAuthenticated &&
+                    <div className="col-auto mb-2">
+                        <a className="btn btn-lg btn-outline-primary" href="/list">{t("my-notes")}</a>
+                    </div>
+                }
+                {!isAuthenticated &&
+                    <div className="col-auto mb-2">
+                        <a className="btn btn-lg btn-outline-primary" href="/auth">Авторизоваться</a>
+                    </div>
+                }
                 <div className="col-auto">
                     <LanguageDropdown/>
                 </div>

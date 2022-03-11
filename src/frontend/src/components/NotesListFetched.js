@@ -1,7 +1,6 @@
 import React from 'react';
 import NotesList from './NotesList';
-import ApiComponent from './Api';
-import {api_request} from './Api';
+import ApiComponent, {apiRequest} from './Api';
 import {withTranslation} from 'react-i18next';
 
 class NotesListFetched extends ApiComponent{
@@ -18,7 +17,7 @@ class NotesListFetched extends ApiComponent{
         const notes = result ? result.notes : [];
         const onDeleteNote = function(id){
             result.notes = result.notes.filter((item) => item.note.id !== id);
-            api_request("notes/delete", "id=" + id);
+            apiRequest("notes/delete", "id=" + id);
         }
         return (<NotesList 
             onDeleteNote={onDeleteNote}

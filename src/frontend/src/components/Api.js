@@ -1,45 +1,52 @@
 import React from 'react';
 
-import Cookies from 'js-cookie';
+import {getAuthToken} from '../contexts/AuthContext';
 
-
+// Settings.
 const API_URL = "http://127.0.0.1:8000/api/"
 
 
-function api_request(method, params=""){
-    const onError = function(error){
-        console.log(`Failed to fetch API "${method}" method via api_request because of error: `);
+function apiRequest(method, params="", onSuccess=undefined, onError=undefined){
+    const onErrorHandler = function(error){
+        if (onError) onError(error);
+        console.log(`Failed to fetch API "${method}" method via apiRequest because of error: `);
         console.error(error);
     }
 
-    const onSuccess = function(result){
-        console.log(`Successfully fetched API "${method}" method via api_request!`);
+    const onSuccessHandler = function(result){
+        if (onSuccess) onSuccess(result);
+        console.log(`Successfully fetched API "${method}" method via apiRequest!`);
     }
 
-    const onResponse = function(result){
+    const onResponseHandler = function(result){
         if ("success" in result){
-            return onSuccess(result);
+            return onSuccessHandler(result);
         }
 
-        return onError(result);
+        return onErrorHandler(result);
     }
-    
-    console.log(`Fetching API "${method}" method via api_request...`);
+
+    let headers = {
+        "Content-Type": "application/json",
+    }
+
+    let token = getAuthToken();
+    if (token){
+        headers["Authorization"] = "Token " + token;
+    }
+
+    console.log(`Fetching API "${method}" method via apiRequest...`);
     fetch(API_URL + method + "?" + params, {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Token " + Cookies.get("AUTH_TOKEN")
-        }
+        headers: headers
     }).then(response => {
-        response.json().then(onResponse).catch(onError)
-    }).catch(onError)
+        response.json().then(onResponseHandler).catch(onErrorHandler)
+    }).catch(onErrorHandler)
 }
 
 class ApiComponent extends React.Component{
     constructor(props){
         super(props);
-  
         this.state = {
             isLoaded: false, 
             error: null, 
@@ -84,12 +91,18 @@ class ApiComponent extends React.Component{
     componentDidMount(){
         console.log(`Fetching API "${this.method}" method via ApiComponent...`);
     
+        let headers = {
+            "Content-Type": "application/json",
+        }
+
+        let token = getAuthToken();
+        if (token){
+            headers["Authorization"] = "Token " + token;
+        }
+
         fetch(API_URL + this.method, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Token " + Cookies.get("AUTH_TOKEN")
-            }
+            headers: headers
         }).then(response => {
             response.json().then(this.onResponse).catch(this.onError)
         }).catch(this.onError)
@@ -112,5 +125,5 @@ class ApiComponent extends React.Component{
     }
 }
 
-export {api_request};
+export {apiRequest};
 export default ApiComponent;

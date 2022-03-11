@@ -1,8 +1,16 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
+import {Navigate} from 'react-router-dom';
+import {useAuth} from '../../contexts/AuthContext';
 
 const AuthPage = function() {
     const {t} = useTranslation();
+    const {isAuthenticated} = useAuth();
+
+    if (isAuthenticated){
+        return (<Navigate to="/list"/>)
+    }
+
     return (
         <div className="__auth__page">
             <div className="text-center">
