@@ -7,6 +7,21 @@ from web_services.api.response import (
 )
 from web_services.api.error_code import ApiErrorCode
 
+@api_view(["GET"])
+def get_routes(_):
+    """Returns list of all routes releated to this API."""
+    routes = [
+        "/token/"
+    ]
+    return api_success({"methods": {"api": {"auth": routes}}})
+
+@api_view(["GET"])
+def get_routes_token(_):
+    """Returns list of all routes releated to this API for token."""
+    routes = [
+        "/get", "/resolve"
+    ]
+    return api_success({"methods": {"api": {"auth": {"token": routes}}}})
 
 @api_view(["GET"])
 def resolve_auth_token(request):
