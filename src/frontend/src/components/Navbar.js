@@ -15,8 +15,8 @@ const Navbar = function(props) {
                     <Nav.Link href="/">{t("home-page")}</Nav.Link>
                     <Nav.Link href="/list">{t("my-notes")}</Nav.Link>
                     <Nav.Link disabled href="/create">{t("new-note")}</Nav.Link>
-                    <Nav.Link disabled href="/auth/login">{t("log-in")}</Nav.Link>
-                    <Nav.Link disabled href="/auth/signup">{t("sign-up")}</Nav.Link>
+                    <Nav.Link href="/auth/login">{t("log-in")}</Nav.Link>
+                    <Nav.Link href="/auth/signup">{t("sign-up")}</Nav.Link>
                 </Nav>
             </BootstrapNavbar.Collapse>
         </BootstrapNavbar>

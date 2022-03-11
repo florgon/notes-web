@@ -19,6 +19,10 @@
     "source-code": "Исходный код на GitHub",
     "copyright": "(с) 2022 ",
     "an-owner-of": " владелец ",
+    
+    "authorize-to-continue": "Авторизуйтесь для продолжения",
+    "i-already-registered": "У меня уже есть аккаунт",
+    "i-not-already-registered": "Нет, создать новый аккаунт",
 
     "change-language": "Язык",
     "language-ru": "Русский",
@@ -40,6 +44,7 @@
     "loading": "Загрузка...", 
 
     "error-unknown": "Неизвестная ошибка!",
+    "or": "или",
 
     "page-not-found-header": "Страница не найдена!",
     "page-not-found-description": "Страница которую вы ищите не найдена."

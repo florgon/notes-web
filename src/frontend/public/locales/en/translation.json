@@ -20,6 +20,10 @@
     "copyright": "(с) 2022 ",
     "an-owner-of": " an owner of ",
 
+    "authorize-to-continue": "Authorize to continue",
+    "i-already-registered": "I already have account",
+    "i-not-already-registered": "No, create new account",
+
     "change-language": "Language",
     "language-ru": "Русский",
     "language-en": "English",
@@ -40,7 +44,8 @@
     "loading": "Loading...", 
 
     "error-unknown": "Unknown error!",
-
+    "or": "or",
+    
     "page-not-found-header": "Page not found!",
     "page-not-found-description": "Page you looking for does not exists."
 }

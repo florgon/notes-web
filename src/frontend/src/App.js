@@ -2,11 +2,14 @@ import React, {Suspense, Fragment} from 'react';
 import Cookies from 'js-cookie';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Footer        from './components/Footer';
-import Navbar        from './components/Navbar';
-import HomePage      from './components/pages/HomePage';
-import NotFoundPage  from './components/pages/NotFoundPage';
-import NotesListPage from './components/pages/NotesListPage';
+import Footer         from './components/Footer';
+import Navbar         from './components/Navbar';
+import HomePage       from './components/pages/HomePage';
+import NotFoundPage   from './components/pages/NotFoundPage';
+import NotesListPage  from './components/pages/NotesListPage';
+import AuthPage       from './components/pages/AuthPage'
+import AuthLoginPage  from './components/pages/AuthLoginPage'
+import AuthSignupPage from './components/pages/AuthSignupPage'
 
 // Not a secret. WIP Until there is no way to auth properly.
 Cookies.set("AUTH_TOKEN", "12d145c6f8f6dce5c4958f143de6a59557555fc6");
@@ -21,6 +24,9 @@ function App() {
             <Routes>
               <Route path='/' element={<HomePage/>} /> 
               <Route path='/list' element={<NotesListPage/>} /> 
+              <Route path='/auth' element={<AuthPage/>} /> 
+              <Route path='/auth/login' element={<AuthLoginPage/>} /> 
+              <Route path='/auth/signup' element={<AuthSignupPage/>} /> 
               <Route path='*' element={<NotFoundPage/>} />
             </Routes>
           </div>
