@@ -7,7 +7,7 @@ const LanguageDropdown = function(){
     const {t} = useTranslation();
     return (
         <Dropdown>
-            <Dropdown.Toggle variant="outline-primary">
+            <Dropdown.Toggle size="lg" variant="outline-primary">
                 {t("change-language")}
             </Dropdown.Toggle>
 
@@ -18,20 +18,24 @@ const LanguageDropdown = function(){
         </Dropdown>
     )
 }
+
 const HomePage = function(props) {
     const {t} = useTranslation();
     return (
-        <div className="__home__page text-center">
-            <div className="__description w-50 mx-auto">
+        <div className="__home__page">
+            <div className="__description w-75 mx-auto text-center">
                 <p className="display-2 mb-5">{t("welcome-there")}</p>
                 <p className="display-6 mb-5">{t("website-desription")}</p>
                 <p className="display-6 mb-5">{t("website-is-free")}</p>
+            </div>
 
-                <div className="row">
-                    <a className="btn btn-outline-primary col-3 mx-auto" href="/list">{t("my-notes")}</a>
-                    <div className="col-2 mx-auto"><LanguageDropdown/></div>
+            <div className="row text-center justify-content-center">
+                <div className="col-auto mb-2">
+                    <a className="btn btn-lg btn-outline-primary" href="/list">{t("my-notes")}</a>
                 </div>
-
+                <div className="col-auto">
+                    <LanguageDropdown/>
+                </div>
             </div>
         </div>
     )
