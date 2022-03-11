@@ -14,8 +14,7 @@ const Footer = function(props) {
                     <a href="https://github.com/kirillzhosul/notes" className="text-reset">{t("source-code")}</a>.
                 </span>
                 <span className="text-muted col">
-                    {t("copyright")}<a href="https://kirillzhosul.site" className="text-reset">{t("author-name")}</a>, 
-                    {t("an-owner-of")}<a href="https://kirillzhosul.site" className="text-reset">kirillzhosul.site</a>
+                    <a href="/dev/docs" className="text-reset">{t("for-developers")}</a>
                 </span>
             </div>
           </div>

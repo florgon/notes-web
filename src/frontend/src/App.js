@@ -10,6 +10,7 @@ import NotesListPage  from './components/pages/NotesListPage';
 import AuthPage       from './components/pages/AuthPage'
 import AuthLoginPage  from './components/pages/AuthLoginPage'
 import AuthSignupPage from './components/pages/AuthSignupPage'
+import DevDocsPage    from './components/pages/DevDocsPage'
 
 // Not a secret. WIP Until there is no way to auth properly.
 Cookies.set("AUTH_TOKEN", "12d145c6f8f6dce5c4958f143de6a59557555fc6");
@@ -27,6 +28,8 @@ function App() {
               <Route path='/auth' element={<AuthPage/>} /> 
               <Route path='/auth/login' element={<AuthLoginPage/>} /> 
               <Route path='/auth/signup' element={<AuthSignupPage/>} /> 
+              <Route path='/dev/docs' element={<DevDocsPage/>} /> 
+              
               <Route path='*' element={<NotFoundPage/>} />
             </Routes>
           </div>

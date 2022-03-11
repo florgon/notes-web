@@ -28,8 +28,7 @@ def get_routes(_):
 @api_view(["GET"])
 def handler404(*args, **kwargs):
     return api_error(ApiErrorCode.API_METHOD_NOT_FOUND, "Requested method does not exists.")
-
-      
+    
 
 @api_view(["GET"])
 def handler500(_):
