@@ -26,7 +26,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+$m574w"
+      - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+6m574w"
       - DEBUG=1
       - ALLOWED_HOSTS=* notes.kirillzhosul.site
       - POSTGRES_HOST=database
