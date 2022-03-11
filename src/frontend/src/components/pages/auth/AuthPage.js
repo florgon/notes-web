@@ -19,14 +19,12 @@ const AuthPage = function() {
                         {t("or")}
                     </p>
                     <p>
-                        <a className="btn btn-primary btn-lg" href="/auth/signin">
+                        <a className="btn btn-primary btn-lg" href="/auth/signup">
                             {t("i-not-already-registered")}
                         </a>
                     </p>
                 </div>
-
             </div>
-            
         </div>
     )
 }

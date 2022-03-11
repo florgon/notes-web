@@ -7,9 +7,9 @@ import Navbar         from './components/Navbar';
 import HomePage       from './components/pages/HomePage';
 import NotFoundPage   from './components/pages/NotFoundPage';
 import NotesListPage  from './components/pages/NotesListPage';
-import AuthPage       from './components/pages/AuthPage'
-import AuthLoginPage  from './components/pages/AuthLoginPage'
-import AuthSignupPage from './components/pages/AuthSignupPage'
+import AuthPage       from './components/pages/auth/AuthPage'
+import AuthLoginPage  from './components/pages/auth/AuthLoginPage'
+import AuthSignupPage from './components/pages/auth/AuthSignupPage'
 import DevDocsPage    from './components/pages/DevDocsPage'
 
 // Not a secret. WIP Until there is no way to auth properly.
