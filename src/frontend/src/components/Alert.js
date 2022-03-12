@@ -1,7 +1,9 @@
+// Libraries.
 import React from 'react';
 
-const Alert = function({text, type="success", classes=""}) {
-    let className = "alert alert-" + type + " " + classes;
+const Alert = function({text, type="success"}) {
+    /// @description Bootstrap alert class.
+    let className = "alert alert-" + type;
     return (
         <div className={className} role="alert">
             {text}

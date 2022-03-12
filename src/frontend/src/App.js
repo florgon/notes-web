@@ -1,33 +1,74 @@
-import React, {Suspense, Fragment} from 'react';
-import Cookies from 'js-cookie';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// Libraries.
+import React, {Suspense} from 'react';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-import Footer        from './components/Footer';
-import Navbar        from './components/Navbar';
-import HomePage      from './components/pages/HomePage';
-import NotFoundPage  from './components/pages/NotFoundPage';
-import NotesListPage from './components/pages/NotesListPage';
+// Import wide use components.
+import Footer          from './components/Footer';
+import Navbar          from './components/Navbar';
+import LoadingFallback from './LoadingFallback';
 
-// Not a secret. WIP Until there is no way to auth properly.
-Cookies.set("AUTH_TOKEN", "12d145c6f8f6dce5c4958f143de6a59557555fc6");
+// Import pages.
+import HomePage       from './pages/HomePage';
+import NotFoundPage   from './pages/NotFoundPage';
+import NotesListPage  from './pages/NotesListPage';
+import AuthPage       from './pages/auth/AuthPage';
+import AuthLoginPage  from './pages/auth/AuthLoginPage';
+import AuthLogoutPage from './pages/auth/AuthLogoutPage';
+import AuthSignupPage from './pages/auth/AuthSignupPage';
+import DevDocsPage    from './pages/DevDocsPage';
 
-function App() {
+// Importing auth provider for global application context.
+import {AuthProvider} from './contexts/AuthContext';
+
+
+
+const PageRoutes = function(){
+  // Returns React router routes for pages.
   return (
-    <Suspense fallback={<Fragment/>}>
-      <BrowserRouter>
-        <div className="App d-flex flex-column min-vh-100">
-          <Navbar/>
-          <div className="container-fluid mt-auto">
-            <Routes>
-              <Route path='/' element={<HomePage/>} /> 
-              <Route path='/list' element={<NotesListPage/>} /> 
-              <Route path='*' element={<NotFoundPage/>} />
-            </Routes>
-          </div>
-          <Footer/>
-        </div>
-      </BrowserRouter>
-      </Suspense>
+    <Routes>
+      {/* Index. */}
+      <Route path='/' element={<HomePage/>} /> 
+      
+      <Route path='/list' element={<NotesListPage/>} /> 
+
+      {/* Auth system. */}
+      <Route path='/auth' element={<AuthPage/>} /> 
+      <Route path='/auth/login' element={<AuthLoginPage/>} /> 
+      <Route path='/auth/logout' element={<AuthLogoutPage/>} /> 
+      <Route path='/auth/signup' element={<AuthSignupPage/>} />
+
+      {/* Other stuff. */}
+      <Route path='/dev/docs' element={<DevDocsPage/>} /> 
+      
+      {/* Error handlers. */}
+      <Route path='*' element={<NotFoundPage/>} />
+    </Routes>
+  )
+}
+
+const AppContainer = function(){
+  // Main application container.
+  return (
+    <div className="d-flex flex-column min-vh-100">
+      <Navbar/>
+      <div className="container-fluid mt-auto">
+        <PageRoutes/>
+      </div>
+      <Footer/>
+    </div>
+  )
+}
+
+const App = function() {
+  // Base application component.
+  return (
+    <Suspense fallback={<LoadingFallback/>}>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppContainer/>
+        </BrowserRouter>
+      </AuthProvider>
+    </Suspense>
   );
 }
 
