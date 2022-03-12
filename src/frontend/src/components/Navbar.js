@@ -2,6 +2,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Navbar as BootstrapNavbar, Nav} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 // Auth context for checking is user authenticated.
 import {useAuth} from '../contexts/AuthContext';
@@ -21,17 +22,17 @@ const NavbarButtons = function({t, isAuthenticated}){
         <BootstrapNavbar.Collapse id="navbarScroll">
             {isAuthenticated &&
                 <Nav navbarScroll>
-                    <Nav.Link href="/">{t("home-page")}</Nav.Link>
-                    <Nav.Link href="/list">{t("my-notes")}</Nav.Link>
-                    <Nav.Link disabled href="/create">{t("new-note")}</Nav.Link>
-                    <Nav.Link href="/auth/logout">{t("log-out")}</Nav.Link>
+                    <Link to="/" className="nav-link">{t("home-page")}</Link>
+                    <Link to="/list" className="nav-link">{t("my-notes")}</Link>
+                    <Link to="/create" className="nav-link">{t("new-note")}</Link>
+                    <Link to="/auth/logout" className="nav-link">{t("log-out")}</Link>
                 </Nav>
             }
             {!isAuthenticated &&
                 <Nav navbarScroll>
-                    <Nav.Link href="/">{t("home-page")}</Nav.Link>
-                    <Nav.Link href="/auth/login">{t("log-in")}</Nav.Link>
-                    <Nav.Link href="/auth/signup">{t("sign-up")}</Nav.Link>
+                    <Link to="/" className="nav-link">{t("home-page")}</Link>
+                    <Link to="/auth/signup" className="nav-link">{t("sign-up")}</Link>
+                    <Link to="/auth/login" className="nav-link">{t("log-in")}</Link>
                 </Nav>
             }
         </BootstrapNavbar.Collapse>

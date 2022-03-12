@@ -14,6 +14,7 @@ See [docs/SPECIFICATION.md](/docs/SPECIFICATION.md).
 See [docs/HOW_TO_RUN.md](/docs/HOW_TO_RUN.md) or simply `docker-compose up`.
 
 ## Deployment production.
+Warning: Not documented yet (Document Nginx + Static serving).
 See [docs/DEPLOYMENT.md](/docs/DEPLOYMENT.md).
 
 ### Technologies.
