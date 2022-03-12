@@ -53,7 +53,7 @@
     "auth-enter-password": "Enter password",
     "auth-enter-username": "Enter username",
     "auth-enter-email": "Enter email",
-    "auth-not-already-have-account": "No account?"
+    "auth-not-already-have-account": "No account?",
     "auth-email-is-not-leaked": "We are not exposing your email elsewhere!",
     "auth-by-continue-you-agree": "By continue, you agree with our terms.",
     "auth-already-have-account": "Already have account?",
