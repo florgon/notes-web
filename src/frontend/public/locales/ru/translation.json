@@ -67,5 +67,7 @@
     "password-too-easy": "Пароль слишком простой (Минимум 1 цифра, символ, заглавная и маленькая буква)",
     "password-confirmation-required": "Введите подтверждение пароля",
     "passwords-not-same": "Пароли не совпадают",
-    "auth-username-lowercase": "В нижнем регистре."
+    "auth-username-lowercase": "В нижнем регистре.",
+    "new-note-text": "Свежайшая заметка",
+    "note-created": "Новая заметка успешно создана!"
 }

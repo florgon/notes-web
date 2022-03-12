@@ -11,6 +11,7 @@ import LoadingFallback from './LoadingFallback';
 import HomePage       from './pages/HomePage';
 import NotFoundPage   from './pages/NotFoundPage';
 import NotesListPage  from './pages/NotesListPage';
+import CreateNotePage from './pages/CreateNotePage';
 import AuthPage       from './pages/auth/AuthPage';
 import AuthLoginPage  from './pages/auth/AuthLoginPage';
 import AuthLogoutPage from './pages/auth/AuthLogoutPage';
@@ -29,7 +30,9 @@ const PageRoutes = function(){
       {/* Index. */}
       <Route path='/' element={<HomePage/>} /> 
       
+      {/* Other. */}
       <Route path='/list' element={<NotesListPage/>} /> 
+      <Route path='/create' element={<CreateNotePage/>} /> 
 
       {/* Auth system. */}
       <Route path='/auth' element={<AuthPage/>} /> 

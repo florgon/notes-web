@@ -67,5 +67,7 @@
     "password-too-easy": "Password too easy (Minimum 1 number, symbol, uppercase and lowercase)",
     "password-confirmation-required": "Password confirmation required",
     "passwords-not-same": "Passwords not the same",
-    "auth-username-lowercase": "In lowercase."
+    "auth-username-lowercase": "In lowercase.",
+    "new-note-text": "Fresh new note",
+    "note-created": "New note successfully created!"
 }

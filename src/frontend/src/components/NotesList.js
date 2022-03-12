@@ -1,6 +1,6 @@
 /// WIP. Not refactored.
-import React, {useState} from 'react';
-
+import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 import Note from './Note';
 import Alert from './Alert';
 import { useTranslation } from 'react-i18next';
@@ -9,10 +9,7 @@ const NotesList = function(props){
     const {t} = useTranslation();
     const [notes, setNotes] = useState({...props.notes});
     const [alertPopup, setAlertPopup] = useState({open: false});
-    React.useEffect(() => {
-        setNotes(props.notes);
-    }, [props.notes])
-  
+
     const openPopup = function(text, type){
         setAlertPopup({
             open: true,
@@ -27,14 +24,29 @@ const NotesList = function(props){
         openPopup(t("note-deleted"));
     }
 
+    useEffect(() => {
+        setNotes(props.notes);
+    }, [props.notes])
+
+    useEffect(() => {
+        if (window.location.href.includes("#new-note")){
+            window.history.replaceState(null, "", window.location.href.replace("#new-note", ""))
+            openPopup(t("note-created"));
+        }
+    })
+
     return (
         <div className="__notes__list__">
             <div className="row">
                 <span className="__notes__list__title text-center display-3">{props.title}</span>
                 <span className="__notes__list__title text-center text-muted">{props.subtitle}</span>
             </div>
-            <hr className="w-25 mx-auto"/>
 
+            
+            <hr className="w-25 mx-auto"/>
+            <div className="mx-auto text-center mb-3">
+                <Link className="btn btn-lg btn-success" to="/create/">{t("new-note")}</Link>
+            </div>
             {
                 <div className="w-50 mx-auto">
                     {alertPopup.open &&

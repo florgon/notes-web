@@ -17,6 +17,7 @@ CREATE DATABASE notes;
 Making migrations:
 ```commandLine
 docker exec -it WEB_CONTAINER_ID /bin/sh
+python manage.py makemigrations *
 python manage.py migrate [CTRL+D]
 ```
 And optionally, create superuser:
