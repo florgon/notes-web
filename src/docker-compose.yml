@@ -40,7 +40,7 @@ services:
       - database
     build: ./backend/.
     command: sh -c "gunicorn --bind 0.0.0.0:8000 notes_web.wsgi"
-    # For native Django (Windows):
+    # Native server:
     # command: python manage.py runserver 0.0.0.0:8000
   frontend:
     hostname: notes

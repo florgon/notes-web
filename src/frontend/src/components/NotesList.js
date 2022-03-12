@@ -1,3 +1,4 @@
+/// WIP. Not refactored.
 import React, {useState} from 'react';
 
 import Note from './Note';
@@ -35,9 +36,9 @@ const NotesList = function(props){
             <hr className="w-25 mx-auto"/>
 
             {
-                <div className="__notes__list__alert__ w-50 mx-auto">
+                <div className="w-50 mx-auto">
                     {alertPopup.open &&
-                        <Alert text={alertPopup.text} type={alertPopup.type} classes=""/>
+                        <Alert text={alertPopup.text} type={alertPopup.type}/>
                     }
                 </div>
             }

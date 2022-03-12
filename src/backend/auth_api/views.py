@@ -7,7 +7,27 @@ from web_services.api.response import (
 )
 from web_services.api.error_code import ApiErrorCode
 
+@api_view(["GET"])
+def get_routes(_):
+    """Returns list of all routes releated to this API."""
+    routes = [
+        "/token/",
+        "/signup",
+    ]
+    return api_success({"methods": {"api": {"auth": routes}}})
 
+@api_view(["GET"])
+def get_routes_token(_):
+    """Returns list of all routes releated to this API for token."""
+    routes = [
+        "/get", "/resolve"
+    ]
+    return api_success({"methods": {"api": {"auth": {"token": routes}}}})
+
+@api_view(["GET"])
+def sign_up(_):
+    return api_error(ApiErrorCode.NOT_IMPLEMENTED, "Sign up is not implemented yet on server-side!")
+    
 @api_view(["GET"])
 def resolve_auth_token(request):
     """Returns information about token (user, actually). Resolving token. """
