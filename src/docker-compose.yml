@@ -26,7 +26,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+6m574w"
+      - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+$m574w"
       - DEBUG=1
       - ALLOWED_HOSTS=* notes.kirillzhosul.site
       - POSTGRES_HOST=database
@@ -44,8 +44,14 @@ services:
     # command: python manage.py runserver 0.0.0.0:8000
   frontend:
     hostname: notes
+    restart: always
     volumes:
       - ./frontend:/web/notes
+    ports:
+      - "3000:3000"
     depends_on:
       - backend
+    links:
+      - backend
     build: ./frontend/.
+    command: sh -c "npm start"
