@@ -1,9 +1,14 @@
+# Project used technologies.
 
 ### Core.
 Backend: Python3 and Django as web-framework for API.
 Frontend: React SPA (Boostrap, i18next, etc.).
 Database: PostgreSQL.
 Utils: Docker (compose).
+
+# Proxy (Nginx).
+Project will not use for now Nginx in containerization.
+Please supply Nginx proxy by own.
 
 ### Database.
 Project uses PostgreSQL as database. Database located at `database` docker container.

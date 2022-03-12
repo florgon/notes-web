@@ -1,3 +1,4 @@
+# How to run project.
 Install `Docker-Compose`, then clone this repository, and run all containers via:
 ```commandLine
 docker-compose up

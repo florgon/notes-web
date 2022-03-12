@@ -46,7 +46,17 @@
     "page-title-auth": "Авторизация",
     "auth-field-password": "Ваш пароль",
     "auth-field-username": "Имя пользователя",
+    "auth-field-email": "Электронная почта",
+    "auth-field-password-confirmation": "Подтверждение пароля",
     "auth-enter-password": "Введите пароль",
     "auth-enter-username": "Введите имя пользователя",
-    "auth-not-already-have-account": "Ещё нет аккаунта?"
+    "auth-enter-email": "Введите почту",
+    "auth-enter-password-confirmation": "Введите пароль ещё раз",
+    "auth-enter-password-confirmation-help": "Ваш пароль ещё раз",
+    "auth-not-already-have-account": "Ещё нет аккаунта?",
+    "auth-email-is-not-leaked": "Мы не передаём вашу почту куда либо!",
+    "auth-by-continue-you-agree": "Продолжая, вы соглашаетесь с нашими правилами.",
+    "auth-already-have-account": "Уже есть аккаунт?",
+    "username-required": "Введите имя пользователя",
+    "password-required": "Введите пароль"
 }

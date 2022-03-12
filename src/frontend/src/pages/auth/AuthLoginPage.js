@@ -83,6 +83,7 @@ const PasswordInput = function({password, setPassword}) {
 
 const AuthLoginPage = function() {
     /// @description Auth login page with login form.
+
     // Is auth currently loading something with loader.
     const [isLoading, setIsLoading] = useState(false);
 
@@ -124,6 +125,7 @@ const AuthLoginPage = function() {
     }
 
     const loginTryValidate = function(){
+        /// @description Returns boolean is login valid or not, and shows popup if not.
         if (username.length <= 1){
             openPopup(t("username-required"), "danger");
             return false;
@@ -136,6 +138,7 @@ const AuthLoginPage = function() {
 
         return true;
     }
+
     const loginWrapper = function(e){
         /// @description Login button click wrapper.
         e.preventDefault();
@@ -159,9 +162,9 @@ const AuthLoginPage = function() {
                     <hr className="w-25 mx-auto"/>
                     <div className='mt-5 w-25 mx-auto'>
                         <div className="text-center">
-                        {alertPopup.open &&
-                            <Alert text={alertPopup.text} type={alertPopup.type}/>
-                        }
+                            {alertPopup.open &&
+                                <Alert text={alertPopup.text} type={alertPopup.type}/>
+                            }
                         </div>
                         <AuthLoginForm loginHandler={loginWrapper} 
                             password={password} setPassword={setPassword} 
