@@ -2,6 +2,7 @@
 import React, {useState, Fragment} from 'react';
 import {useTranslation } from 'react-i18next';
 import {Link} from 'react-router-dom';
+import {t} from 'i18next';
 
 // Auth context for working with auth.
 import {useAuth} from '../../contexts/AuthContext';
@@ -12,8 +13,9 @@ import {apiRequest} from '../../components/Api';
 // Dissalow already authenticated users.
 import DissalowAuth from '../../components/DissalowAuth';
 
+// Alert for messages.
 import Alert from '../../components/Alert';
-import { t } from 'i18next';
+
 
 const AuthLoginForm = function({loginHandler, username, password, setUsername, setPassword, t}) {
     /// @description Login form for auth.
