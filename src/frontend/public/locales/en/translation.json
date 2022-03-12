@@ -58,5 +58,14 @@
     "auth-by-continue-you-agree": "By continue, you agree with our terms.",
     "auth-already-have-account": "Already have account?",
     "username-required": "Username required",
-    "password-required": "Password required"
+    "password-required": "Password required",
+    "username-too-short": "Username too short (Minimum: 4)",
+    "username-not-lowercase": "Username should not container uppercase",
+    "email-required": "Email required",
+    "email-invalid": "Email is invalid",
+    "password-too-short": "Password too short (Minimum: 8)",
+    "password-too-easy": "Password too easy (Minimum 1 number, symbol, uppercase and lowercase)",
+    "password-confirmation-required": "Password confirmation required",
+    "passwords-not-same": "Passwords not the same",
+    "auth-username-lowercase": "In lowercase."
 }

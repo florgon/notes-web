@@ -13,6 +13,7 @@ const NotesListPage = function() {
                     Developer documentation.
                 </p>
                 <p className='text-danger'>Sorry, for now there is no translation for developer documentation...</p>
+                <p className='text-danger'>Documentation is unfinished yet...</p>
                 <p>
                 Website provides free public REST API which you may use for developing own clients or integrations. API is located at "/api/" URL. Almost all methods requires only GET HTTP requests.
                 </p>

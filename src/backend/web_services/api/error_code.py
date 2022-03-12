@@ -6,6 +6,7 @@ class ApiErrorCode(Enum):
     # Auth releated.
     AUTH_REQUIRED = 0, 401
     AUTH_INVALID_CREDENTIALS = 1, 400
+    AUTH_PASSWORDS_NOT_SAME = 2, 400,
 
     # Non existance releated.
     NOTE_NOT_EXISTS = 10, 404

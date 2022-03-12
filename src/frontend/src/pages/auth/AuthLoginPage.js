@@ -126,16 +126,11 @@ const AuthLoginPage = function() {
 
     const loginTryValidate = function(){
         /// @description Returns boolean is login valid or not, and shows popup if not.
-        if (username.length <= 1){
-            openPopup(t("username-required"), "danger");
-            return false;
-        }
+        if (username.length < 1) return openPopup(t("username-required"), "danger") && false;
+        if (username.length < 1) return openPopup(t("password-required"), "danger") && false;
 
-        if (password.length <= 1){
-            openPopup(t("password-required"), "danger");
-            return false;
-        }
-
+        if (username.length < 4) return openPopup(t("username-too-short"), "danger") && false;
+        if (password.length < 8) return openPopup(t("password-too-short"), "danger") && false;
         return true;
     }
 
