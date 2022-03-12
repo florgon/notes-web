@@ -1,123 +1,99 @@
+// Libraries.
 import React from 'react';
 
+// Getting auth token for sending authetnication.
 import {getAuthToken} from '../contexts/AuthContext';
 
+
 // Settings.
-const API_URL = "http://127.0.0.1:8000/api/"
+const API_URL = process.env.REACT_APP_API_URL;
+const API_HTTP_METHOD = "GET";
+const DEFAULT_HEADERS = {
+    "Content-Type": "application/json",
+}
 
 
 function apiRequest(method, params="", onSuccess=undefined, onError=undefined){
+    /// @description Makes request to API method.
     const onErrorHandler = function(error){
+        /// @description Error response handler.
         if (onError) onError(error);
         console.log(`Failed to fetch API "${method}" method via apiRequest because of error: `);
         console.error(error);
     }
 
     const onSuccessHandler = function(result){
+        /// @description Success response handler.
         if (onSuccess) onSuccess(result);
         console.log(`Successfully fetched API "${method}" method via apiRequest!`);
     }
 
-    const onResponseHandler = function(result){
-        if ("success" in result){
-            return onSuccessHandler(result);
-        }
-
-        return onErrorHandler(result);
-    }
-
-    let headers = {
-        "Content-Type": "application/json",
-    }
-
-    let token = getAuthToken();
-    if (token){
-        headers["Authorization"] = "Token " + token;
-    }
-
+    // Requesting API.
     console.log(`Fetching API "${method}" method via apiRequest...`);
-    fetch(API_URL + method + "?" + params, {
-        method: "GET",
-        headers: headers
-    }).then(response => {
-        response.json().then(onResponseHandler).catch(onErrorHandler)
-    }).catch(onErrorHandler)
+    apiRequestWrapper(method, params, onSuccessHandler, onErrorHandler);
 }
 
 class ApiComponent extends React.Component{
+    /// @description API Component. Fetches API on mounting and returning response. All render stuff should be in render_body().
     constructor(props){
         super(props);
+        
+        // State.
         this.state = {
-            isLoaded: false, 
-            error: null, 
-            result: null
+            isLoading: false, 
+            error: null, result: null,
         };
   
-        this.onError = this.onError.bind(this);
-        this.onSuccess = this.onSuccess.bind(this);
-        this.onResponse = this.onResponse.bind(this);
+        // Binding.
+        this.onErrorHandler = this.onErrorHandler.bind(this);
+        this.onSuccessHandler = this.onSuccessHandler.bind(this);
+        this.getErrorMessage = this.getErrorMessage.bind(this);
     }
   
-    onError(error){
+    getErrorMessage(error){
+        /// @description Returns error message for error.
+        return "error" in error ? error.message : this.props.t("error-unknown");
+    }
+
+    onErrorHandler(error){
+        /// @description Error response handler.
         console.log(`Failed to fetch API "${this.method}" method via ApiComponent because of error: `);
         console.error(error);
     
-        const message = "error" in error ? error.message : this.props.t("error-unknown");
         this.setState({
-            isLoaded: true, 
-            error: message,
-            result: null,
+            isLoading: true, result: null,
+            error: this.getErrorMessage(error),
         });
     }
 
-    onSuccess(result){
+    onSuccessHandler(result){
+        /// @description Success response handler.
         console.log(`Successfully fetched API "${this.method}" method via ApiComponent!`);
-  
         this.setState({
-            isLoaded: true, 
-            error: null,
+            isLoading: true, error: null,
             result: result.success
         });
     }
 
-    onResponse(result){
-        if ("success" in result){
-            return this.onSuccess(result);
-        }
-
-        return this.onError(result);
-    }
-  
     componentDidMount(){
+        /// @description Requesting API when mounting.
         console.log(`Fetching API "${this.method}" method via ApiComponent...`);
-    
-        let headers = {
-            "Content-Type": "application/json",
-        }
-
-        let token = getAuthToken();
-        if (token){
-            headers["Authorization"] = "Token " + token;
-        }
-
-        fetch(API_URL + this.method, {
-            method: "GET",
-            headers: headers
-        }).then(response => {
-            response.json().then(this.onResponse).catch(this.onError)
-        }).catch(this.onError)
+        apiRequestWrapper(this.method, "", this.onSuccessHandler, this.onErrorHandler);
     }
 
-    render_body(result, message){}
+    render_body(result, message){
+        /// @description Decorated under render() wrapper. Inherited components should do stuff here, not in render().
+    }
+
     render(){
-        const { error, isLoaded, result } = this.state;
+        const { error, isLoading, result } = this.state;
   
         let message = this.empty_message;
   
         if (error){
             message = Object.create(this.error_message);
             message.text += error;
-        }else if (!isLoaded){
+        }else if (!isLoading){
             message = this.loading_message;
         }
 
@@ -125,5 +101,47 @@ class ApiComponent extends React.Component{
     }
 }
 
-export {apiRequest};
-export default ApiComponent;
+
+// Private.
+
+function getHeaders(){
+    /// @description Returns headers object for request.
+    let headers = DEFAULT_HEADERS;
+
+    let authToken = getAuthToken();
+    if (authToken){
+        headers["Authorization"] = "Token " + authToken;
+    }
+
+    return headers;
+}
+
+function buildRequestURL(apiMethod, apiParams=""){
+    /// @description Returns ready request URL for API.
+    return API_URL + apiMethod + "?" + apiParams;
+}
+
+function apiFetch(apiMethod, apiParams=""){
+    /// @description Returns fetch for API.
+    return fetch(buildRequestURL(apiMethod, apiParams), {
+        method: API_HTTP_METHOD,
+        headers: getHeaders()
+    })
+}
+
+function apiRequestWrapper(apiMethod, apiParams, successHandler, errorHandler){
+    /// @description Makes API request with given handlers.
+    apiFetch(apiMethod, apiParams).then(response => {
+        // We got 200 OK.
+        response.json().then(((response) => {
+            // We got valid JSON.
+            if ("success" in response) return successHandler(response);
+            return errorHandler(response);
+        })).catch(errorHandler)
+    }).catch(errorHandler);
+}
+
+export {
+    apiRequest,
+    ApiComponent,
+};

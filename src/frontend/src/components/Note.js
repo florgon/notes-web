@@ -1,5 +1,8 @@
+/// WIP. Not refactored.
+
 import React, {Fragment} from 'react';
 import { useTranslation } from 'react-i18next';
+
 
 const Note = function ({onDeleteNote, id, text, created_at, updated_at}){
   const {t} = useTranslation();

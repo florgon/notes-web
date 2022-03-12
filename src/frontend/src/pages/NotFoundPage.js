@@ -1,13 +1,16 @@
+// Libraries.
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
-const NotFoundPage = function(props) {
+const NotFoundPage = function() {
+    /// @description Page with 404 not found error.
     const {t} = useTranslation();
 
+    document.title = t("page-title-not-found");
     return (
-        <div className="__not__found__page text-center">
-            <p className="__error__text display-1 text-danger">{t("page-not-found-header")}</p>
-            <p className="__error__description display-3 text-black">{t("page-not-found-description")}</p>
+        <div className="text-center">
+            <p className="display-1 text-danger">{t("page-not-found-header")}</p>
+            <p className="display-3 text-black">{t("page-not-found-description")}</p>
         </div>
     )
 }

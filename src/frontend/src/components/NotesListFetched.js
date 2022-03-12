@@ -1,6 +1,7 @@
+/// WIP. Not refactored.
 import React from 'react';
 import NotesList from './NotesList';
-import ApiComponent, {apiRequest} from './Api';
+import {apiRequest, ApiComponent} from './Api';
 import {withTranslation} from 'react-i18next';
 
 class NotesListFetched extends ApiComponent{

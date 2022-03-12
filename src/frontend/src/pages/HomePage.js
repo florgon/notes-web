@@ -1,30 +1,40 @@
-import React from 'react';
+// Libraries.
+import React, {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Dropdown} from 'react-bootstrap'
-import i18next from 'i18next';
+import {Link} from 'react-router-dom'
+
+// Checking if user is authenticated.
 import {useAuth} from '../contexts/AuthContext';
 
-const LanguageDropdown = function(){
-    const {t} = useTranslation();
-    return (
-        <Dropdown>
-            <Dropdown.Toggle size="lg" variant="outline-primary">
-                {t("change-language")}
-            </Dropdown.Toggle>
+// Components.
+import LanguageDropdown from '../components/LanguageDropdown';
 
-            <Dropdown.Menu>
-                <Dropdown.Item onClick={() => i18next.changeLanguage("en")}>{t("language-en")}</Dropdown.Item>
-                <Dropdown.Item onClick={() => i18next.changeLanguage("ru")}>{t("language-ru")}</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
+const AuthenticatedButtons = function({t}){
+    /// @description Home page buttons when user is authenticated.
+    return (
+        <div className="col-auto mb-2">
+            <Link className="btn btn-lg btn-outline-primary" to="/list">{t("my-notes")}</Link>
+        </div>
     )
 }
 
-const HomePage = function(props) {
+const NotAuthenticatedButtons = function ({t}){
+    /// @description Home page buttons when user is not authenticated.
+    return (
+        <div className="col-auto mb-2">
+            <Link className="btn btn-lg btn-outline-primary" to="/auth">{t("authorize")}</Link>
+        </div>
+    )
+}
+
+const HomePage = function() {
+    /// @description Home root page.
     const {t} = useTranslation();
     const {isAuthenticated} = useAuth();
+
+    document.title = t("page-title-home");
     return (
-        <div className="__home__page">
+        <Fragment>
             <div className="__description w-75 mx-auto text-center">
                 <p className="display-2 mb-5">{t("welcome-there")}</p>
                 <p className="display-6 mb-5">{t("website-desription")}</p>
@@ -32,21 +42,14 @@ const HomePage = function(props) {
             </div>
 
             <div className="row text-center justify-content-center">
-                {isAuthenticated &&
-                    <div className="col-auto mb-2">
-                        <a className="btn btn-lg btn-outline-primary" href="/list">{t("my-notes")}</a>
-                    </div>
-                }
-                {!isAuthenticated &&
-                    <div className="col-auto mb-2">
-                        <a className="btn btn-lg btn-outline-primary" href="/auth">Авторизоваться</a>
-                    </div>
-                }
+                {isAuthenticated && <AuthenticatedButtons t={t}/>}
+                {!isAuthenticated && <NotAuthenticatedButtons t={t}/>}
+
                 <div className="col-auto">
-                    <LanguageDropdown/>
+                    <LanguageDropdown t={t}/>
                 </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
 

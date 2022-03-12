@@ -1,3 +1,6 @@
+/// WIP. Not refactored.
+
+
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Navigate} from 'react-router-dom';
@@ -17,6 +20,7 @@ const AuthSignupPage = function() {
         return (<Navigate to="/list"/>)
     }
 
+    document.title = t("page-title-auth-signup");
     return (
         <div className="__auth__signup__page">
             {isLoading && <div className='display-6 text-muted text-center'>{t("loading")}</div>}

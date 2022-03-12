@@ -2,50 +2,51 @@
     "brand": "Заметки",
     "author-name": "Кирилл Жосул",
     "author-name-by": "Кириллом Жосулом",
-
     "welcome-there": "Добро пожаловать!",
     "website-desription": "Это сайт для заметок. Сайт позволяет создавать приватные заметки и работать с ними.",
     "website-is-free": "Сайт абсолютно бесплатен для всех",
-    
     "home-page": "Главная",
     "new-note": "Новая заметка",
     "my-notes": "Мои заметки",
     "api": "API",
-
     "log-in": "Войти",
     "sign-up": "Зарегистрироваться",
     "log-out": "Выйти",
-
     "built-with-love": "Сделано с ❤️ ",
     "source-code": "Исходный код на GitHub",
     "for-developers": "Разработчикам",
-
+    "authorize": "Авторизоваться",
     "authorize-to-continue": "Авторизуйтесь для продолжения",
     "i-already-registered": "У меня уже есть аккаунт",
     "i-not-already-registered": "Нет, создать новый аккаунт",
-
     "change-language": "Язык",
     "language-ru": "Русский",
     "language-en": "English",
-
     "note-id": "Заметка #",
     "note-created-at": "Создана ",
     "note-updated-at": "Обновлена ",
     "note-not-changed": "Не изменялась",
-    
     "note-deleted": "Заметка успешно удалена!",
     "delete-note": "Удалить",
-
     "your-notes": "Ваши заметки",
     "only-you-see-those-notes": "(Эти заметки видны только вам!)",
-
     "error-occured": "Ошибка: ",
     "notes-empty": "У вас ещё нет заметок!",
     "loading": "Загрузка...", 
-
     "error-unknown": "Неизвестная ошибка!",
     "or": "или",
-
     "page-not-found-header": "Страница не найдена!",
-    "page-not-found-description": "Страница которую вы ищите не найдена."
+    "page-not-found-description": "Страница которую вы ищите не найдена.",
+    "page-title-not-found": "Страница не найдена!",
+    "page-title-notes-list": "Ваши заметки",
+    "page-title-home": "Главная",
+    "page-title-dev-docs": "Разработчикам",
+    "page-title-auth-login": "Вход",
+    "page-title-auth-signup": "Регистрация",
+    "page-title-auth": "Авторизация",
+    "auth-field-password": "Ваш пароль",
+    "auth-field-username": "Имя пользователя",
+    "auth-enter-password": "Введите пароль",
+    "auth-enter-username": "Введите имя пользователя",
+    "auth-not-already-have-account": "Ещё нет аккаунта?"
 }

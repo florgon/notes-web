@@ -1,37 +1,35 @@
+// Libraries.
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Navigate} from 'react-router-dom';
-import {useAuth} from '../../contexts/AuthContext';
+import {Link} from 'react-router-dom';
+
+// Dissalowing already authenticated for auth page.
+import DissalowAuth from '../../components/DissalowAuth'
 
 const AuthPage = function() {
+    /// @description Auth page.
     const {t} = useTranslation();
-    const {isAuthenticated} = useAuth();
 
-    if (isAuthenticated){
-        return (<Navigate to="/list"/>)
-    }
-
+    document.title = t("page-title-auth");
     return (
-        <div className="__auth__page">
-            <div className="text-center">
-                <p className="display-1">
-                    {t("authorize-to-continue")}
+        <div className="text-center">
+            <DissalowAuth/>
+            <p className="display-1">
+                {t("authorize-to-continue")}
+            </p>
+            <div>
+                <p>
+                    <Link className="btn btn-primary btn-lg" to="/auth/login">
+                        {t("i-already-registered")}
+                    </Link>
                 </p>
-                <div>
-                    <p>
-                        <a className="btn btn-primary btn-lg" href="/auth/login">
-                            {t("i-already-registered")}
-                        </a>
-                    </p>
-                    <p>
-                        {t("or")}
-                    </p>
-                    <p>
-                        <a className="btn btn-primary btn-lg" href="/auth/signup">
-                            {t("i-not-already-registered")}
-                        </a>
-                    </p>
-                </div>
+                <p>{t("or")}</p>
+                <p>
+
+                    <Link className="btn btn-primary btn-lg" to="/auth/signup">
+                        {t("i-not-already-registered")}
+                    </Link>
+                </p>
             </div>
         </div>
     )

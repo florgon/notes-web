@@ -1,6 +1,6 @@
 {
-  "short_name": "Notes App",
-  "name": "Take notes",
+  "short_name": "Notes",
+  "name": "Notes",
   "icons": [
     {
       "src": "favicon.ico",

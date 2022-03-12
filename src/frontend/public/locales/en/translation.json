@@ -2,50 +2,51 @@
     "brand": "Notes",
     "author-name": "Kirill Zhosul",
     "author-name-by": "Kirill Zhosul",
-
     "welcome-there": "Welcome, there!",
     "website-desription": "This is notes taking website, that allows you to create private notes and work with them.",
     "website-is-free": "Website is absolutely free for all",
-    
     "home-page": "Home",
     "new-note": "New note",
     "my-notes": "My notes",
     "api": "API",
-
     "log-in": "Log in",
     "sign-up": "Sign in",
     "log-out": "Log out",
-
     "built-with-love": "Built with ❤️ by ",
     "source-code": "Source code at GitHub",
     "for-developers": "For developers",
-
+    "authorize": "Authorize",
     "authorize-to-continue": "Authorize to continue",
     "i-already-registered": "I already have account",
     "i-not-already-registered": "No, create new account",
-
     "change-language": "Language",
     "language-ru": "Русский",
     "language-en": "English",
-
     "note-id": "Note #",
     "note-created-at": "Created at ",
     "note-updated-at": "Updated at ",
     "note-not-changed": "Was not changed",
-
     "note-deleted": "Note successfully deleted!",
     "delete-note": "Delete",
-
     "your-notes": "Your notes",
     "only-you-see-those-notes": "(Only you see those notes!)",
-
     "error-occured": "Error: ",
     "notes-empty": "No notes yet!",
     "loading": "Loading...", 
-
     "error-unknown": "Unknown error!",
     "or": "or",
-    
     "page-not-found-header": "Page not found!",
-    "page-not-found-description": "Page you looking for does not exists."
+    "page-not-found-description": "Page you looking for does not exists.",
+    "page-title-not-found": "Page not found!",
+    "page-title-notes-list": "Your notes",
+    "page-title-home": "Home",
+    "page-title-dev-docs": "For developers",
+    "page-title-auth-login": "Login",
+    "page-title-auth-signup": "Signup",
+    "page-title-auth": "Authorize",
+    "auth-field-password": "Your password",
+    "auth-field-username": "Username",
+    "auth-enter-password": "Enter password",
+    "auth-enter-username": "Enter username",
+    "auth-not-already-have-account": "No account?"
 }
