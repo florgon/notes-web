@@ -10,7 +10,7 @@
     "my-notes": "My notes",
     "api": "API",
     "log-in": "Log in",
-    "sign-up": "Sign in",
+    "sign-up": "Sign up",
     "log-out": "Log out",
     "built-with-love": "Built with ❤️ by ",
     "source-code": "Source code at GitHub",
@@ -45,8 +45,18 @@
     "page-title-auth-signup": "Signup",
     "page-title-auth": "Authorize",
     "auth-field-password": "Your password",
+    "auth-field-email": "Email address",
     "auth-field-username": "Username",
+    "auth-field-password-confirmation": "Password",
+    "auth-enter-password-confirmation": "Enter password again",
+    "auth-enter-password-confirmation-help": "Repeat your password",
     "auth-enter-password": "Enter password",
     "auth-enter-username": "Enter username",
+    "auth-enter-email": "Enter email",
     "auth-not-already-have-account": "No account?"
+    "auth-email-is-not-leaked": "We are not exposing your email elsewhere!",
+    "auth-by-continue-you-agree": "By continue, you agree with our terms.",
+    "auth-already-have-account": "Already have account?",
+    "username-required": "Username required",
+    "password-required": "Password required"
 }
