@@ -1,6 +1,11 @@
+/// WIP. Not refactored.
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 const NotesListPage = function() {
+    const {t} = useTranslation();
+
+    document.title = t("page-title-dev-docs");
     return (
         <div className="__notes__list__page">
             <div className="text-center">
