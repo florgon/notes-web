@@ -8,7 +8,7 @@ Project uses Python (Django, REST) + React (Boostrap, Router, i18next) + Docker 
 This is test task for *SimbirSoft* (Web/Backend).
 
 ## API Methods.
-See `docs/API_METHODS.md` or `/dev/docs` page.
+See [docs/API_METHODS.md](/docs/API_METHODS.md) or `/dev/docs` page.
 
 # Specification.
 See [docs/SPECIFICATION.md](/docs/SPECIFICATION.md).
