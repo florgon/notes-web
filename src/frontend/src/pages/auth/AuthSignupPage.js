@@ -146,17 +146,19 @@ const AuthSignupPage = function() {
                     <p className="display-1">
                         {t("sign-up")}
                     </p>
-                    <div className='mt-5 w-25 mx-auto'>
-                        <div className="text-center">
-                            {alertPopup.open &&
-                                <Alert text={alertPopup.text} type={alertPopup.type}/>
-                            }
+                    <div className='mt-5 row'>
+                        <div className="col-lg-3 col-sm-9 col-md-6 mx-auto">
+                            <div className="text-center">
+                                {alertPopup.open &&
+                                    <Alert text={alertPopup.text} type={alertPopup.type}/>
+                                }
+                            </div>
+                            <AuthSignupForm signupHandler={signupWrapper} t={t} 
+                                username={username} email={email} password={password} passwordConfirmation={passwordConfirmation}
+                                setUsername={usernameValidator} setEmail={setEmail} setPassword={setPassword} 
+                                setPasswordConfirmation={setPasswordConfirmation}
+                            />
                         </div>
-                        <AuthSignupForm signupHandler={signupWrapper} t={t} 
-                            username={username} email={email} password={password} passwordConfirmation={passwordConfirmation}
-                            setUsername={usernameValidator} setEmail={setEmail} setPassword={setPassword} 
-                            setPasswordConfirmation={setPasswordConfirmation}
-                        />
                     </div>
                 </div>
             }

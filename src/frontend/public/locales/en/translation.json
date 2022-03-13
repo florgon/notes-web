@@ -68,7 +68,7 @@
     "password-confirmation-required": "Password confirmation required",
     "passwords-not-same": "Passwords not the same",
     "auth-username-lowercase": "In lowercase.",
-    "new-note-text": "Fresh new note",
+    "new-note-text": "# Fresh new note",
     "note-created": "New note successfully created!",
     "edit-note": "Edit",
     "save-note": "Save",

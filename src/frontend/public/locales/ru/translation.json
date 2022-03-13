@@ -68,7 +68,7 @@
     "password-confirmation-required": "Введите подтверждение пароля",
     "passwords-not-same": "Пароли не совпадают",
     "auth-username-lowercase": "В нижнем регистре.",
-    "new-note-text": "Свежайшая заметка",
+    "new-note-text": "# Свежайшая заметка",
     "note-created": "Новая заметка успешно создана!",
     "edit-note": "Редактировать",
     "save-note": "Сохранить",
