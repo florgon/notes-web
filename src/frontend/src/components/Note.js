@@ -1,12 +1,15 @@
 // Libraries.
+import { t } from 'i18next';
 import React, {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 const NoteFooter = function({id, text, defaultText, t, isEditing, startEdit, saveEdit, cancelEdit, onDeleteNote}){
   /// @description Note footer with buttons.
 
   // May note be saved or not?
-  const noteMaySaved = (text.length > 0 && text != defaultText);
+  const noteMaySaved = (text.length > 0 && text !== defaultText);
 
   return (
     <div className="card-footer">
@@ -48,8 +51,11 @@ const NoteBody = function({isEditing, text, setText}){
   /// @description Body of the not with text.
   return (
     <div className="card-body">
-      {!isEditing && <span className="display-6">{text}</span>}
-      {isEditing &&  <textarea value={text} className="form-control" onChange={(e) => {setText(e.target.value)}}/>}
+      {!isEditing && <ReactMarkdown children={text} remarkPlugins={[remarkGfm]}/>}
+      {isEditing && <Fragment>
+        <small className="text-muted">{t("markdown-supported")}</small>
+        <textarea value={text} className="form-control mt-2" onChange={(e) => {setText(e.target.value)}}/>
+      </Fragment>}
     </div>
   )
 }

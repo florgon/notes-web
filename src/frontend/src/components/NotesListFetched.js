@@ -37,7 +37,11 @@ class NotesListFetched extends ApiComponent{
 
         const onSaveNote = function (id, text){
             /// @description Note save handler. Saves note text on server side with API.
-            apiRequest("notes/edit", "id=" + id + "&text=" + text, () => {
+            let params = new URLSearchParams();
+            params.set("id", id);
+            params.set("text", text);
+
+            apiRequest("notes/edit", params.toString(), () => {
                 this.fetchAgain();
             });
         }.bind(this);
