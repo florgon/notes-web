@@ -18,11 +18,11 @@ const CreateNotePage = function() {
     useEffect(() => {
         let params = new URLSearchParams();
         params.set("text", t("new-note-text"));
-        
+
         apiRequest("notes/create", params.toString(), () => {
             navivate("/list/#new-note");
         }, () => {
-            navivate("/list/#new-note");
+            navivate("/list/");
         });
     });
 

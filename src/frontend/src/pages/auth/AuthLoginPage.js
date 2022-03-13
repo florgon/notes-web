@@ -160,17 +160,19 @@ const AuthLoginPage = function() {
                         {t("log-in")}
                     </p>
                     <hr className="w-25 mx-auto"/>
-                    <div className='mt-5 w-25 mx-auto'>
-                        <div className="text-center">
-                            {alertPopup.open &&
-                                <Alert text={alertPopup.text} type={alertPopup.type}/>
-                            }
+                    <div className='mt-5 row'>
+                        <div className="col-lg-3 col-sm-8 col-md-6 mx-auto">
+                            <div className="text-center">
+                                {alertPopup.open &&
+                                    <Alert text={alertPopup.text} type={alertPopup.type}/>
+                                }
+                            </div>
+                            <AuthLoginForm loginHandler={loginWrapper} 
+                                password={password} setPassword={setPassword} 
+                                username={username} setUsername={setUsername}
+                                t={t}
+                            />
                         </div>
-                        <AuthLoginForm loginHandler={loginWrapper} 
-                            password={password} setPassword={setPassword} 
-                            username={username} setUsername={setUsername}
-                            t={t}
-                        />
                     </div>
                 </div>
             }
