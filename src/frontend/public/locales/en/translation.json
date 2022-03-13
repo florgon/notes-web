@@ -73,5 +73,6 @@
     "edit-note": "Edit",
     "save-note": "Save",
     "cancel-note-edit": "Cancel",
-    "note-saved": "Note successfully saved!"
+    "note-saved": "Note successfully saved!",
+    "markdown-supported": "Notice: you may use Markdown inside notes!"
 }

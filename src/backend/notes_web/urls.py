@@ -7,6 +7,7 @@ from . import views
 handler404 = views.error_handlers.handler404
 handler500 = views.error_handlers.handler500
 
+
 urlpatterns = [
     path('api/', views.routes.get_routes_api),
     path('', views.routes.get_routes),

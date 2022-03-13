@@ -25,7 +25,7 @@ const NavbarButtons = function({t, isAuthenticated}){
                 <Nav navbarScroll>
                     <Link to="/" className="nav-link">{t("home-page")}</Link>
                     <Link to="/list" className="nav-link">{t("my-notes")}</Link>
-                    {location.pathname != "/list" && location.pathname != "/list/" && <Link to="/create" className="nav-link">{t("new-note")}</Link>}
+                    {location.pathname !== "/list" && location.pathname !== "/list/" && <Link to="/create" className="nav-link">{t("new-note")}</Link>}
                     <Link to="/auth/logout" className="nav-link">{t("log-out")}</Link>
                 </Nav>
             }
