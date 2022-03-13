@@ -1,53 +1,43 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
 
+from web_services.api.error_code import ApiErrorCode
+from web_services import crud
 from web_services.api.response import (
     api_success, api_error
 )
-from web_services.utils import validate_email
-from web_services.api.error_code import ApiErrorCode
+from web_services.utils import (
+    validate_email, validate_request
+)
 
-@api_view(["GET"])
-def get_routes(_):
-    """Returns list of all routes releated to this API."""
-    routes = [
-        "/token/",
-        "/signup",
-    ]
-    return api_success({"methods": {"api": {"auth": routes}}})
-
-@api_view(["GET"])
-def get_routes_token(_):
-    """Returns list of all routes releated to this API for token."""
-    routes = [
-        "/get", "/resolve"
-    ]
-    return api_success({"methods": {"api": {"auth": {"token": routes}}}})
 
 @api_view(["GET"])
 def sign_up(request):
     """Register new account for user. """
-    username = request.GET.get("username", "")
-    email = request.GET.get("email", "")
-    password = request.GET.get("password", "")
-    password_confirmation = request.GET.get("password_confirmation", "")
 
-    if not username:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`username` field is required!", {"field": "username"})
+    # Validate request.
+    is_valid, fields_or_error = validate_request(request, fields=["username", "email", "password", "password_confirmation"], auth_required=False)
+    if not is_valid:
+        return fields_or_error
+    username, email, password, password_confirmation  = fields_or_error
+
+    # Validate username.
     if len(username) < 4:
         return api_error(ApiErrorCode.API_FIELD_INVALID, "`username` field has invalid format, too short!", {"field": "username"})
     if username != username.lower():
         return api_error(ApiErrorCode.API_FIELD_INVALID, "`username` field has invalid format, only lowercase!", {"field": "username"})
+    if crud.user.user_username_taken(username):
+        return api_error(ApiErrorCode.AUTH_USERNAME_TAKEN, "Given username is already taken!")
 
-    if not email:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`email` field is required!", {"field": "email"})
+    # Validate email.
     if not validate_email(email):
         return api_error(ApiErrorCode.API_FIELD_INVALID, f"`email` field has invalid format, email invalid! {email}", {"field": "email"})
+    if crud.user.user_email_taken(email):
+        return api_error(ApiErrorCode.AUTH_EMAIL_TAKEN, "Given email is already taken!")
 
-    if not password:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`password` field is required!", {"field": "password"})
+    # Validate password.
     if not password_confirmation:
         return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`password_confirmation` field is required!", {"field": "password_confirmation"})
     if password != password_confirmation:
@@ -55,8 +45,13 @@ def sign_up(request):
     if len(password) < 8:
         return api_error(ApiErrorCode.API_FIELD_INVALID, "`password` field has invalid format, too short!", {"field": "password"})
 
+    # Create new user.
     user = User.objects.create_user(username, email, password)
+
+    # Query fresh new token.
     token, is_new = Token.objects.get_or_create(user=user)
+    
+    # Returning user index and token to login immediatly.
     return api_success({
         "token": {
             "key": token.key,
@@ -69,45 +64,55 @@ def sign_up(request):
 @api_view(["GET"])
 def resolve_auth_token(request):
     """Returns information about token (user, actually). Resolving token. """
-    key = request.GET.get("token", "")
-    if not key:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`token` field is required!", {"field": "token"})
 
-    try:  # This is bad, should move away later.
-        token = Token.objects.select_related('user').get(key=key)
-    except Token.DoesNotExist:
+    # Validate request.
+    is_valid, fields_or_error = validate_request(request, fields=["token"], auth_required=False)
+    if not is_valid:
+        return fields_or_error
+    key,  = fields_or_error
+
+    # Query token.
+    token = crud.token.get_token_by_key(key)
+    if not token:
         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Token does not exist.")
 
+    # Check that owner of the token is active.
     if not token.user.is_active:
         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Owner of this token is not active or deleted!")
 
-    return api_success({"token": {
-        "key": key,
+    # Returning user with tokne.
+    return api_success({
+        "token": {
+            "key": key,
+        },
         "user": {
             "id": token.user.id,
             "username": token.user.username
         }
-    }})
+    })
+
 
 @api_view(["GET"])
 def get_auth_token(request):
     """Returns authentication token by given username and password pair. Used as auth endpoint. """
-    username = request.GET.get("username", "")
-    if not username:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`username` field is required!", {"field": "username"})
 
-    password = request.GET.get("password", "")
-    if not password:
-        return api_error(ApiErrorCode.API_FIELD_REQUIRED, "`password` field is required!", {"field": "password"})
+    # Validate request.
+    is_valid, fields_or_error = validate_request(request, fields=["username", "password"], auth_required=False)
+    if not is_valid:
+        return fields_or_error
+    username, password = fields_or_error
 
+    # Try authenticate user.
     user = authenticate(request=request, username=username, password=password)
     if not user:
         return  api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Invalid credentials to autheticate!")
 
+    # Try query token.
     token, is_new = Token.objects.get_or_create(user=user)
     if not token:
-         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Failed to created token!")
+         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Failed to create new token!")
 
+    # Returning token.
     return api_success({
         "token": {
             'key': token.key,

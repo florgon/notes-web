@@ -106,16 +106,21 @@ const AuthLoginPage = function() {
         })
     }
     
-    const loginOnSuccess = function(result){
+    const loginOnSuccess = function(raw, result){
         /// @description Handler for login request success.
         setIsLoading(false);
         login(result.success.token.key);
     }
 
-    const loginOnError = function(result){
+    const loginOnError = function(raw, result){
         /// @description Handler for login request error.
         setIsLoading(false);
-        openPopup(result.error.message, "danger");
+        if ("error" in result){
+            openPopup(result.error.message, "danger");
+        }else{
+            openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
+        }
+        
     }
 
     const loginRequest = function(){

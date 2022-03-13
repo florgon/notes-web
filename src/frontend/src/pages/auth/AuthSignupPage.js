@@ -87,17 +87,20 @@ const AuthSignupPage = function() {
         })
     }
 
-    const signUpOnSuccess = function(result){
+    const signUpOnSuccess = function(raw, result){
         /// @description Handler for signup request success.
         setIsLoading(false);
         login(result.success.token.key);
     }
 
-    const signUpOnError = function(result){
+    const signUpOnError = function(raw, result){
         /// @description Handler for signup request error.
         setIsLoading(false);
-        console.log(result);
-        openPopup(result.error.message, "danger");
+        if ("error" in result){
+            openPopup(result.error.message, "danger");
+        }else{
+            openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
+        }
     }
 
     const signupRequest = function(){

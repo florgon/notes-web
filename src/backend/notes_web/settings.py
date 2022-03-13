@@ -1,12 +1,16 @@
 import os
 from pathlib import Path
 
+# NOTICE!
+# See root `/src/docker-compose.yml` for service settings!
+# All stuff should be grabben from there!
+
 # Main.
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = os.environ.get('DEBUG')
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = os.environ.get("DEBUG") or False
 
 # Server.
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', "*").split()
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split()
 USE_X_FORWARDED_HOST = True
 WSGI_APPLICATION = 'notes_web.wsgi.application'
 

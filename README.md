@@ -26,4 +26,4 @@ See [docs/API_METHODS.md](/docs/API_METHODS.md) or `/dev/docs` page.
 ## Previews.
 ![Home page](/previews/home.jpg)
 ![Login page](/previews/login.jpg)
-![Notes list page](/previews/list.png)
+![Notes list page](/previews/list.jpg)
