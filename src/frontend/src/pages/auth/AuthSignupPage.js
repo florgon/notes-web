@@ -2,6 +2,9 @@
 import React, {useState, Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
+import isEmail from 'validator/lib/isEmail';
+import isLowercase from 'validator/lib/isLowercase';
+import isStrongPassword from 'validator/lib/isStrongPassword';
 
 // Auth context for working with auth.
 import {useAuth} from '../../contexts/AuthContext';
@@ -28,6 +31,7 @@ const AuthSignupForm = function({
                 <input autoComplete="on" type="text" className="form-control" placeholder={t("auth-enter-username")} 
                     value={username} onChange={e => setUsername(e.target.value)}
                 />
+                <small className="form-text text-muted">{t("auth-username-lowercase")}</small>
             </div>
             <div className='form-group mt-3 w-75 mx-auto'>
                 <label>{t("auth-field-email")}</label>
@@ -60,7 +64,7 @@ const AuthSignupPage = function() {
     const [isLoading, setIsLoading] = useState(false);
 
     // Popup.
-    const [alertPopup, setAlertPopup] = useState({open: true, text: "Sign-up is not implemented yet!", type: "warning"});
+    const [alertPopup, setAlertPopup] = useState({open: false});
 
     // Form inputs.
     const [username, setUsername] = useState("");
@@ -72,6 +76,9 @@ const AuthSignupPage = function() {
     const {t} = useTranslation();
     const {login} = useAuth();
 
+    const usernameValidator = function(username){
+        return setUsername(username.toLowerCase());
+    }
     const openPopup = function(text, type){
         /// @description Opens popup.
         setAlertPopup({
@@ -80,26 +87,42 @@ const AuthSignupPage = function() {
         })
     }
 
-    const signUpOnSuccess = function(result){
+    const signUpOnSuccess = function(raw, result){
         /// @description Handler for signup request success.
         setIsLoading(false);
         login(result.success.token.key);
     }
 
-    const signUpOnError = function(result){
+    const signUpOnError = function(raw, result){
         /// @description Handler for signup request error.
         setIsLoading(false);
-        openPopup(result.error.message, "danger");
+        if ("error" in result){
+            openPopup(result.error.message, "danger");
+        }else{
+            openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
+        }
     }
 
     const signupRequest = function(){
         /// @description Requests API for signup.
-        let params = "";
+        let params = "username=" + username + "&email=" + email + "&password=" + password + "&password_confirmation=" + passwordConfirmation;
         apiRequest("auth/signup", params, signUpOnSuccess, signUpOnError)
     }
 
     const signupTryValidate = function(){
         /// @description Returns boolean is signup valid or not, and shows popup if not.
+        if (username.length < 1) return openPopup(t("username-required"), "danger") && false;
+        if (username.length < 4) return openPopup(t("username-too-short"), "danger") && false;
+        if (!isLowercase(username)) return openPopup(t("username-not-lowercase"), "danger") && false;
+
+        if (email.length < 1) return openPopup(t("email-required"), "danger") && false;
+        if (!isEmail(email)) return openPopup(t("email-invalid"), "danger") && false;
+
+        if (password.length < 1) return openPopup(t("password-required"), "danger") && false;
+        if (password.length < 8) return openPopup(t("password-too-short"), "danger") && false;
+        if (!isStrongPassword(password)) return openPopup(t("password-too-easy"), "danger") && false;
+        if (passwordConfirmation.length < 1) return openPopup(t("password-confirmation-required"), "danger") && false;
+        if (password !== passwordConfirmation) return openPopup(t("passwords-not-same"), "danger") && false;
         return true;
     }
 
@@ -131,7 +154,7 @@ const AuthSignupPage = function() {
                         </div>
                         <AuthSignupForm signupHandler={signupWrapper} t={t} 
                             username={username} email={email} password={password} passwordConfirmation={passwordConfirmation}
-                            setUsername={setUsername} setEmail={setEmail} setPassword={setPassword} 
+                            setUsername={usernameValidator} setEmail={setEmail} setPassword={setPassword} 
                             setPasswordConfirmation={setPasswordConfirmation}
                         />
                     </div>

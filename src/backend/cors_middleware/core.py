@@ -3,7 +3,7 @@ from django import http
 # https://stackoverflow.com/questions/28046422/django-cors-headers-not-work
 
 # Why use this instead of django-cors-middleware?
-# Module above is not working. So in end with that solution.
+# Module above is not working. So I end with that solution.
 
 class CorsMiddleware(object):
     def __init__(self, get_response):

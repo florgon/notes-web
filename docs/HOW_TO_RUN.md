@@ -1,5 +1,5 @@
 # How to run project.
-Install `Docker-Compose`, then clone this repository, and run all containers via:
+Install `docker-compose`, then clone this repository, and run all containers via:
 ```commandLine
 docker-compose up
 ```
@@ -17,6 +17,7 @@ CREATE DATABASE notes;
 Making migrations:
 ```commandLine
 docker exec -it WEB_CONTAINER_ID /bin/sh
+python manage.py makemigrations *
 python manage.py migrate [CTRL+D]
 ```
 And optionally, create superuser:

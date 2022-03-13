@@ -1,6 +1,7 @@
 from typing import Dict, Optional
 
 from rest_framework.response import Response
+
 from web_services.api.error_code import ApiErrorCode
 from web_services.api.version import API_VERSION
 
@@ -18,6 +19,7 @@ def api_error(api_code: ApiErrorCode, message: str, data: Optional[Dict] = None)
             **data
         }
     }, status=status)
+
 
 def api_success(data: Dict) -> Response:
     """Returns success API response."""

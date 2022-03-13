@@ -7,19 +7,23 @@ Website provides web interface for creating *private* user notes and working wit
 Project uses Python (Django, REST) + React (Boostrap, Router, i18next) + Docker (Compose).
 This is test task for *SimbirSoft* (Web/Backend).
 
-## API Methods.
-See `docs/API_METHODS.md` or `/dev/docs` page.
-
-# Specification.
+## Specification.
 See [docs/SPECIFICATION.md](/docs/SPECIFICATION.md).
 
 ## How to run?
 See [docs/HOW_TO_RUN.md](/docs/HOW_TO_RUN.md) or simply `docker-compose up`.
 
-## Technologies.
+## Deployment production.
+Warning: Not documented yet (Document Nginx + Static serving).
+See [docs/DEPLOYMENT.md](/docs/DEPLOYMENT.md).
+
+### Technologies.
 See [docs/TECHNOLOGIES.md](/docs/TECHNOLOGIES.md).
+
+### API Methods.
+See [docs/API_METHODS.md](/docs/API_METHODS.md) or `/dev/docs` page.
 
 ## Previews.
 ![Home page](/previews/home.jpg)
 ![Login page](/previews/login.jpg)
-![Notes list page](/previews/list.png)
+![Notes list page](/previews/list.jpg)

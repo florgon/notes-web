@@ -58,5 +58,20 @@
     "auth-by-continue-you-agree": "Продолжая, вы соглашаетесь с нашими правилами.",
     "auth-already-have-account": "Уже есть аккаунт?",
     "username-required": "Введите имя пользователя",
-    "password-required": "Введите пароль"
+    "password-required": "Введите пароль",
+    "username-too-short": "Имя пользователя слишком короткое (Минимум: 4)",
+    "username-not-lowercase": "Имя пользователя не может содержать буквы верхнего регистра",
+    "email-required": "Введите почту",
+    "email-invalid": "Адрес электронной почты некорректен",
+    "password-too-short": "Пароль слишком короткий (Минимум: 8)",
+    "password-too-easy": "Пароль слишком простой (Минимум 1 цифра, символ, заглавная и маленькая буква)",
+    "password-confirmation-required": "Введите подтверждение пароля",
+    "passwords-not-same": "Пароли не совпадают",
+    "auth-username-lowercase": "В нижнем регистре.",
+    "new-note-text": "Свежайшая заметка",
+    "note-created": "Новая заметка успешно создана!",
+    "edit-note": "Редактировать",
+    "save-note": "Сохранить",
+    "cancel-note-edit": "Отменить",
+    "note-saved": "Заметка успешно сохранена!"
 }

@@ -15,16 +15,16 @@ const DEFAULT_HEADERS = {
 
 function apiRequest(method, params="", onSuccess=undefined, onError=undefined){
     /// @description Makes request to API method.
-    const onErrorHandler = function(error){
+    const onErrorHandler = function(raw, result){
         /// @description Error response handler.
-        if (onError) onError(error);
+        if (onError) onError(raw, result);
         console.log(`Failed to fetch API "${method}" method via apiRequest because of error: `);
-        console.error(error);
+        console.error(raw);
     }
 
-    const onSuccessHandler = function(result){
+    const onSuccessHandler = function(raw, result){
         /// @description Success response handler.
-        if (onSuccess) onSuccess(result);
+        if (onSuccess) onSuccess(raw, result);
         console.log(`Successfully fetched API "${method}" method via apiRequest!`);
     }
 
@@ -48,25 +48,43 @@ class ApiComponent extends React.Component{
         this.onErrorHandler = this.onErrorHandler.bind(this);
         this.onSuccessHandler = this.onSuccessHandler.bind(this);
         this.getErrorMessage = this.getErrorMessage.bind(this);
+        this.fetchAgain = this.fetchAgain.bind(this);
+        this.fetch = this.fetch.bind(this);
     }
   
-    getErrorMessage(error){
-        /// @description Returns error message for error.
-        return "error" in error ? error.message : this.props.t("error-unknown");
+    fetchAgain(){
+        this.setState({
+            isLoading: false, 
+            error: null, result: null,
+        });
+        this.fetch();
     }
 
-    onErrorHandler(error){
+    getErrorMessage(raw, result){
+        /// @description Returns error message for error.
+
+        let errorText = "";
+        if ("error" in result){
+            errorText = result.error.message;
+        }else{
+            errorText = this.props.t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText;
+        }
+        
+        return errorText;
+    }
+
+    onErrorHandler(raw, result){
         /// @description Error response handler.
         console.log(`Failed to fetch API "${this.method}" method via ApiComponent because of error: `);
-        console.error(error);
+        console.error(result);
     
         this.setState({
             isLoading: true, result: null,
-            error: this.getErrorMessage(error),
+            error: this.getErrorMessage(raw, result),
         });
     }
 
-    onSuccessHandler(result){
+    onSuccessHandler(raw, result){
         /// @description Success response handler.
         console.log(`Successfully fetched API "${this.method}" method via ApiComponent!`);
         this.setState({
@@ -77,6 +95,11 @@ class ApiComponent extends React.Component{
 
     componentDidMount(){
         /// @description Requesting API when mounting.
+        this.fetch();
+    }
+
+    fetch(){
+         /// @description Requesting API with fetch.
         console.log(`Fetching API "${this.method}" method via ApiComponent...`);
         apiRequestWrapper(this.method, "", this.onSuccessHandler, this.onErrorHandler);
     }
@@ -131,13 +154,13 @@ function apiFetch(apiMethod, apiParams=""){
 
 function apiRequestWrapper(apiMethod, apiParams, successHandler, errorHandler){
     /// @description Makes API request with given handlers.
-    apiFetch(apiMethod, apiParams).then(response => {
+    apiFetch(apiMethod, apiParams).then(raw_response => {
         // We got 200 OK.
-        response.json().then(((response) => {
+        raw_response.json().then(((response) => {
             // We got valid JSON.
-            if ("success" in response) return successHandler(response);
-            return errorHandler(response);
-        })).catch(errorHandler)
+            if ("success" in response) return successHandler(raw_response, response);
+            return errorHandler(raw_response, response);
+        })).catch((error) => errorHandler(raw_response, error))
     }).catch(errorHandler);
 }
 

@@ -106,16 +106,21 @@ const AuthLoginPage = function() {
         })
     }
     
-    const loginOnSuccess = function(result){
+    const loginOnSuccess = function(raw, result){
         /// @description Handler for login request success.
         setIsLoading(false);
         login(result.success.token.key);
     }
 
-    const loginOnError = function(result){
+    const loginOnError = function(raw, result){
         /// @description Handler for login request error.
         setIsLoading(false);
-        openPopup(result.error.message, "danger");
+        if ("error" in result){
+            openPopup(result.error.message, "danger");
+        }else{
+            openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
+        }
+        
     }
 
     const loginRequest = function(){
@@ -126,16 +131,11 @@ const AuthLoginPage = function() {
 
     const loginTryValidate = function(){
         /// @description Returns boolean is login valid or not, and shows popup if not.
-        if (username.length <= 1){
-            openPopup(t("username-required"), "danger");
-            return false;
-        }
+        if (username.length < 1) return openPopup(t("username-required"), "danger") && false;
+        if (username.length < 1) return openPopup(t("password-required"), "danger") && false;
 
-        if (password.length <= 1){
-            openPopup(t("password-required"), "danger");
-            return false;
-        }
-
+        if (username.length < 4) return openPopup(t("username-too-short"), "danger") && false;
+        if (password.length < 8) return openPopup(t("password-too-short"), "danger") && false;
         return true;
     }
 
