@@ -1,60 +1,127 @@
-/// WIP. Not refactored.
+// Libraries.
+import React, {Fragment, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
-import React, {Fragment} from 'react';
-import { useTranslation } from 'react-i18next';
+const NoteFooter = function({id, text, defaultText, t, isEditing, startEdit, saveEdit, cancelEdit, onDeleteNote}){
+  /// @description Note footer with buttons.
 
-
-const Note = function ({onDeleteNote, id, text, created_at, updated_at}){
-  const {t} = useTranslation();
-
-  const convertDate = function(timestamp){
-    return new Date(timestamp).toLocaleDateString("en-GB", {
-      "hour": "2-digit",
-      "minute": "2-digit"
-    })
-  }
-
-  const dateIsSame = function(timestamp_a, timestamp_b){
-    /// Date is same when difference in minutes is less than 1.
-    let diff = (new Date(timestamp_a).getTime() - new Date(timestamp_b).getTime()) / 60000;
-    return Math.abs(diff) < 1
-  }
+  // May note be saved or not?
+  const noteMaySaved = (text.length > 0 && text != defaultText);
 
   return (
-    <div className="__note__ card shadow">
-      <div className="card-header">
-        <div className="__note__id display-6 text-center">
-          {t("note-id")}{id} 
-        </div>
-        <div className="__note__created__at__ col text-muted text-center">
-          {t("note-created-at")}{convertDate(created_at)}
-        </div>
-        
-        <div className="__note__modified__at__ col text-muted text-center">
-          {dateIsSame(created_at, updated_at) && 
-            <Fragment>{t("note-not-changed")}</Fragment>
-          }
-          {!dateIsSame(created_at, updated_at) &&
-            <Fragment>{t("note-updated-at")}{convertDate(updated_at)}</Fragment>
-          }
-        </div>
-      </div>
-      <div className="card-body">
-        <div className="__note__text__ display-6">
-          {text}
-        </div>
-      </div>
-      <div className="card-footer">
-      <div className="row">
-          <div className="col">
-          <button className="btn btn-danger" onClick={(e) => {
-                onDeleteNote(id, e);
-              }}>{t("delete-note")}
-          </button></div>
-        </div>
+    <div className="card-footer">
+      {!isEditing && <Fragment>
+        <button className="btn btn-danger" onClick={()=>{onDeleteNote(id)}}>{t("delete-note")}</button>
+        &nbsp;
+        <button className="btn btn-secondary" onClick={startEdit}>{t("edit-note")}</button>
+      </Fragment>}
+
+      {isEditing && <Fragment>
+        {!noteMaySaved && <button className="btn btn-primary" disabled>{t("save-note")}</button>}
+        {noteMaySaved && <button className="btn btn-primary" onClick={saveEdit}>{t("save-note")}</button>}
+        &nbsp;
+        <button className="btn btn-warning" onClick={cancelEdit}>{t("cancel-note-edit")}</button>
+      </Fragment>}
+    </div>
+  )
+}
+
+const NoteHeader = function({id, createdAt, updatedAt, t}){
+  /// @description Note header with note information.
+
+  // Is note changed?
+  const wasChanged = !dateIsSame(createdAt, updatedAt);
+
+  return (
+    <div className="card-header">
+      <div className="display-6 text-center">{t("note-id")}{id} </div>
+      <div className="col text-muted text-center">{t("note-created-at")}{convertDate(createdAt)}</div>
+      <div className="col text-muted text-center">
+        {!wasChanged && <Fragment>{t("note-not-changed")}</Fragment>}
+        {wasChanged && <Fragment>{t("note-updated-at")}{convertDate(updatedAt)}</Fragment>}
       </div>
     </div>
   )
+}
+
+const NoteBody = function({isEditing, text, setText}){
+  /// @description Body of the not with text.
+  return (
+    <div className="card-body">
+      {!isEditing && <span className="display-6">{text}</span>}
+      {isEditing &&  <textarea value={text} className="form-control" onChange={(e) => {setText(e.target.value)}}/>}
+    </div>
+  )
+}
+
+const Note = function ({onDeleteNote, onSaveNote, id, currentText, createdAt, updatedAt}){
+  /// @description Note block component.
+
+  // Usings.
+  const {t} = useTranslation();
+
+  // States.
+  const [text, setText] = useState(currentText); // Currenty displayed text.
+  const [defaultText, setDefaultText] = useState(currentText); // Default text for canceling editing.
+  const [isEditing, setIsEditing] = useState(false); // Is note currently edited by user?
+
+  const startEdit = function(){
+    /// @description Note start editing.
+    setIsEditing(true);
+  }
+
+  const saveEdit = function(){
+    /// @decription Note save edit changes.
+    setIsEditing(false);
+
+    if (text.length === 0){
+      // Dissalow to save empty note and raise resetting to default text.
+      return false && setText(defaultText);
+    }
+
+    if (text === defaultText){
+      // Not required to save not changed note.
+      return false;
+    }
+
+    // Save note.
+    onSaveNote(id, text);
+    setDefaultText(text);
+  }
+
+  const cancelEdit = function(){
+    /// @description Note cancel edit changes.
+    setIsEditing(false);
+    setText(defaultText);
+  }
+  
+  return (
+    <div className="card shadow">
+      <NoteHeader id={id} t={t}
+        createdAt={createdAt} updatedAt={updatedAt}/>
+      <NoteBody 
+        isEditing={isEditing} text={text} defaultText={defaultText}
+        setText={setText}/>
+      <NoteFooter id={id} t={t} text={text} defaultText={defaultText}
+        isEditing={isEditing} 
+        onDeleteNote={onDeleteNote} startEdit={startEdit} saveEdit={saveEdit} cancelEdit={cancelEdit}
+      />
+    </div>
+  )
+}
+
+const convertDate = function(timestamp){
+  /// @description Converts date to human string.
+  return new Date(timestamp).toLocaleDateString("en-GB", {
+    "hour": "2-digit",
+    "minute": "2-digit"
+  })
+}
+
+const dateIsSame = (timestampA, timestampB) => {
+  /// @description Date is same when difference in minutes is less than 0.1.
+  let difference = (new Date(timestampA).getTime() - new Date(timestampB).getTime()) / 1000;
+  return Math.abs(difference) < 1
 }
 
 export default Note;

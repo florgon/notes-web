@@ -2,7 +2,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Navbar as BootstrapNavbar, Nav} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 // Auth context for checking is user authenticated.
 import {useAuth} from '../contexts/AuthContext';
@@ -18,13 +18,14 @@ const NavbarBrand = function({t}){
 
 const NavbarButtons = function({t, isAuthenticated}){
     /// @description Buttons for navbar.
+    const location = useLocation();
     return (
         <BootstrapNavbar.Collapse id="navbarScroll">
             {isAuthenticated &&
                 <Nav navbarScroll>
                     <Link to="/" className="nav-link">{t("home-page")}</Link>
                     <Link to="/list" className="nav-link">{t("my-notes")}</Link>
-                    <Link to="/create" className="nav-link">{t("new-note")}</Link>
+                    {location.pathname != "/list" && location.pathname != "/list/" && <Link to="/create" className="nav-link">{t("new-note")}</Link>}
                     <Link to="/auth/logout" className="nav-link">{t("log-out")}</Link>
                 </Nav>
             }

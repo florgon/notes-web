@@ -69,5 +69,9 @@
     "passwords-not-same": "Passwords not the same",
     "auth-username-lowercase": "In lowercase.",
     "new-note-text": "Fresh new note",
-    "note-created": "New note successfully created!"
+    "note-created": "New note successfully created!",
+    "edit-note": "Edit",
+    "save-note": "Save",
+    "cancel-note-edit": "Cancel",
+    "note-saved": "Note successfully saved!"
 }

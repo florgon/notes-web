@@ -48,8 +48,18 @@ class ApiComponent extends React.Component{
         this.onErrorHandler = this.onErrorHandler.bind(this);
         this.onSuccessHandler = this.onSuccessHandler.bind(this);
         this.getErrorMessage = this.getErrorMessage.bind(this);
+        this.fetchAgain = this.fetchAgain.bind(this);
+        this.fetch = this.fetch.bind(this);
     }
   
+    fetchAgain(){
+        this.setState({
+            isLoading: false, 
+            error: null, result: null,
+        });
+        this.fetch();
+    }
+
     getErrorMessage(error){
         /// @description Returns error message for error.
         return "error" in error ? error.message : this.props.t("error-unknown");
@@ -77,6 +87,11 @@ class ApiComponent extends React.Component{
 
     componentDidMount(){
         /// @description Requesting API when mounting.
+        this.fetch();
+    }
+
+    fetch(){
+         /// @description Requesting API with fetch.
         console.log(`Fetching API "${this.method}" method via ApiComponent...`);
         apiRequestWrapper(this.method, "", this.onSuccessHandler, this.onErrorHandler);
     }

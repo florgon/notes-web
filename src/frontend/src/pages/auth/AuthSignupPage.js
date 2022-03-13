@@ -96,6 +96,7 @@ const AuthSignupPage = function() {
     const signUpOnError = function(result){
         /// @description Handler for signup request error.
         setIsLoading(false);
+        console.log(result);
         openPopup(result.error.message, "danger");
     }
 
