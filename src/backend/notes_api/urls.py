@@ -11,6 +11,8 @@ urlpatterns = [
     path('api/notes/get', views.notes.get_note),
     path('api/notes/delete', views.notes.delete_note),
     path('api/notes/edit', views.notes.edit_note),
+    path('api/notes/unpin', views.notes.unpin_note),
+    path('api/notes/pin', views.notes.pin_note),
 
     # Other methods.
     path('api/notes/create', views.notes.create_note),
