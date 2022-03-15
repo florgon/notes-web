@@ -1,4 +1,5 @@
 from . import (
     error_handlers,
-    routes
+    routes,
+    changelog
 )

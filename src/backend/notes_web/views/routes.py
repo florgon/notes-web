@@ -8,7 +8,8 @@ def get_routes_api(_):
     """Returns list of all routes releated to this app root API."""
     routes = [
         "/notes/",
-        "/auth/"
+        "/auth/",
+        "/changelog"
     ]
     return api_success({"methods": {"api": routes}})
 
