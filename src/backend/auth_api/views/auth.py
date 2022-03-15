@@ -87,7 +87,8 @@ def resolve_auth_token(request):
         },
         "user": {
             "id": token.user.id,
-            "username": token.user.username
+            "username": token.user.username,
+            "email": token.user.email
         }
     })
 
