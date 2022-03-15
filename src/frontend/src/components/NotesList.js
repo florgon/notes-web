@@ -8,20 +8,29 @@ import Note from './Note';
 import Alert from './Alert';
 
 
-const NotesList = function({currentNotes, onDeleteNote, onSaveNote, title, subtitle, text}){
+const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, onUnpinNote, title, subtitle, text}){
     /// @description Notes list. Displays list of notes.
 
     // Usings.
     const {t} = useTranslation();
 
     // States.
-    const [notes, setNotes] = useState({});
+    const [notes, setNotes] = useState([]);
     const [alertPopup, setAlertPopup] = useState({open: false});
     
     // Setting notes from props.
     useEffect(() => {
         setNotes(currentNotes);
     }, [currentNotes])
+
+    const sortWithOrdering = function(){
+        /// @description Returns two arrays, with pinned notes, and unpinned. Should be used as first rendering pinned notes, then unpinned.
+
+        // TODO: Later this will be reworked to sortering with custom levels.
+        let notesUnpinned = notes.filter((item) => !item.note.sorting.is_pinned);
+        let notesPinned = notes.filter((item) => item.note.sorting.is_pinned)
+        return [notesPinned, notesUnpinned];
+    }
 
     // Popup.
     const openPopup = function(text, type){
@@ -38,6 +47,16 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, title, subti
         openPopup(t("note-deleted"));
     }
 
+    const onPinNoteWrapper = function(id){
+        /// @description Pin note handler. Pins note to the top.
+        if (onPinNote) onPinNote(id);
+    }
+
+    const onUnpinNoteWrapper = function(id){
+        /// @description Unpin note handler. Unpins note from the top.
+        if (onUnpinNote) onUnpinNote(id);
+    }
+
     const onSaveNoteWrapper = function(id, text){
         /// @description Save note handler. Saves note in list, and showing popup.
         if (onSaveNote) onSaveNote(id, text);
@@ -52,6 +71,7 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, title, subti
         }
     })
 
+    let [notesPinned, notesUnpinned] = sortWithOrdering();
     return (
         <Fragment>
             <div className="row">
@@ -61,25 +81,46 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, title, subti
             <hr className="w-25 mx-auto"/>
 
             <div className="mx-auto text-center mb-3">
-                <Link className="btn btn-lg btn-success" to="/create/">{t("new-note")}</Link>
+                <Link className="btn btn-lg btn-success" to="/create">{t("new-note")}</Link>
             </div>
 
             <div className="w-50 mx-auto">
                 {alertPopup.open && <Alert text={alertPopup.text} type={alertPopup.type}/>}
             </div>
 
-            {notes.length > 0 && 
-                <div className="w-75 mx-auto">
-                    {notes.map((note) =>
-                        <div className="mb-4" key={note.note.id}>
-                            <Note
-                                onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper}
-                                id={note.note.id} currentText={note.note.text}
-                                createdAt={note.note.created_at} updatedAt={note.note.updated_at}
-                            />
-                        </div>
-                    )}
-                </div>
+            {notes.length > 0 && <Fragment>
+                {/* Will be refactored later to sorting system. */}
+                {notesPinned.length > 0 && 
+                    <div className="w-75 mx-auto">
+                        {notesPinned.map((note) =>
+                            <div className="mb-4" key={note.note.id}>
+                                <Note
+                                    onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
+                                    id={note.note.id} currentText={note.note.text}
+                                    currentIsPinned={note.note.sorting.is_pinned}
+                                    createdAt={note.note.created_at} updatedAt={note.note.updated_at}
+                                />
+                            </div>
+                        )}
+                    </div>
+                }
+
+                {/* Will be refactored later to sorting system. */}
+                {notesUnpinned.length > 0 && 
+                    <div className="w-75 mx-auto">
+                        {notesUnpinned.map((note) =>
+                            <div className="mb-4" key={note.note.id}>
+                                <Note
+                                    onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
+                                    id={note.note.id} currentText={note.note.text}
+                                    currentIsPinned={note.note.sorting.is_pinned}
+                                    createdAt={note.note.created_at} updatedAt={note.note.updated_at}
+                                />
+                            </div>
+                        )}
+                    </div>
+                }
+                </Fragment>
             }
 
             {notes.length === 0 && !alertPopup.open && 

@@ -46,11 +46,18 @@ class NotesListFetched extends ApiComponent{
             });
         }.bind(this);
 
+        const onUnpinNote = function(id){
+            apiRequest("notes/unpin", "id=" + id);
+        }
+
+        const onPinNote = function(id){
+            apiRequest("notes/pin", "id=" + id);
+        }
 
         return (
             <NotesList 
                 currentNotes={notes} text={message}
-                onDeleteNote={onDeleteNote} onSaveNote={onSaveNote}
+                onDeleteNote={onDeleteNote} onSaveNote={onSaveNote} onPinNote={onPinNote} onUnpinNote={onUnpinNote}
                 title={this.props.t("your-notes")} subtitle={this.props.t("only-you-see-those-notes")} 
             />
         );
