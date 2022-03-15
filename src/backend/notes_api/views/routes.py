@@ -10,5 +10,6 @@ def get_routes(_):
         "/get", "/delete",
         "/edit", "/create",
         "/list", "/counters",
+        "/pin", "/unpin"
     ]
     return api_success({"methods": {"api": {"notes": routes}}})

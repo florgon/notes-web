@@ -1,4 +1,7 @@
+from typing import Union
+
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from web_services.api.error_code import ApiErrorCode
 from web_services import crud
@@ -10,29 +13,43 @@ from web_services.api.response import (
 )
 
 
+# Todo: Move this function away.
+def try_query_note_from_request(request) -> Union[bool, Response]:
+    """ Returns first boolean is OK or not, and note or error if failed to query. """
+    # Validate request.
+    is_valid, fields_or_error = validate_request(request, fields=["id"], auth_required=True)
+    if not is_valid:
+        return False, fields_or_error
+    note_id, = fields_or_error
+
+    # Validate note index value.
+    note_id = try_convert_type(note_id, type=int)
+    if note_id is None or note_id < 0:
+        return False, api_error(ApiErrorCode.API_FIELD_INVALID, "`id` field has invalid format, expected a number!", {"field": "id"})
+    
+    # Query note from CRUD API.
+    note = crud.notes.get_note_by_id(note_id)
+    if not note:
+        return False, api_error(ApiErrorCode.NOTE_NOT_EXISTS, "Note not found!")
+
+    # Checking privacy.
+    if not crud.notes.user_is_note_author(note, request.user):
+        return False, api_error(ApiErrorCode.PRIVACY_PRIVATE_NOTE, "You are not allowed to delete this note.", {"description": "This note belongs to another user, which you dont have access to by privacy reasons!"})
+
+    # Return note.
+    return True, note
+
+
+# Specific note methods.
 @api_view(["GET"])
 def get_note(request):
     """ Returns information about specific note by it`s ID. """
 
     # Validate request.
-    is_valid, fields_or_error = validate_request(request, fields=["id"], auth_required=True)
+    is_valid, note_or_error = try_query_note_from_request(request)
     if not is_valid:
-        return fields_or_error
-    note_id, = fields_or_error
-
-    # Validating note index value.
-    note_id = try_convert_type(note_id, type=int)
-    if note_id is None or note_id < 0:
-        return api_error(ApiErrorCode.API_FIELD_INVALID, "`id` field has invalid format, expected a number!", {"field": "id"})
-    
-    # Query note from CRUD API.
-    note = crud.notes.get_note_by_id(note_id)
-    if not note:
-        return api_error(ApiErrorCode.NOTE_NOT_EXISTS, "Note not found!")
-
-    # Check privacy.
-    if not crud.notes.user_is_note_author(note, request.user):
-        return api_error(ApiErrorCode.PRIVACY_PRIVATE_NOTE, "You are not allowed to view this note.", {"description": "This note belongs to another user, which you dont have access to by privacy reasons!"})
+        return note_or_error
+    note = note_or_error
 
     # Returning OK.
     return api_success(note.to_api_dict())
@@ -43,24 +60,10 @@ def delete_note(request):
     """ Deletes specific note by it`s ID and returns information about it. """
 
     # Validate request.
-    is_valid, fields_or_error = validate_request(request, fields=["id"], auth_required=True)
+    is_valid, note_or_error = try_query_note_from_request(request)
     if not is_valid:
-        return fields_or_error
-    note_id, = fields_or_error
-
-    # Validate note index value.
-    note_id = try_convert_type(note_id, type=int)
-    if note_id is None or note_id < 0:
-        return api_error(ApiErrorCode.API_FIELD_INVALID, "`id` field has invalid format, expected a number!", {"field": "id"})
-    
-    # Query note from CRUD API.
-    note = crud.notes.get_note_by_id(note_id)
-    if not note:
-        return api_error(ApiErrorCode.NOTE_NOT_EXISTS, "Note not found!")
-
-    # Checking privacy.
-    if not crud.notes.user_is_note_author(note, request.user):
-        return api_error(ApiErrorCode.PRIVACY_PRIVATE_NOTE, "You are not allowed to delete this note.", {"description": "This note belongs to another user, which you dont have access to by privacy reasons!"})
+        return note_or_error
+    note = note_or_error
 
     # Save note dict before delete request.
     note_dict = note.to_api_dict()
@@ -97,11 +100,50 @@ def edit_note(request):
         return api_error(ApiErrorCode.PRIVACY_PRIVATE_NOTE, "You are not allowed to edit this note.", {"description": "This note belongs to another user, which you dont have access to by privacy reasons!"})
 
     # Edit note.
-    note.text = text
+    note.update_text(text)
     note.save()
 
     # Returning OK.
     return api_success(note.to_api_dict())
+
+
+@api_view(["GET"])
+def pin_note(request):
+    """ Pins note for sorting and returns information about it. """
+
+    # Validate request.
+    is_valid, note_or_error = try_query_note_from_request(request)
+    if not is_valid:
+        return note_or_error
+    note = note_or_error
+
+    # Pin note.
+    note.is_pinned = True
+    note.save()
+
+    # Returning OK with note data.
+    return api_success(note.to_api_dict())
+
+
+@api_view(["GET"])
+def unpin_note(request):
+    """ Unpins note for sorting and returns information about it. """
+
+    # Validate request.
+    is_valid, note_or_error = try_query_note_from_request(request)
+    if not is_valid:
+        return note_or_error
+    note = note_or_error
+
+    # Unpin note.
+    note.is_pinned = False
+    note.save()
+
+    # Returning OK with note data.
+    return api_success(note.to_api_dict())
+
+
+# Base notes methods.
 
 
 @api_view(["GET"])
@@ -119,6 +161,8 @@ def create_note(request):
     return api_success(note.to_api_dict())
 
 
+# Overall notes methods.
+
 @api_view(["GET"])
 def list_notes(request):
     """ Returns a list with notes (with information) of current authenticated user. """
@@ -133,6 +177,7 @@ def list_notes(request):
     return api_success({
         "notes": [note.to_api_dict() for note in notes]
     })
+
 
 
 @api_view(["GET"])
