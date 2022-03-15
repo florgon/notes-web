@@ -20,7 +20,6 @@ class NotesListFetched extends ApiComponent{
         this.error_message = {text: this.props.t("error-occured"), className: "text-danger"};
         this.empty_message = {text: this.props.t("notes-empty"), className: "text-warning"};
         this.loading_message = {text: this.props.t("loading"), className: "text-muted"};
-
     }
 
     render_body(result, message){

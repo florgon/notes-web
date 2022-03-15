@@ -103,7 +103,7 @@ class ApiComponent extends React.Component{
     fetch(){
          /// @description Requesting API with fetch.
         console.log(`Fetching API "${this.method}" method via ApiComponent...`);
-        apiRequestWrapper(this.method, "", this.onSuccessHandler, this.onErrorHandler);
+        apiRequestWrapper(this.method, this.params || "", this.onSuccessHandler, this.onErrorHandler);
     }
 
     render_body(result, message){
@@ -111,7 +111,7 @@ class ApiComponent extends React.Component{
     }
 
     render(){
-        const { error, isLoading, result } = this.state;
+        const {error, isLoading, result} = this.state;
   
         let message = this.empty_message;
   

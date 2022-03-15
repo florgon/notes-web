@@ -74,5 +74,12 @@
     "save-note": "Save",
     "cancel-note-edit": "Cancel",
     "note-saved": "Note successfully saved!",
-    "markdown-supported": "Notice: you may use Markdown inside notes!"
+    "markdown-supported": "Notice: you may use Markdown inside notes!",
+    "settings": "Settings",
+    "page-title-settings": "Settings",
+    "account": "Account",
+    "user-index": "User index: ",
+    "email": "Email: ",
+    "site": "Site",
+    "account-actions": "Account actions"
 }

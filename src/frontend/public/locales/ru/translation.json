@@ -74,5 +74,12 @@
     "save-note": "Сохранить",
     "cancel-note-edit": "Отменить",
     "note-saved": "Заметка успешно сохранена!",
-    "markdown-supported": "Пометка: вы можете использовать Markdown в ваших заметках!"
+    "markdown-supported": "Пометка: вы можете использовать Markdown в ваших заметках!",
+    "settings": "Настройки",
+    "page-title-settings": "Настройки",
+    "account": "Аккаунт",
+    "user-index": "Индекс пользователя: ",
+    "email": "Почта: ",
+    "site": "Сайт",
+    "account-actions": "Действия с аккаунтом"
 }
