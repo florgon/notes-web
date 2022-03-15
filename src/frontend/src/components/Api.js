@@ -20,6 +20,7 @@ function apiRequest(method, params="", onSuccess=undefined, onError=undefined){
         if (onError) onError(raw, result);
         console.log(`Failed to fetch API "${method}" method via apiRequest because of error: `);
         console.error(raw);
+        console.error(result);
     }
 
     const onSuccessHandler = function(raw, result){
@@ -76,6 +77,7 @@ class ApiComponent extends React.Component{
     onErrorHandler(raw, result){
         /// @description Error response handler.
         console.log(`Failed to fetch API "${this.method}" method via ApiComponent because of error: `);
+        console.error(raw);
         console.error(result);
     
         this.setState({
