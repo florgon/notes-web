@@ -1,5 +1,5 @@
 # Notes website.
-### [Try it in browser!](http://notes.kirillzhosul.site) / [But how to run?](/docs/HOW_TO_RUN.md)
+### [Try it in browser!](https://notes.kirillzhosul.site) / [But how to run?](/docs/HOW_TO_RUN.md)
 
 ## Description.
 This is monorepository with notes website.
