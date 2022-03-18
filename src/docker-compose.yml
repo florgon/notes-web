@@ -10,8 +10,6 @@ services:
     restart: always
     volumes:
       - ./database_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_HOST=database
       - POSTGRES_NAME=notes
