@@ -6,6 +6,8 @@ import {useTranslation} from 'react-i18next';
 // Base components.
 import Note from './Note';
 import Alert from './Alert';
+import SettingsListViewDropdown from './SettingsListViewDropdown'
+import {getNotesListViewAsGrid, useSettings} from '../contexts/SettingsContext'
 
 
 const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, onUnpinNote, title, subtitle, text}){
@@ -13,6 +15,7 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, o
 
     // Usings.
     const {t} = useTranslation();
+    const settings = useSettings()
 
     // States.
     const [notes, setNotes] = useState([]);
@@ -71,6 +74,7 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, o
         }
     })
 
+    let notesListViewAsGrid = getNotesListViewAsGrid();
     let [notesPinned, notesUnpinned] = sortWithOrdering();
     return (
         <Fragment>
@@ -82,6 +86,9 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, o
 
             <div className="mx-auto text-center mb-3">
                 <Link className="btn btn-lg btn-success" to="/create">{t("new-note")}</Link>
+                {false && 
+                    <SettingsListViewDropdown className="" size="md" t={t} settings={settings}/>
+                }
             </div>
 
             <div className="w-50 mx-auto">
@@ -89,39 +96,74 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, o
             </div>
 
             {notes.length > 0 && <Fragment>
-                {/* Will be refactored later to sorting system. */}
-                {notesPinned.length > 0 && 
-                    <div className="w-75 mx-auto">
-                        {notesPinned.map((note) =>
-                            <div className="mb-4" key={note.note.id}>
-                                <Note
-                                    onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
-                                    id={note.note.id} currentText={note.note.text}
-                                    currentIsPinned={note.note.sorting.is_pinned}
-                                    createdAt={note.note.created_at} updatedAt={note.note.updated_at}
-                                />
-                            </div>
-                        )}
-                    </div>
-                }
+                {notesListViewAsGrid && <Fragment>
+                    {/* Will be refactored later to sorting system. */}
+                    {notesPinned.length > 0 && 
+                        <div className="row">
+                            {notesPinned.map((note) =>
+                                <div className="col-4 mb-4" key={note.note.id}>
+                                    <Note
+                                        onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
+                                        id={note.note.id} currentText={note.note.text}
+                                        currentIsPinned={note.note.sorting.is_pinned}
+                                        createdAt={note.note.created_at} updatedAt={note.note.updated_at}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    }
 
-                {/* Will be refactored later to sorting system. */}
-                {notesUnpinned.length > 0 && 
-                    <div className="w-75 mx-auto">
-                        {notesUnpinned.map((note) =>
-                            <div className="mb-4" key={note.note.id}>
-                                <Note
-                                    onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
-                                    id={note.note.id} currentText={note.note.text}
-                                    currentIsPinned={note.note.sorting.is_pinned}
-                                    createdAt={note.note.created_at} updatedAt={note.note.updated_at}
-                                />
-                            </div>
-                        )}
-                    </div>
-                }
-                </Fragment>
-            }
+                    {/* Will be refactored later to sorting system. */}
+                    {notesUnpinned.length > 0 && 
+                        <div className="row">
+                            {notesUnpinned.map((note) =>
+                                <div className="col-4 mb-4" key={note.note.id}>
+                                    <Note
+                                        onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
+                                        id={note.note.id} currentText={note.note.text}
+                                        currentIsPinned={note.note.sorting.is_pinned}
+                                        createdAt={note.note.created_at} updatedAt={note.note.updated_at}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    }
+                </Fragment>}
+
+                {!notesListViewAsGrid && <Fragment>
+                    {/* Will be refactored later to sorting system. */}
+                    {notesPinned.length > 0 && 
+                        <div className="w-75 mx-auto">
+                            {notesPinned.map((note) =>
+                                <div className="mb-4" key={note.note.id}>
+                                    <Note
+                                        onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
+                                        id={note.note.id} currentText={note.note.text}
+                                        currentIsPinned={note.note.sorting.is_pinned}
+                                        createdAt={note.note.created_at} updatedAt={note.note.updated_at}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    }
+
+                    {/* Will be refactored later to sorting system. */}
+                    {notesUnpinned.length > 0 && 
+                        <div className="w-75 mx-auto">
+                            {notesUnpinned.map((note) =>
+                                <div className="mb-4" key={note.note.id}>
+                                    <Note
+                                        onDeleteNote={onDeleteNoteWrapper} onSaveNote={onSaveNoteWrapper} onUnpinNote={onUnpinNoteWrapper} onPinNote={onPinNoteWrapper}
+                                        id={note.note.id} currentText={note.note.text}
+                                        currentIsPinned={note.note.sorting.is_pinned}
+                                        createdAt={note.note.created_at} updatedAt={note.note.updated_at}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    }
+                </Fragment>}
+            </Fragment>}
 
             {notes.length === 0 && !alertPopup.open && 
                 <div className="text-center display-6">

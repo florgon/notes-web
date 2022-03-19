@@ -81,5 +81,8 @@
     "user-index": "User index: ",
     "email": "Email: ",
     "site": "Site",
-    "account-actions": "Account actions"
+    "account-actions": "Account actions",
+    "settings-list-view": "Notes list view",
+    "settings-list-view-option-list": "As list",
+    "settings-list-view-option-grid": "As grid"
 }

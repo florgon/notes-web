@@ -35,6 +35,7 @@ const AuthProvider = (props) => {
         setIsAuthenticated(getIsAuthenticated());
         if (isAuthenticated){
             setAuthToken(getAuthToken());
+            console.log("Successfully authenticated via auth context!");
         }
     }, [isAuthenticated]);
 

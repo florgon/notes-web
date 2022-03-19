@@ -19,9 +19,9 @@ import AuthLogoutPage from './pages/auth/AuthLogoutPage';
 import AuthSignupPage from './pages/auth/AuthSignupPage';
 import DevDocsPage    from './pages/DevDocsPage';
 
-// Importing auth provider for global application context.
+// Importing contexts for global application context.
 import {AuthProvider} from './contexts/AuthContext';
-
+import {SettingsProvider} from './contexts/SettingsContext';
 
 
 const PageRoutes = function(){
@@ -68,11 +68,11 @@ const App = function() {
   // Base application component.
   return (
     <Suspense fallback={<LoadingFallback/>}>
-      <AuthProvider>
+      <AuthProvider><SettingsProvider>
         <BrowserRouter>
           <AppContainer/>
         </BrowserRouter>
-      </AuthProvider>
+        </SettingsProvider></AuthProvider>
     </Suspense>
   );
 }

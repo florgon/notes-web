@@ -3,15 +3,21 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
+
 // Dissalowing already authenticated for settings page.
 import RequireAuth from '../components/RequireAuth'
 
 // Language dropdown for settings.
 import LanguageDropdown from '../components/LanguageDropdown';
+import SettingsListViewDropdown from '../components/SettingsListViewDropdown'
 
 // API for fetching / updating.
 import {ApiComponent} from '../components/Api';
 import {getAuthToken} from '../contexts/AuthContext'
+
+// Settings context.
+import {useSettings} from '../contexts/SettingsContext';
+
 
 class AccountSettings extends ApiComponent{
     /// @description Fetched with API notes list component.
@@ -52,13 +58,16 @@ class AccountSettings extends ApiComponent{
     }
 }
 
-const SiteSettings = function({t}){
+const SiteSettings = function({t, settings}){
     /// @description Settings block for site related settings.
     return (
         <div className="col">
             <p className="display-4 mt-3">{t("site")}</p>
             <hr className="w-50 mx-auto"/>
             <LanguageDropdown t={t}/>
+            {false && 
+                <SettingsListViewDropdown t={t} settings={settings}/>
+            }
         </div>
     )
 }
@@ -76,6 +85,7 @@ const AccountActionsSettings = function({t}){
 const SettingsPage = function() {
     /// @description Settings page with profile information.
     const {t} = useTranslation();
+    const settings = useSettings()
 
     document.title = t("page-title-settings");
     return (
@@ -86,7 +96,7 @@ const SettingsPage = function() {
 
             <div className="row mt-5">
                 <AccountSettings t={t}/>
-                <SiteSettings t={t}/>
+                <SiteSettings t={t} settings={settings}/>
                 <AccountActionsSettings t={t}/>
             </div>
         </div>

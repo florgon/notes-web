@@ -81,5 +81,8 @@
     "user-index": "Индекс пользователя: ",
     "email": "Почта: ",
     "site": "Сайт",
-    "account-actions": "Действия с аккаунтом"
+    "account-actions": "Действия с аккаунтом",
+    "settings-list-view": "Отображение списка заметок",
+    "settings-list-view-option-list": "Как список",
+    "settings-list-view-option-grid": "Как сетка"
 }
