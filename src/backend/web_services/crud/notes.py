@@ -1,7 +1,6 @@
 from typing import Optional, List
 
-from django.contrib.auth.models import User
-
+from auth_api.models import User
 from notes_api.models import Note
 
 

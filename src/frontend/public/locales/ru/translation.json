@@ -84,5 +84,11 @@
     "account-actions": "Действия с аккаунтом",
     "settings-list-view": "Отображение списка заметок",
     "settings-list-view-option-list": "Как список",
-    "settings-list-view-option-grid": "Как сетка"
+    "settings-list-view-option-grid": "Как сетка",
+    "auth-via-vk": "Войти через VK",
+    "auth-service-error-service": "Произошла ошибка сервиса авторизации!",
+    "auth-service-error-unavaliable": "Сервис авторизации недоступен!",
+    "auth-service-error-no-connected-user": "Не удалось найти аккаунт привязанный к этому внешнему аккаунту!",
+    "auth-service-error-unknown": "Произошла неизвестная ошибка авторизации!",
+    "auth-external-token-invalid": "Не удалось авторизоваться через внешний ключ доступа!"
 }

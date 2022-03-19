@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
+
+from auth_api.models import User
 
 from web_services.api.error_code import ApiErrorCode
 from web_services import crud

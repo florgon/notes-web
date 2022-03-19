@@ -84,5 +84,11 @@
     "account-actions": "Account actions",
     "settings-list-view": "Notes list view",
     "settings-list-view-option-list": "As list",
-    "settings-list-view-option-grid": "As grid"
+    "settings-list-view-option-grid": "As grid",
+    "auth-via-vk": "Login via VK",
+    "auth-service-error-service": "Auth service error occured!",
+    "auth-service-error-unavaliable": "Auth service unavaliable!",
+    "auth-service-error-no-connected-user": "Unable to find any account connected with given social account!",
+    "auth-service-error-unknown": "Auth service unknown error!",
+    "auth-external-token-invalid": "Unable to auth with given external auth token!"
 }

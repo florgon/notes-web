@@ -24,8 +24,8 @@ def api_error(api_code: ApiErrorCode, message: str="", data: Optional[Dict] = No
 def api_success(data: Dict) -> Response:
     """Returns success API response."""
     return Response({
+        "api_version": API_VERSION,
         "success": {
-            **{"api_version": API_VERSION}, 
             **data
         }
     }, status=200)

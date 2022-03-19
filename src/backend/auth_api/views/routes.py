@@ -1,6 +1,10 @@
 from rest_framework.decorators import api_view
 
-from web_services.api.response import api_success
+from web_services.api.error_code import ApiErrorCode
+from web_services.api.response import (
+    api_success,
+    api_error
+)
 
 
 @api_view(["GET"])
@@ -8,6 +12,7 @@ def get_routes(_):
     """Returns list of all routes releated to this API."""
     routes = [
         "/token/",
+        "/service/",
         "/signup",
     ]
     return api_success({"methods": {"api": {"auth": routes}}})
@@ -20,3 +25,22 @@ def get_routes_token(_):
         "/get", "/resolve"
     ]
     return api_success({"methods": {"api": {"auth": {"token": routes}}}})
+
+
+
+@api_view(["GET"])
+def get_routes_service(_):
+    """Returns list of all routes releated to this API for services."""
+    routes = [
+        "/vk/"
+    ]
+    return api_success({"methods": {"api": {"auth": {"service": routes}}}})
+
+
+@api_view(["GET"])
+def get_routes_service_vk(_):
+    """Returns list of all routes releated to this API for VK service."""
+    routes = [
+        "/request", "/callback"
+    ]
+    return api_success({"methods": {"api": {"auth": {"service": {"vk": routes}}}}})

@@ -2,7 +2,8 @@ from typing import NoReturn
 from datetime import datetime
 
 from django.db import models
-from django.contrib.auth.models import User
+
+from auth_api.models import User
 
 
 class Note(models.Model):

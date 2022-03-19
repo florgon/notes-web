@@ -7,6 +7,9 @@ from web_services.api.response import api_success
 def get_api_changelog(_):
     """Returns list of all routes releated to this app APIs."""
     changelog = {
+        "1.2.2": [
+            "Add VK auth service (`/api/auth/service/vk`)."
+        ],
         "1.1.2": [
             "Add `/api/changelog` method."
         ],

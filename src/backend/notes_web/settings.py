@@ -7,14 +7,15 @@ from pathlib import Path
 
 # Main.
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG") or False
-
-# Server.
+DEBUG = os.environ.get("DEBUG")
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split()
-USE_X_FORWARDED_HOST = True
-WSGI_APPLICATION = 'notes_web.wsgi.application'
+FRONTEND_DOMAIN = os.environ.get("FRONTEND_DOMAIN") or "http://localhost:3000"
 
-# Datbase.
+# Auth service logic.
+AUTH_SERVICE_VK_CLIENT_ID = os.environ.get("VK_CLIENT_ID")
+AUTH_SERVICE_VK_CLIENT_SECRET = os.environ.get("VK_CLIENT_SECRET")
+
+# Database.
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DATABASES = {
     'default': {
@@ -26,14 +27,18 @@ DATABASES = {
     },
 }
 
+# Other.
+USE_X_FORWARDED_HOST = True
+WSGI_APPLICATION = 'notes_web.wsgi.application'
+
 # Django.
+AUTH_USER_MODEL = 'auth_api.User'
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # 'django.contrib.messages',
+    # 'django.contrib.staticfiles',
 
     'rest_framework',
     'rest_framework.authtoken',
