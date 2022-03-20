@@ -181,8 +181,8 @@ const AuthLoginPage = function() {
     }
 
     // External token.
-    useEffect(tryLoginViaExternalTokenProvider, []);
-
+    useEffect(tryLoginViaExternalTokenProvider, [login, searchParams, setSearchParams, t]);
+    
     document.title = t("page-title-auth-login");
     return (
         <Fragment>

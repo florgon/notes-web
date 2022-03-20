@@ -4,7 +4,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from web_services.api.error_code import ApiErrorCode
-from web_services import crud
+from web_services import (
+    crud,
+    serializers
+)
 from web_services.utils import (
     try_convert_type, validate_request
 )
@@ -52,7 +55,7 @@ def get_note(request):
     note = note_or_error
 
     # Returning OK.
-    return api_success(note.to_api_dict())
+    return api_success(serializers.note.serialize(note))
 
 
 @api_view(["GET"])
@@ -66,7 +69,7 @@ def delete_note(request):
     note = note_or_error
 
     # Save note dict before delete request.
-    note_dict = note.to_api_dict()
+    note_dict = serializers.note.serialize(note)
 
     # Delete note.
     note.delete()
@@ -104,7 +107,7 @@ def edit_note(request):
     note.save()
 
     # Returning OK.
-    return api_success(note.to_api_dict())
+    return api_success(serializers.note.serialize(note))
 
 
 @api_view(["GET"])
@@ -122,7 +125,7 @@ def pin_note(request):
     note.save()
 
     # Returning OK with note data.
-    return api_success(note.to_api_dict())
+    return api_success(serializers.note.serialize(note))
 
 
 @api_view(["GET"])
@@ -140,7 +143,7 @@ def unpin_note(request):
     note.save()
 
     # Returning OK with note data.
-    return api_success(note.to_api_dict())
+    return api_success(serializers.note.serialize(note))
 
 
 # Base notes methods.
@@ -158,7 +161,7 @@ def create_note(request):
    
     # Returning note from CRUD API.
     note = crud.notes.create_note(text, request.user)
-    return api_success(note.to_api_dict())
+    return api_success(serializers.note.serialize(note))
 
 
 # Overall notes methods.
@@ -174,9 +177,7 @@ def list_notes(request):
 
     # Returning notes from CRUD API.
     notes = crud.notes.get_notes_from_user(request.user.id)
-    return api_success({
-        "notes": [note.to_api_dict() for note in notes]
-    })
+    return api_success(serializers.note.serialize_list(notes))
 
 
 
