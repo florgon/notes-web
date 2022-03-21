@@ -93,6 +93,7 @@
     "auth-external-token-invalid": "Не удалось авторизоваться через внешний ключ доступа!",
     "connect-vk-account": "Привязать аккаунт VK",
     "service-successfully-connected": "Сторонний аккаунт успешно привязан!",
+    "service-failed-connect": "Не удалось привязать сторонний аккаунт!",
     "connect-external-account": "Привязать внешний аккаунт",
     "confirm-connect-external-account": "Подтвердить привязку внешего аккаунта",
     "vk-account-connected": "VK аккаунт привязан",

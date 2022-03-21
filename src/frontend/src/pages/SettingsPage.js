@@ -146,7 +146,11 @@ const SettingsPage = function() {
     useEffect(() => {
         if (window.location.href.includes("#service-connected")){
             window.history.replaceState(null, "", window.location.href.replace("#service-connected", ""))
-            openPopup(t("service-successfully-connected"));
+            openPopup(t("service-successfully-connected"), "success");
+        }
+        if (window.location.href.includes("#service-connect-error")){
+            window.history.replaceState(null, "", window.location.href.replace("#service-connect-error", ""))
+            openPopup(t("service-failed-connect"), "danger");
         }
     }, [openPopup])
 

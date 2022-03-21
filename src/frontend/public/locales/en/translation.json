@@ -93,6 +93,7 @@
     "auth-external-token-invalid": "Unable to auth with given external auth token!",
     "connect-vk-account": "Link VK account",
     "service-successfully-connected": "External account successfully linked!",
+    "service-failed-connect": "Unable to link external account!",
     "connect-external-account": "Link external social account",
     "confirm-connect-external-account": "Confirm linking external account",
     "vk-account-connected": "VK account linked",
