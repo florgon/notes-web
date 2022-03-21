@@ -29,23 +29,23 @@ const AuthConnectPage = function() {
         setServiceUserId(searchParams.get("service_user_id"))
         setState(searchParams.get("state"))
         setSearchParams("")
-    }, [setSearchParams, setServiceUserId, setState]);
+    }, [setSearchParams, setServiceUserId, setState, searchParams]);
    
 
     document.title = t("page-title-auth");
     return (
         <div className="text-center">
             <RequireAuth/>
-            {state == "success" && <Navigate to="/settings#service-connected"/>}
-            {state == "error" && <Navigate to="/settings#service-connect-error"/>}
-            {state != "success" && state != "error" && state != "confirm" && <Navigate to="/settings"/>}
+            {state === "success" && <Navigate to="/settings#service-connected"/>}
+            {state === "error" && <Navigate to="/settings#service-connect-error"/>}
+            {state !== "success" && state !== "error" && state !== "confirm" && <Navigate to="/settings"/>}
 
             <p className="display-1">
                 {t("connect-external-account")}
             </p>
 
             <div>
-                {state == "confirm" &&
+                {state === "confirm" &&
                     <form method="post" action={API_URL + "auth/service/vk/connect?state=confirm_external"} className="inline">
                         <input type="hidden" name="service_user_id" value={serviceUserId}/>
                         <input type="hidden" name="token" value={getAuthToken()}/>
