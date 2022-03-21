@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 
@@ -16,5 +17,7 @@ urlpatterns = [
     path('api/auth/token/resolve', views.auth.resolve_auth_token),
     # Services.
     path('api/auth/service/vk/request', views.services.vk_request_auth),
-    path('api/auth/service/vk/callback', views.services.vk_callback_auth)
+    path('api/auth/service/vk/callback', views.services.vk_callback_auth),
+    path('api/auth/service/vk/connect', views.services.vk_connect_auth),
+    path('api/auth/service/vk/disconnect', views.services.vk_disconnect_auth)
 ]

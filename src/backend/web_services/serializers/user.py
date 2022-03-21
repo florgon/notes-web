@@ -4,6 +4,9 @@ def serialize(user):
         "user": {
             "id": user.id,
             "username": user.username,
-            "email": user.email
+            "email": user.email,
+            "services": {
+                "vk": user.vk_user_id is not None
+            }
         }
     }

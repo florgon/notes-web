@@ -65,7 +65,7 @@ class ApiComponent extends React.Component{
         /// @description Returns error message for error.
 
         let errorText = "";
-        if ("error" in result){
+        if (result !== undefined && "error" in result){
             errorText = result.error.message;
         }else{
             errorText = this.props.t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText;
@@ -167,6 +167,7 @@ function apiRequestWrapper(apiMethod, apiParams, successHandler, errorHandler){
 }
 
 export {
+    API_URL,
     apiRequest,
     ApiComponent,
 };

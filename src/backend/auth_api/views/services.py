@@ -4,28 +4,33 @@ from rest_framework.authtoken.models import Token
 from django.http import HttpResponseRedirect
 from django.conf import settings
 
-from web_services import crud
+from web_services import (
+    crud,
+    serializers
+)
 from web_services.api.error_code import ApiErrorCode
 from web_services.api.response import (
     api_success,
     api_error
 )
 from web_services.utils import (
-    validate_request
+    validate_request,
+    validate_post_request
 )
 
 
 # URLs.
 VK_SERVICE_AUTH_REDIRECT_URL = "https://oauth.vk.com/oauth/authorize"
 VK_SERVICE_AUTH_VERIFY_URL = "https://oauth.vk.com/access_token"
-VK_SERVICE_AUTH_FINAL_URL = f"{settings.FRONTEND_DOMAIN}/auth/login"
+REDIRECT_AUTH_LOGIN_URL = f"{settings.FRONTEND_DOMAIN}/auth/login"
+REDIRECT_AUTH_CONNECT_URL = f"{settings.FRONTEND_DOMAIN}/auth/connect"
 
 
 def validate_service_response(error: str, description: str, is_external: bool):
     """ Validates service response for any errors."""
     if error or description:
         if is_external:
-            return False, HttpResponseRedirect(redirect_to=f"{VK_SERVICE_AUTH_FINAL_URL}?error=service&service_error={error}&service_description={description}")
+            return False, HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?error=service&service_error={error}&service_description={description}")
         return False, api_error(ApiErrorCode.AUTH_SERVICE_ERROR, "Failed to authorize via service provider!", {
             "service_error": error,
             "service_error_description": description
@@ -36,7 +41,7 @@ def validate_service_response(error: str, description: str, is_external: bool):
 def _error_unavaliable(is_external: bool):
     """Returns service unaviable error."""
     if is_external:
-        return HttpResponseRedirect(redirect_to=f"{VK_SERVICE_AUTH_FINAL_URL}?error=unavaliable")
+        return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?error=unavaliable")
     return api_error(ApiErrorCode.AUTH_SERVICE_ERROR, "Authorization service is unavaliable, or inproperly configured by administrators!")
     
 
@@ -48,7 +53,7 @@ def vk_request_auth(request):
     is_valid, fields_or_error = validate_request(request, fields=["state"], auth_required=False)
     if not is_valid:
         return fields_or_error
-    state,  = fields_or_error
+    state, = fields_or_error
     is_external = (state == "external")
 
     # Check setup.
@@ -65,6 +70,85 @@ def vk_request_auth(request):
     return api_success({"auth_provider_url": auth_provider_url})
 
 
+@api_view(["GET", "POST"])
+def vk_connect_auth(request):
+    """VK service connect initiator and finalizer. """
+
+    # Validate request.
+    is_valid, fields_or_error = validate_request(request, fields=["state"], auth_required=False)
+    if not is_valid:
+        return fields_or_error
+    state, = fields_or_error
+    is_external = (state == "external" or state == "confirm_external")
+    is_confirm = (state == "confirm" or state == "confirm_external")
+
+    # Check setup.
+    if settings.AUTH_SERVICE_VK_CLIENT_ID is None:
+        _error_unavaliable()
+
+    if is_confirm:
+        # If this final confirmation callback from frontend.
+
+        # Validate request.
+        is_valid, fields_or_error = validate_post_request(request, fields=["service_user_id", "token"], auth_required=False)
+        if not is_valid:
+            return fields_or_error
+        service_user_id, token, = fields_or_error
+        
+        # Query token.
+        token = crud.token.get_token_by_key(token)
+        if not token:
+            if is_external:
+                return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=error")
+            return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Token does not exist.")
+
+        # Connect.
+        token.user.vk_user_id = service_user_id
+        token.user.save()
+
+        # Returning success or redirect.
+        if is_external:
+            return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=success")
+        return api_success({
+            **serializers.user.serialize(token.user),
+            "service_user_id": service_user_id
+        })
+
+    # Provider URL.
+    state = ("connect_external" if is_external else "connect")
+    service_redirect_uri = f"{request.scheme}://{request.get_host()}/api/auth/service/vk/callback"
+    auth_provider_url = f"{VK_SERVICE_AUTH_REDIRECT_URL}?client_id={settings.AUTH_SERVICE_VK_CLIENT_ID}&redirect_uri={service_redirect_uri}&state={state}&scope=0&display=page&response_type=code&v=5.131"
+
+    # Returning redirect or just URL JSON.
+    if is_external:
+        return HttpResponseRedirect(redirect_to=auth_provider_url)
+    return api_success({"auth_provider_url": auth_provider_url})
+
+
+@api_view(["GET"])
+def vk_disconnect_auth(request):
+    """ Disconnects VK servce from user. """
+    # Validate request.
+    is_valid, fields_or_error = validate_request(request, fields=[], auth_required=True)
+    if not is_valid:
+        return fields_or_error
+
+    # OK.
+    if not request.user.vk_user_id:
+        return api_success({
+            "status": "already disconnected"
+        })
+
+    # Disconnect.
+    request.user.vk_user_id = None
+    request.user.save()
+
+    # OK.
+    return api_success({
+        "status": "disconnected"
+    })
+
+
 @api_view(["GET"])
 def vk_callback_auth(request):
     """Callback from VK auth service."""
@@ -74,7 +158,7 @@ def vk_callback_auth(request):
     if not is_valid:
         return fields_or_error
     state, code  = fields_or_error
-    is_external = (state == "external")
+    is_external = (state == "external" or state == "connect_external")
 
     # Validate service.
     is_valid, validation_error = validate_service_response(request.GET.get("error"), request.GET.get("error_description"), is_external)
@@ -103,31 +187,37 @@ def vk_callback_auth(request):
     user_id = auth_request.get("user_id")
     if not user_id:
         if is_external:
-            return HttpResponseRedirect(redirect_to=f"{VK_SERVICE_AUTH_FINAL_URL}?error=unknown")
+            return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?error=unknown")
         return api_error(ApiErrorCode.AUTH_SERVICE_ERROR, "Failed to authorize via service provider! Service not returned required information!")
+
+    if state == "connect_external" or state == "connect":
+        # If this is connect account request.
+
+        auth_next_url = f"{REDIRECT_AUTH_CONNECT_URL}?state=confirm&service_user_id={user_id}"
+        # Returning redirect or just URL JSON.
+        if is_external:
+            return HttpResponseRedirect(redirect_to=auth_next_url)
+        return api_success({"auth_next_url": auth_next_url})
 
     # Query user.
     user = crud.user.get_user_by_vk_user_id(user_id)
     if not user:
         if is_external:
-            return HttpResponseRedirect(redirect_to=f"{VK_SERVICE_AUTH_FINAL_URL}?error=no-connected-user")
-        return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Failed to get user!")
+            return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?error=no-connected-user")
+        return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Unable to find any connected account with given social account!")
     
     # Try query token.
     token, is_new = Token.objects.get_or_create(user=user)
     if not token:
         if is_external:
-            return HttpResponseRedirect(redirect_to=f"{VK_SERVICE_AUTH_FINAL_URL}?error=unknown")
+            return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?error=unknown")
         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Failed to create new token!")
 
     # Return success.
     if is_external:
-        return HttpResponseRedirect(redirect_to=f"{VK_SERVICE_AUTH_FINAL_URL}?token={token}")
+        return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?token={token}")
     # Returning token.
     return api_success({
-        "token": {
-            'key': token.key,
-            'is_new': is_new
-        },
+        **serializers.token.serialize(token.key, is_new),
         'user_id': user.id
     })

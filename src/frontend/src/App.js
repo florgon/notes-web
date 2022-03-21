@@ -8,16 +8,17 @@ import Navbar          from './components/Navbar';
 import LoadingFallback from './LoadingFallback';
 
 // Import pages.
-import HomePage       from './pages/HomePage';
-import NotFoundPage   from './pages/NotFoundPage';
-import NotesListPage  from './pages/NotesListPage';
-import CreateNotePage from './pages/CreateNotePage';
-import SettingsPage   from './pages/SettingsPage';
-import AuthPage       from './pages/auth/AuthPage';
-import AuthLoginPage  from './pages/auth/AuthLoginPage';
-import AuthLogoutPage from './pages/auth/AuthLogoutPage';
-import AuthSignupPage from './pages/auth/AuthSignupPage';
-import DevDocsPage    from './pages/DevDocsPage';
+import HomePage        from './pages/HomePage';
+import NotFoundPage    from './pages/NotFoundPage';
+import NotesListPage   from './pages/NotesListPage';
+import CreateNotePage  from './pages/CreateNotePage';
+import SettingsPage    from './pages/SettingsPage';
+import AuthPage        from './pages/auth/AuthPage';
+import AuthLoginPage   from './pages/auth/AuthLoginPage';
+import AuthLogoutPage  from './pages/auth/AuthLogoutPage';
+import AuthSignupPage  from './pages/auth/AuthSignupPage';
+import AuthConnectPage from './pages/auth/AuthConnectPage'
+import DevDocsPage     from './pages/DevDocsPage';
 
 // Importing contexts for global application context.
 import {AuthProvider} from './contexts/AuthContext';
@@ -41,6 +42,7 @@ const PageRoutes = function(){
       <Route path='/auth/login' element={<AuthLoginPage/>} /> 
       <Route path='/auth/logout' element={<AuthLogoutPage/>} /> 
       <Route path='/auth/signup' element={<AuthSignupPage/>} />
+      <Route path='/auth/connect' element={<AuthConnectPage/>} />
 
       {/* Other stuff. */}
       <Route path='/dev/docs' element={<DevDocsPage/>} /> 

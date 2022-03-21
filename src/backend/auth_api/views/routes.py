@@ -1,10 +1,6 @@
 from rest_framework.decorators import api_view
 
-from web_services.api.error_code import ApiErrorCode
-from web_services.api.response import (
-    api_success,
-    api_error
-)
+from web_services.api.response import api_success
 
 
 @api_view(["GET"])
@@ -41,6 +37,6 @@ def get_routes_service(_):
 def get_routes_service_vk(_):
     """Returns list of all routes releated to this API for VK service."""
     routes = [
-        "/request", "/callback"
+        "/request", "/callback", "/connect", "/disconnect"
     ]
     return api_success({"methods": {"api": {"auth": {"service": {"vk": routes}}}}})

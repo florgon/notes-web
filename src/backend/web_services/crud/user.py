@@ -10,6 +10,7 @@ def user_username_taken(username: str) -> bool:
     
     return False
 
+
 def user_email_taken(email: str) -> bool:
     """ Returns is given email already taken or not. """
     if User.objects.filter(email=email).exists():
@@ -25,5 +26,3 @@ def get_user_by_vk_user_id(vk_user_id: str) -> Optional[User]:
         return user
     except User.DoesNotExist:
         return None
-
-    
