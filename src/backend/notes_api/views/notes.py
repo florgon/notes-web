@@ -127,7 +127,6 @@ def pin_note(request):
     # Returning OK with note data.
     return api_success(serializers.note.serialize(note))
 
-
 @api_view(["GET"])
 def unpin_note(request):
     """ Unpins note for sorting and returns information about it. """

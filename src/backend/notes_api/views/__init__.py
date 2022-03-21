@@ -1,2 +1,5 @@
-from . import notes
-from . import routes
+from . import (
+    routes,
+    notes,
+    upload
+)
