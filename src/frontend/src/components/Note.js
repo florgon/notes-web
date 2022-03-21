@@ -62,14 +62,14 @@ const NoteHeader = function({id, createdAt, updatedAt, t}){
   )
 }
 
-const NoteBody = function({isEditing, text, setText}){
+const NoteBody = function({isEditing, text, setText, handleDrop}){
   /// @description Body of the not with text.
   return (
     <div className="card-body">
       {!isEditing && <ReactMarkdown children={text} remarkPlugins={[remarkGfm]}/>}
       {isEditing && <Fragment>
         <small className="text-muted">{t("markdown-supported")}</small>
-        <textarea value={text} className="form-control mt-2" onChange={(e) => {setText(e.target.value)}}/>
+        <textarea onDrop={handleDrop} value={text} className="form-control mt-2" onChange={(e) => {setText(e.target.value)}}/>
       </Fragment>}
     </div>
   )
@@ -128,13 +128,39 @@ const Note = function ({onDeleteNote, onSaveNote, onPinNote, onUnpinNote, id, cu
     setText(defaultText);
   }
   
+  const _handleDrop = function(e){
+    /// @description Drop handle wrapper.
+
+    // Handle link.
+    let dataLink = e.dataTransfer.getData("text/uri-list");
+    if (dataLink){
+      let markdownLink = `[${dataLink}](${dataLink})`;
+      setText(text + markdownLink);
+      return true;
+    }
+
+    // Unable to handle this type of event.
+    return false;
+  }
+
+  const handleDrop = function(e){
+    /// @description Handles drop event when there is something drag and dropped on note body.
+
+    if (_handleDrop(e)){
+      // Prevent default d&d event.
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  }
+
+
   return (
     <div className="card shadow">
       <NoteHeader id={id} t={t}
         createdAt={createdAt} updatedAt={updatedAt}/>
       <NoteBody 
         isEditing={isEditing} text={text} defaultText={defaultText}
-        setText={setText}/>
+        setText={setText} handleDrop={handleDrop}/>
       <NoteFooter t={t} text={text} defaultText={defaultText}
         isEditing={isEditing} isPinned={isPinned}
         deleteNote={() => onDeleteNote(id)} startEdit={startEdit} saveEdit={saveEdit} cancelEdit={cancelEdit}
