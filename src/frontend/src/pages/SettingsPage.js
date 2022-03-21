@@ -44,7 +44,7 @@ class AccountSettings extends ApiComponent{
         apiRequest("auth/service/vk/disconnect", "", (raw, response) => {
             if ("status" in response.success){
                 let status = response.success.status;
-                if (status == "disconnected"){
+                if (status === "disconnected"){
                     this.props.openPopup(this.props.t("vk-account-success-disconnect"), "success")
                     this.fetchAgain();
                     return;

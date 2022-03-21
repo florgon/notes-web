@@ -29,7 +29,7 @@ const AuthConnectPage = function() {
         setServiceUserId(searchParams.get("service_user_id"))
         setState(searchParams.get("state"))
         setSearchParams("")
-    }, [setSearchParams, setServiceUserId, setState, searchParams]);
+    }, [setSearchParams, setServiceUserId, setState]);
    
 
     document.title = t("page-title-auth");
