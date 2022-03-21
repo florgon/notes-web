@@ -10,8 +10,6 @@ services:
     restart: always
     volumes:
       - ./database_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     environment:
       - POSTGRES_HOST=database
       - POSTGRES_NAME=notes
@@ -27,8 +25,13 @@ services:
       - "8000:8000"
     environment:
       - SECRET_KEY="django-insecure-_gl#873^qj90cdc27c1gkbliesm@5b9ila2xgcz_5f8+$m574w"
-      - DEBUG=1
-      - ALLOWED_HOSTS=* notes.kirillzhosul.site
+      - DEBUG=true
+      - ALLOWED_HOSTS=*
+      - FRONTEND_DOMAIN=http://localhost:3000
+
+      - VK_CLIENT_ID=
+      - VK_CLIENT_SECRET=
+
       - POSTGRES_HOST=database
       - POSTGRES_PORT=5432
       - POSTGRES_NAME=notes

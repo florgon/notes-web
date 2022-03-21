@@ -65,7 +65,7 @@ class ApiComponent extends React.Component{
         /// @description Returns error message for error.
 
         let errorText = "";
-        if ("error" in result){
+        if (result !== undefined && "error" in result){
             errorText = result.error.message;
         }else{
             errorText = this.props.t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText;
@@ -103,7 +103,7 @@ class ApiComponent extends React.Component{
     fetch(){
          /// @description Requesting API with fetch.
         console.log(`Fetching API "${this.method}" method via ApiComponent...`);
-        apiRequestWrapper(this.method, "", this.onSuccessHandler, this.onErrorHandler);
+        apiRequestWrapper(this.method, this.params || "", this.onSuccessHandler, this.onErrorHandler);
     }
 
     render_body(result, message){
@@ -111,7 +111,7 @@ class ApiComponent extends React.Component{
     }
 
     render(){
-        const { error, isLoading, result } = this.state;
+        const {error, isLoading, result} = this.state;
   
         let message = this.empty_message;
   
@@ -167,6 +167,7 @@ function apiRequestWrapper(apiMethod, apiParams, successHandler, errorHandler){
 }
 
 export {
+    API_URL,
     apiRequest,
     ApiComponent,
 };

@@ -8,6 +8,8 @@ import Cookies from 'js-cookie';
 // I know that, and may fix that later.
 // Also there is some problems under naming...
 
+// In how much time auth cookies should expire.
+const AUTH_COOKIES_EXPIRES = 365;
 
 const getAuthToken = function(){
     /// @description Returns auth token from cookies.
@@ -33,13 +35,14 @@ const AuthProvider = (props) => {
         setIsAuthenticated(getIsAuthenticated());
         if (isAuthenticated){
             setAuthToken(getAuthToken());
+            console.log("Successfully authenticated via auth context!");
         }
     }, [isAuthenticated]);
 
     const login = function (authToken){
         /// @description Logins user under given auth token.
-        Cookies.set("AUTH_AUTHORIZED", "true");
-        Cookies.set("AUTH_TOKEN", authToken);
+        Cookies.set("AUTH_AUTHORIZED", "true", { expires: AUTH_COOKIES_EXPIRES });
+        Cookies.set("AUTH_TOKEN", authToken, { expires: AUTH_COOKIES_EXPIRES });
         setIsAuthenticated(true);
     }
 

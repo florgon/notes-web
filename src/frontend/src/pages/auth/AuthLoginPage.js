@@ -1,8 +1,9 @@
 // Libraries.
-import React, {useState, Fragment} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import {useTranslation } from 'react-i18next';
-import {Link} from 'react-router-dom';
+import {Link, useSearchParams} from 'react-router-dom';
 import {t} from 'i18next';
+
 
 // Auth context for working with auth.
 import {useAuth} from '../../contexts/AuthContext';
@@ -15,6 +16,9 @@ import DissalowAuth from '../../components/DissalowAuth';
 
 // Alert for messages.
 import Alert from '../../components/Alert';
+
+// Settings.
+const API_AUTH_SERVICE_VK_URL = process.env.REACT_APP_API_URL + "auth/service/vk/request?state=external";
 
 
 const AuthLoginForm = function({loginHandler, username, password, setUsername, setPassword, t}) {
@@ -29,8 +33,13 @@ const AuthLoginForm = function({loginHandler, username, password, setUsername, s
                 <label>{t("auth-field-password")}</label>
                 <PasswordInput password={password} setPassword={setPassword}/>
             </div>
-            <button type="submit" onClick={loginHandler} className="btn btn-primary btn-lg mt-3 w-50 mx-auto">{t("log-in")}</button><br/>
-            <small className="form-text text-muted"><Link to="/auth/signup">{t("auth-not-already-have-account")}</Link></small>
+            <div className='form-group mx-auto mt-3'>
+                <button type="submit" onClick={loginHandler} className="btn btn-primary btn-lg">{t("log-in")}</button>
+            </div>
+            <div className='form-group mx-auto mt-1'>
+                <span><a className="btn btn-outline-primary btn-sm" href={API_AUTH_SERVICE_VK_URL}>{t("auth-via-vk")}</a></span>&nbsp;
+                <span><Link className="btn btn-outline-secondary btn-sm" to="/auth/signup">{t("auth-not-already-have-account")}</Link></span>
+            </div>
         </form>
     )
 }
@@ -97,6 +106,7 @@ const AuthLoginPage = function() {
     // Usings.
     const {t} = useTranslation();
     const {login} = useAuth();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const openPopup = function(text, type){
         /// @description Opens popup.
@@ -106,6 +116,28 @@ const AuthLoginPage = function() {
         })
     }
     
+    const tryLoginViaExternalTokenProvider = function(){
+        /// @description Tries to query and login with externally given credentials.
+        let token = searchParams.get("token");
+        if (token){
+            setSearchParams("");
+            setIsLoading(true);
+            apiRequest("auth/token/resolve", "token=" + token, () => {
+                openPopup(t("loading"), "success");
+                login(token);
+            }, () => {
+                setIsLoading(false);
+                openPopup(t("auth-external-token-invalid"), "danger");
+            })
+        }else{
+            let error = searchParams.get("error");
+            if (error){
+                setSearchParams("");
+                openPopup(t("auth-service-error-" +error), "danger");
+            }
+        }
+    }
+
     const loginOnSuccess = function(raw, result){
         /// @description Handler for login request success.
         setIsLoading(false);
@@ -120,7 +152,6 @@ const AuthLoginPage = function() {
         }else{
             openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
         }
-        
     }
 
     const loginRequest = function(){
@@ -149,6 +180,9 @@ const AuthLoginPage = function() {
         }
     }
 
+    // External token.
+    useEffect(tryLoginViaExternalTokenProvider, [login, searchParams, setSearchParams, t]);
+    
     document.title = t("page-title-auth-login");
     return (
         <Fragment>

@@ -9,14 +9,16 @@ class ApiErrorCode(Enum):
     AUTH_PASSWORDS_NOT_SAME = 2, 400,
     AUTH_EMAIL_TAKEN = 3, 400
     AUTH_USERNAME_TAKEN = 4, 400
+    AUTH_SERVICE_ERROR = 5, 400
     
     # Non existance releated.
     NOTE_NOT_EXISTS = 10, 404
 
-    # API fields releated.
+    # API related.
     API_FIELD_REQUIRED = 20, 400
     API_FIELD_INVALID = 21, 400
     API_METHOD_NOT_FOUND = 22, 404
+    API_FORBIDDEN = 23, 403
 
     # Privacy releate.
     PRIVACY_PRIVATE_NOTE = 30, 403

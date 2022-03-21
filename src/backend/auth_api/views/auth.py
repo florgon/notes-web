@@ -1,10 +1,13 @@
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 
+from auth_api.models import User
+
 from web_services.api.error_code import ApiErrorCode
-from web_services import crud
+from web_services import (
+    crud, serializers
+)
 from web_services.api.response import (
     api_success, api_error
 )
@@ -53,10 +56,7 @@ def sign_up(request):
     
     # Returning user index and token to login immediatly.
     return api_success({
-        "token": {
-            "key": token.key,
-            "is_new": is_new
-        },
+        **serializers.token.serialize(token.key, is_new),
         "user_id": user.id
     })
     
@@ -72,7 +72,7 @@ def resolve_auth_token(request):
     key,  = fields_or_error
 
     # Query token.
-    token = crud.token.get_token_by_key(key)
+    token, is_new = crud.token.get_token_by_key(key), False
     if not token:
         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Token does not exist.")
 
@@ -80,15 +80,10 @@ def resolve_auth_token(request):
     if not token.user.is_active:
         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Owner of this token is not active or deleted!")
 
-    # Returning user with tokne.
+    # Returning user with token.
     return api_success({
-        "token": {
-            "key": key,
-        },
-        "user": {
-            "id": token.user.id,
-            "username": token.user.username
-        }
+        **serializers.token.serialize(token.key, is_new),
+        **serializers.user.serialize(token.user)
     })
 
 
@@ -114,9 +109,6 @@ def get_auth_token(request):
 
     # Returning token.
     return api_success({
-        "token": {
-            'key': token.key,
-            'is_new': is_new
-        },
+        **serializers.token.serialize(token.key, is_new),
         'user_id': user.id
     })
