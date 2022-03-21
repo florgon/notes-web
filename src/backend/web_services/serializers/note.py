@@ -22,6 +22,6 @@ def serialize(note: Note) -> Dict:
 
 def serialize_list(notes: List[Note]) -> Dict:
     """Returns dict object for API response from notes list."""
-    return [
-        serialize(note) for note in notes
-    ]
+    return {
+        "notes": [serialize(note) for note in notes]
+    }
