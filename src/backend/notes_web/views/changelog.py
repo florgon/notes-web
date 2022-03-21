@@ -7,6 +7,9 @@ from web_services.api.response import api_success
 def get_api_changelog(_):
     """Returns list of all routes releated to this app APIs."""
     changelog = {
+        "1.2.3": [
+            "Dissalowed to connect external VK account to more than 1 account. (Now there will code 6 error raised)"
+        ],
         "1.2.2": [
             "Add VK auth service (`/api/auth/service/vk`).",
             "`/api/auht/token/resolve` now returns services field which may be used for showing current service connectivity status"

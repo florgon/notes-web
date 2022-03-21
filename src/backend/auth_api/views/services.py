@@ -102,6 +102,12 @@ def vk_connect_auth(request):
                 return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=error")
             return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Token does not exist.")
 
+        # Check not already connected to other user.
+        if crud.user.get_user_by_vk_user_id(service_user_id):
+            if is_external:
+                return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=error")
+            return api_error(ApiErrorCode.AUTH_SERVICE_ACCOUNT_TAKEN, "Given external account already connected to another user!")
+
         # Connect.
         token.user.vk_user_id = service_user_id
         token.user.save()
@@ -192,6 +198,12 @@ def vk_callback_auth(request):
 
     if state == "connect_external" or state == "connect":
         # If this is connect account request.
+
+        # Check not already connected to other user.
+        if crud.user.get_user_by_vk_user_id(user_id):
+            if is_external:
+                return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=error")
+            return api_error(ApiErrorCode.AUTH_SERVICE_ACCOUNT_TAKEN, "Given external account already connected to another user!")
 
         auth_next_url = f"{REDIRECT_AUTH_CONNECT_URL}?state=confirm&service_user_id={user_id}"
         # Returning redirect or just URL JSON.
