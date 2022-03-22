@@ -14,6 +14,10 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker" # See documentation for possible values
-    directory: "/src/" # Location of package manifests
+    directory: "/src/backend/" # Location of package manifests
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/src/frontend/" # Location of package manifests
     schedule:
       interval: "daily"
