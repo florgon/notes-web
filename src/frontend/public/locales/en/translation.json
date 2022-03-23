@@ -100,5 +100,9 @@
     "vk-account-disconnect": "Unlink VK",
     "external-accounts": "External social accounts",
     "vk-account-success-disconnect": "VK account successfully unlinked!",
-    "vk-account-failed-disconnect": "Unable to unlink VK account!"
+    "vk-account-failed-disconnect": "Unable to unlink VK account!",
+    "back-to-list": "Back to list",
+    "editor-wip": "Fullscale editor still in development yet!",
+    "open-in-editor": "Open in editor",
+    "page-title-note-editor": "Editor"
 }

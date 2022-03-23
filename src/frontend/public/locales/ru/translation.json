@@ -100,5 +100,9 @@
     "vk-account-disconnect": "Отвязать VK",
     "external-accounts": "Сторонние аккаунты",
     "vk-account-success-disconnect": "VK аккаунт успешно отвязан!",
-    "vk-account-failed-disconnect": "Не удалось отвязать аккаунт VK!"
+    "vk-account-failed-disconnect": "Не удалось отвязать аккаунт VK!",
+    "back-to-list": "Назад в список",
+    "editor-wip": "Полноразмерный редактор всё ещё находится в разработке!",
+    "open-in-editor": "Открыть в редакторе",
+    "page-title-note-editor": "Редактор"
 }

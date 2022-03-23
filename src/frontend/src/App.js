@@ -12,6 +12,7 @@ import HomePage        from './pages/HomePage';
 import NotFoundPage    from './pages/NotFoundPage';
 import NotesListPage   from './pages/NotesListPage';
 import CreateNotePage  from './pages/CreateNotePage';
+import NoteEditorPage  from './pages/NoteEditorPage';
 import SettingsPage    from './pages/SettingsPage';
 import AuthPage        from './pages/auth/AuthPage';
 import AuthLoginPage   from './pages/auth/AuthLoginPage';
@@ -34,6 +35,7 @@ const PageRoutes = function(){
       
       {/* Other. */}
       <Route path='/list' element={<NotesListPage/>} /> 
+      <Route path='/note' element={<NoteEditorPage/>} /> 
       <Route path='/create' element={<CreateNotePage/>} /> 
       <Route path='/settings' element={<SettingsPage/>} /> 
       
