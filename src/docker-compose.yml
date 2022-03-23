@@ -31,6 +31,7 @@ services:
 
       - VK_CLIENT_ID=
       - VK_CLIENT_SECRET=
+      - VK_HTTP_SCHEME=https
 
       - POSTGRES_HOST=database
       - POSTGRES_PORT=5432
@@ -56,5 +57,5 @@ services:
       - backend
     links:
       - backend
-    build: ./frontend/.
-    command: sh -c "npm start"
+   build: ./frontend/.
+   command: sh -c "npm start"

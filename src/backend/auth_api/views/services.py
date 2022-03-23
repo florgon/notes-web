@@ -61,7 +61,7 @@ def vk_request_auth(request):
         _error_unavaliable()
 
     # Provider URL.
-    service_redirect_uri = f"{request.scheme}://{request.get_host()}/api/auth/service/vk/callback"
+    service_redirect_uri = f"{settings.AUTH_SERVICE_VK_SCHEME}://{request.get_host()}/api/auth/service/vk/callback"
     auth_provider_url = f"{VK_SERVICE_AUTH_REDIRECT_URL}?client_id={settings.AUTH_SERVICE_VK_CLIENT_ID}&redirect_uri={service_redirect_uri}&state={state}&scope=0&display=page&response_type=code&v=5.131"
 
     # Returning redirect or just URL JSON.
@@ -122,7 +122,7 @@ def vk_connect_auth(request):
 
     # Provider URL.
     state = ("connect_external" if is_external else "connect")
-    service_redirect_uri = f"{request.scheme}://{request.get_host()}/api/auth/service/vk/callback"
+    service_redirect_uri = f"{settings.AUTH_SERVICE_VK_SCHEME}://{request.get_host()}/api/auth/service/vk/callback"
     auth_provider_url = f"{VK_SERVICE_AUTH_REDIRECT_URL}?client_id={settings.AUTH_SERVICE_VK_CLIENT_ID}&redirect_uri={service_redirect_uri}&state={state}&scope=0&display=page&response_type=code&v=5.131"
 
     # Returning redirect or just URL JSON.
@@ -176,7 +176,7 @@ def vk_callback_auth(request):
         _error_unavaliable(is_external)
 
     # Request service.
-    service_redirect_uri = f"{request.scheme}://{request.get_host()}/api/auth/service/vk/callback"
+    service_redirect_uri = f"{settings.AUTH_SERVICE_VK_SCHEME}://{request.get_host()}/api/auth/service/vk/callback"
     auth_request = requests.get(VK_SERVICE_AUTH_VERIFY_URL, {
         "client_id": settings.AUTH_SERVICE_VK_CLIENT_ID,
         "client_secret": settings.AUTH_SERVICE_VK_CLIENT_SECRET,
