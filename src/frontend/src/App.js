@@ -5,7 +5,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 // Import wide use components.
 import Footer          from './components/Footer';
 import Navbar          from './components/Navbar';
-import LoadingFallback from './LoadingFallback';
+import LoadingFallback from './components//LoadingFallback';
 
 // Import pages.
 import HomePage        from './pages/HomePage';
@@ -20,7 +20,6 @@ import AuthLoginPage   from './pages/auth/AuthLoginPage';
 import AuthLogoutPage  from './pages/auth/AuthLogoutPage';
 import AuthSignupPage  from './pages/auth/AuthSignupPage';
 import AuthConnectPage from './pages/auth/AuthConnectPage'
-
 
 // Importing contexts for global application context.
 import {AuthProvider} from './contexts/AuthContext';

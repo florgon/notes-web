@@ -1,5 +1,5 @@
 // Libraries.
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import {t} from 'i18next';
 import {Link} from 'react-router-dom'
 import {useTranslation} from 'react-i18next';
@@ -68,7 +68,7 @@ const NoteEditor = function({id, currentText, createdAt, updatedAt, onSaveNote})
     const [text, setText] = useState(currentText); // Currenty displayed text.
     const [defaultText, setDefaultText] = useState(currentText); // Default text for canceling editing.
 
-    const saveEdit = function(){
+    const saveEdit = useCallback(() => {
         /// @decription Note save edit changes.
         if (text.length === 0){
           // Dissalow to save empty note and raise resetting to default text.
@@ -83,37 +83,37 @@ const NoteEditor = function({id, currentText, createdAt, updatedAt, onSaveNote})
         // Save note.
         onSaveNote(text);
         setDefaultText(text);
+    }, [text, setText, defaultText, setDefaultText, onSaveNote]);
+    
+    const cancelEdit = useCallback(() => {
+      /// @description Note cancel edit changes.
+      setText(defaultText);
+    }, [setText, setDefaultText]);
+    
+    const _handleDrop = useCallback((e) => {
+      /// @description Drop handle wrapper.
+  
+      // Handle link.
+      let dataLink = e.dataTransfer.getData("text/uri-list");
+      if (dataLink){
+        let markdownLink = `[${dataLink}](${dataLink})`;
+        setText(text + markdownLink);
+        return true;
       }
-    
-      const cancelEdit = function(){
-        /// @description Note cancel edit changes.
-        setText(defaultText);
+  
+      // Unable to handle this type of event.
+      return false;
+    }, [setText]);
+  
+    const handleDrop = useCallback((e) => {
+      /// @description Handles drop event when there is something drag and dropped on note body.
+  
+      if (_handleDrop(e)){
+        // Prevent default d&d event.
+        e.stopPropagation();
+        e.preventDefault();
       }
-      
-      const _handleDrop = function(e){
-        /// @description Drop handle wrapper.
-    
-        // Handle link.
-        let dataLink = e.dataTransfer.getData("text/uri-list");
-        if (dataLink){
-          let markdownLink = `[${dataLink}](${dataLink})`;
-          setText(text + markdownLink);
-          return true;
-        }
-    
-        // Unable to handle this type of event.
-        return false;
-      }
-    
-      const handleDrop = function(e){
-        /// @description Handles drop event when there is something drag and dropped on note body.
-    
-        if (_handleDrop(e)){
-          // Prevent default d&d event.
-          e.stopPropagation();
-          e.preventDefault();
-        }
-      }
+    }, [_handleDrop]);
     
     return (<>
         <div className="card shadow">

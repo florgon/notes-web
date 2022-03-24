@@ -1,25 +1,25 @@
 // Libraries.
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 
 // Dissalowing already authenticated for settings page.
-import RequireAuth from '../components/RequireAuth'
+import RequireAuth from '../../components/RequireAuth'
 
 // Language dropdown for settings.
-import LanguageDropdown from '../components/LanguageDropdown';
-import SettingsListViewDropdown from '../components/SettingsListViewDropdown'
+import LanguageDropdown from '../../components/LanguageDropdown';
+import SettingsListViewDropdown from '../../components/SettingsListViewDropdown'
 
 // API for fetching / updating.
-import {ApiComponent, apiRequest, API_URL} from '../components/Api';
-import {getAuthToken} from '../contexts/AuthContext'
+import {ApiComponent, apiRequest, API_URL} from '../../components/Api';
+import {getAuthToken} from '../../contexts/AuthContext'
 
 // Settings context.
-import {useSettings} from '../contexts/SettingsContext';
+import {useSettings} from '../../contexts/SettingsContext';
 
 // Alert for messages.
-import Alert from '../components/Alert';
+import Alert from '../../components/Alert';
 
 
 class AccountSettings extends ApiComponent{
@@ -134,13 +134,13 @@ const SettingsPage = function() {
     // Popup.
     const [alertPopup, setAlertPopup] = useState({open: false});
 
-    const openPopup = function(text, type){
+    const openPopup = useCallback((text, type) => {
         /// @description Opens popup.
         setAlertPopup({
             open: true,
             text, type
         })
-    }
+    }, []);
     
     // Opening note created popup if there is hash link in url.
     useEffect(() => {
@@ -152,7 +152,7 @@ const SettingsPage = function() {
             window.history.replaceState(null, "", window.location.href.replace("#service-connect-error", ""))
             openPopup(t("service-failed-connect"), "danger");
         }
-    }, [openPopup])
+    }, [openPopup, t])
 
     document.title = t("page-title-settings");
     return (
@@ -166,7 +166,6 @@ const SettingsPage = function() {
                     <Alert text={alertPopup.text} type={alertPopup.type}/>
                 }
             </div>
-
 
             <div className="row mt-5">
                 <AccountSettings t={t} openPopup={openPopup}/>

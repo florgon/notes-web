@@ -3,12 +3,12 @@ import React, {useEffect, useState} from 'react';
 import {Navigate, useSearchParams} from 'react-router-dom'
 import {useTranslation} from 'react-i18next';
 
-
 // Components.
-import NoteEditorFetched from '../components/NoteEditorFetched';
+import NoteEditorFetched from '../../components/NoteEditorFetched';
+import {PageLoadingFallback} from '../../components/LoadingFallback'
 
 // Checking if user is authenticated for redirect.
-import {useAuth} from '../contexts/AuthContext'
+import {useAuth} from '../../contexts/AuthContext'
 
 
 const NoteEditorPage = function() {
@@ -28,7 +28,7 @@ const NoteEditorPage = function() {
             return;
         }
         setNoteId(noteId);
-    }, [setNoteId]);
+    }, [setNoteId, searchParams]);
    
     // Redirect to auth if not already authenticated.
     const {isAuthenticated} = useAuth();
@@ -36,9 +36,11 @@ const NoteEditorPage = function() {
     if (noteId === null) return (<Navigate to="/list"/>)
 
     document.title = t("page-title-note-editor");
-    return (<>
-        {noteId !== undefined && <NoteEditorFetched id={noteId}/>}
-    </>)
+    if (noteId !== undefined){
+        return (<NoteEditorFetched id={noteId}/>)
+    }
+
+    return (<PageLoadingFallback t={t}/>)
 }
 
 export default NoteEditorPage;

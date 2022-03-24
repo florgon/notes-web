@@ -1,5 +1,5 @@
 // Libraries.
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
@@ -76,24 +76,25 @@ const AuthSignupPage = function() {
     const {t} = useTranslation();
     const {login} = useAuth();
 
-    const usernameValidator = function(username){
+    const usernameValidator = useCallback((username) => {
         return setUsername(username.toLowerCase());
-    }
-    const openPopup = function(text, type){
+    }, [setUsername]);
+
+    const openPopup = useCallback((text, type) =>{
         /// @description Opens popup.
         setAlertPopup({
             open: true,
             text, type
         })
-    }
+    }, [setAlertPopup]);
 
-    const signUpOnSuccess = function(raw, result){
+    const signUpOnSuccess = useCallback((raw, result) =>{
         /// @description Handler for signup request success.
         setIsLoading(false);
         login(result.success.token.key);
-    }
+    }, [setIsLoading, login]);
 
-    const signUpOnError = function(raw, result){
+    const signUpOnError = useCallback((raw, result) =>{
         /// @description Handler for signup request error.
         setIsLoading(false);
         if ("error" in result){
@@ -101,15 +102,15 @@ const AuthSignupPage = function() {
         }else{
             openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
         }
-    }
+    }, [setIsLoading, openPopup, t]);
 
-    const signupRequest = function(){
+    const signupRequest = useCallback(() =>{
         /// @description Requests API for signup.
         let params = "username=" + username + "&email=" + email + "&password=" + password + "&password_confirmation=" + passwordConfirmation;
         apiRequest("auth/signup", params, signUpOnSuccess, signUpOnError)
-    }
+    }, [username, email, password, passwordConfirmation, signUpOnSuccess, signUpOnError]);
 
-    const signupTryValidate = function(){
+    const signupTryValidate = useCallback(() =>{
         /// @description Returns boolean is signup valid or not, and shows popup if not.
         if (username.length < 1) return openPopup(t("username-required"), "danger") && false;
         if (username.length < 4) return openPopup(t("username-too-short"), "danger") && false;
@@ -124,9 +125,9 @@ const AuthSignupPage = function() {
         if (passwordConfirmation.length < 1) return openPopup(t("password-confirmation-required"), "danger") && false;
         if (password !== passwordConfirmation) return openPopup(t("passwords-not-same"), "danger") && false;
         return true;
-    }
+    }, [openPopup, username, email, password, passwordConfirmation, t]);
 
-    const signupWrapper = function(e){
+    const signupWrapper = useCallback((e) => {
         /// @description Signup button click wrapper.
         e.preventDefault();
 
@@ -134,7 +135,7 @@ const AuthSignupPage = function() {
             setIsLoading(true);
             signupRequest();
         }
-    }
+    }, [signupTryValidate, setIsLoading, signupRequest]);
 
     document.title = t("page-title-auth-signup");
     return (

@@ -1,5 +1,5 @@
 // Libraries.
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useCallback, useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 
 
@@ -39,19 +39,19 @@ const AuthProvider = (props) => {
         }
     }, [isAuthenticated]);
 
-    const login = function (authToken){
+    const login = useCallback((authToken) =>{
         /// @description Logins user under given auth token.
         Cookies.set("AUTH_AUTHORIZED", "true", { expires: AUTH_COOKIES_EXPIRES });
         Cookies.set("AUTH_TOKEN", authToken, { expires: AUTH_COOKIES_EXPIRES });
         setIsAuthenticated(true);
-    }
+    }, [setIsAuthenticated]);
 
-    const logout = function () {
+    const logout = useCallback(() => {
         /// @description Logouts user and removes it data.
         Cookies.set("AUTH_AUTHORIZED", "false");
         Cookies.set("AUTH_TOKEN", "");
         setIsAuthenticated(false);
-    }
+    }, [setIsAuthenticated]);
 
     const authContext = {
         // Functions.
@@ -61,9 +61,7 @@ const AuthProvider = (props) => {
         isAuthenticated, authToken
     }
 
-    return (
-        <AuthContext.Provider value={authContext} {...props}/>
-    )
+    return (<AuthContext.Provider value={authContext} {...props}/>)
 }
 const useAuth = () => React.useContext(AuthContext);
 

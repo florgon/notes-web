@@ -1,5 +1,5 @@
 // Libraries.
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 import {t} from 'i18next';
 import {Link} from 'react-router-dom'
 import {useTranslation} from 'react-i18next';
@@ -94,12 +94,12 @@ const Note = function ({onDeleteNote, onSaveNote, onPinNote, onUnpinNote, id, cu
   const [isEditing, setIsEditing] = useState(false); // Is note currently edited by user?
   const [isPinned, setIsPinned] = useState(currentIsPinned);
 
-  const startEdit = function(){
+  const startEdit = useCallback(() =>{
     /// @description Note start editing.
     setIsEditing(true);
-  }
+  }, [setIsEditing]);
 
-  const saveEdit = function(){
+  const saveEdit = useCallback(() =>{
     /// @decription Note save edit changes.
     setIsEditing(false);
 
@@ -116,7 +116,7 @@ const Note = function ({onDeleteNote, onSaveNote, onPinNote, onUnpinNote, id, cu
     // Save note.
     onSaveNote(id, text);
     setDefaultText(text);
-  }
+  }, [setIsEditing, onSaveNote, text, setText, defaultText, setDefaultText]);
 
   const pinNote = function(){
     /// @description Pins note.
@@ -124,18 +124,18 @@ const Note = function ({onDeleteNote, onSaveNote, onPinNote, onUnpinNote, id, cu
     setIsPinned(true);
   }
   
-  const unpinNote = function(){
-    onUnpinNote(id)
+  const unpinNote = useCallback(() => {
+    onUnpinNote(id);
     setIsPinned(false);
-  }
+  }, [onUnpinNote, setIsPinned]);
 
-  const cancelEdit = function(){
+  const cancelEdit = useCallback(() => {
     /// @description Note cancel edit changes.
     setIsEditing(false);
     setText(defaultText);
-  }
+  }, [setIsEditing, setText]);
   
-  const _handleDrop = function(e){
+  const _handleDrop = useCallback((e) =>{
     /// @description Drop handle wrapper.
 
     // Handle link.
@@ -148,9 +148,9 @@ const Note = function ({onDeleteNote, onSaveNote, onPinNote, onUnpinNote, id, cu
 
     // Unable to handle this type of event.
     return false;
-  }
+  }, [setText]);
 
-  const handleDrop = function(e){
+  const handleDrop = useCallback((e) => {
     /// @description Handles drop event when there is something drag and dropped on note body.
 
     if (_handleDrop(e)){
@@ -158,7 +158,7 @@ const Note = function ({onDeleteNote, onSaveNote, onPinNote, onUnpinNote, id, cu
       e.stopPropagation();
       e.preventDefault();
     }
-  }
+  }, [_handleDrop]);
 
 
   return (
