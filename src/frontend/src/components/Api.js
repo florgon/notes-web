@@ -48,7 +48,9 @@ class ApiComponent extends React.Component{
         // Binding.
         this.onErrorHandler = this.onErrorHandler.bind(this);
         this.onSuccessHandler = this.onSuccessHandler.bind(this);
+
         this.getErrorMessage = this.getErrorMessage.bind(this);
+
         this.fetchAgain = this.fetchAgain.bind(this);
         this.fetch = this.fetch.bind(this);
     }
@@ -61,17 +63,17 @@ class ApiComponent extends React.Component{
         this.fetch();
     }
 
+
     getErrorMessage(raw, result){
         /// @description Returns error message for error.
 
-        let errorText = "";
         if (result !== undefined && "error" in result){
-            errorText = result.error.message;
-        }else{
-            errorText = this.props.t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText;
+            let error_message = getErrorMessageFromCode(result.error.code);
+            if (error_message) return this.props.t(error_message);
+            return result.error.message;
         }
-        
-        return errorText;
+
+        return (this.props.t("error-unknown") + raw.status + " " + raw.statusText);
     }
 
     onErrorHandler(raw, result){
@@ -126,6 +128,28 @@ class ApiComponent extends React.Component{
     }
 }
 
+const getErrorMessageFromCode = function(code){
+    /// @description Returns translation message from code.
+    switch(code){
+        case 0: return "api-error-auth-required"; // "AUTH_REQUIRED";
+        case 1: return "api-error-auth-invalid-credentials"; // "AUTH_INVALID_CREDENTIALS";
+        case 2: return "api-error-auth-passwords-not-same"; //"AUTH_PASSWORDS_NOT_SAME";
+        case 3: return "api-error-auth-email-taken"; //"AUTH_EMAIL_TAKEN";
+        case 4: return "api-error-auth-username-taken"; //"AUTH_USERNAME_TAKEN";
+        case 5: return "api-error-auth-service-error"; //"AUTH_SERVICE_ERROR";
+        case 6: return "api-error-auth-service-account-taken"; //"AUTH_SERVICE_ACCOUNT_TAKEN";
+        case 10: return "api-error-auth-note-not-exists"; //"NOTE_NOT_EXISTS";
+        case 20: return "api-error-api-field-required"; //"API_FIELD_REQUIRED";
+        case 21: return "api-error-api-field-invalid"; //"API_FIELD_INVALID";
+        case 22: return "api-error-api-method-not-found"; //"API_METHOD_NOT_FOUND";
+        case 23: return "api-error-api-forbidden"; //"API_FORBIDDEN";
+        case 30: return "api-error-privacy-private-note"; //"PRIVACY_PRIVATE_NOTE";
+        case 50: return "api-error-not-implemented"; //"NOT_IMPLEMENTED";
+        case 51: return "api-error-server-is-down"; //"SERVER_IS_DOWN";
+    }
+    return undefined;
+}
+
 
 // Private.
 
@@ -135,7 +159,7 @@ function getHeaders(){
 
     let authToken = getAuthToken();
     if (authToken){
-        headers["Authorization"] = "Token " + authToken;
+        //headers["Authorization"] = "Token " + authToken;
     }
 
     return headers;
@@ -169,5 +193,6 @@ function apiRequestWrapper(apiMethod, apiParams, successHandler, errorHandler){
 export {
     API_URL,
     apiRequest,
+    getErrorMessageFromCode,
     ApiComponent,
 };

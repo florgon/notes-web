@@ -13,7 +13,7 @@ import {useAuth} from '../../contexts/AuthContext';
 import DissalowAuth from '../../components/DissalowAuth';
 
 // API for requesting API auth methods.
-import {apiRequest} from '../../components/Api';
+import {apiRequest, getErrorMessageFromCode} from '../../components/Api';
 
 // Alert for messages.
 import Alert from '../../components/Alert';
@@ -98,7 +98,7 @@ const AuthSignupPage = function() {
         /// @description Handler for signup request error.
         setIsLoading(false);
         if ("error" in result){
-            openPopup(result.error.message, "danger");
+            openPopup(t(getErrorMessageFromCode(result.error.code)), "danger");
         }else{
             openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
         }

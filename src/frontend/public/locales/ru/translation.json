@@ -104,5 +104,20 @@
     "back-to-list": "Назад в список",
     "editor-wip": "Полноразмерный редактор всё ещё находится в разработке!",
     "open-in-editor": "Открыть в редакторе",
-    "page-title-note-editor": "Редактор"
+    "page-title-note-editor": "Редактор",
+    "api-error-auth-required": "Требуется авторизация",
+    "api-error-auth-invalid-credentials": "Неверные данные для авторизации",
+    "api-error-auth-passwords-not-same": "Пароли не совпадают",
+    "api-error-auth-email-taken": "Электронная почта уже занята",
+    "api-error-auth-username-taken": "Имя пользователя уже занято",
+    "api-error-auth-service-error": "Ошибка стороннего сервиса авторизации",
+    "api-error-auth-service-account-taken": "Сторонний аккаунт уже привязан к другому аккаунту",
+    "api-error-auth-note-not-exists": "Заметка не существует",
+    "api-error-api-field-required": "Ошибка API (Поле не указано)",
+    "api-error-api-field-invalid": "Ошибка API (Невалидное поле)",
+    "api-error-api-method-not-found": "Данное действие ещё не реализовано на стороне сервера",
+    "api-error-api-forbidden": "У вас нет прав доступа",
+    "api-error-privacy-private-note": "Это приватная заметка",
+    "api-error-not-implemented": "Данное действие ещё не реализовано на стороне сервера",
+    "api-error-server-is-down": "Сервер не может обработать ваш запрос"
 }

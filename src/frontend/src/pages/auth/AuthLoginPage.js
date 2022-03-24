@@ -9,7 +9,7 @@ import {t} from 'i18next';
 import {useAuth} from '../../contexts/AuthContext';
 
 // API for requesting API auth methods.
-import {apiRequest} from '../../components/Api';
+import {apiRequest, getErrorMessageFromCode} from '../../components/Api';
 
 // Dissalow already authenticated users.
 import DissalowAuth from '../../components/DissalowAuth';
@@ -148,7 +148,7 @@ const AuthLoginPage = function() {
         /// @description Handler for login request error.
         setIsLoading(false);
         if ("error" in result){
-            openPopup(result.error.message, "danger");
+            openPopup(t(getErrorMessageFromCode(result.error.code)), "danger");
         }else{
             openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
         }
