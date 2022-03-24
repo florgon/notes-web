@@ -33,6 +33,11 @@ services:
       - VK_CLIENT_SECRET=
       - VK_HTTP_SCHEME=https
 
+      - MAIL_FROM=
+      - MAIL_HOST=
+      - MAIL_HOST_USER=
+      - MAIL_HOST_PASSWORD=
+      
       - POSTGRES_HOST=database
       - POSTGRES_PORT=5432
       - POSTGRES_NAME=notes

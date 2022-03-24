@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+
 from rest_framework.decorators import api_view
 from rest_framework.authtoken.models import Token
 
@@ -6,7 +7,7 @@ from auth_api.models import User
 
 from web_services.api.error_code import ApiErrorCode
 from web_services import (
-    crud, serializers
+    crud, serializers, mail
 )
 from web_services.api.response import (
     api_success, api_error
@@ -54,6 +55,9 @@ def sign_up(request):
     # Query fresh new token.
     token, is_new = Token.objects.get_or_create(user=user)
     
+    # Email user.
+    mail.send_signup_message(email=email, username=username)
+
     # Returning user index and token to login immediatly.
     return api_success({
         **serializers.token.serialize(token.key, is_new),
