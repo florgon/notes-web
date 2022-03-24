@@ -159,7 +159,7 @@ function getHeaders(){
 
     let authToken = getAuthToken();
     if (authToken){
-        //headers["Authorization"] = "Token " + authToken;
+        headers["Authorization"] = "Token " + authToken;
     }
 
     return headers;
