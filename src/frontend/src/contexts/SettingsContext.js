@@ -19,27 +19,40 @@ const getNotesListViewAsGrid = function(){
     return _getSetting("SettingNotesListViewAsGrid", "false") === "true";
 }
 
+const getNoteEditorSplitView = function(){
+    /// @description Returns settings NoteEditorSplitView from storage.
+    return _getSetting("SettingNoteEditorSplitView", "false") === "true";
+}
+
 const SettingsContext = createContext({});
 const SettingsProvider = (props) => {
     // Settings states.
     const [notesListViewAsGrid, _setNotesListViewAsGrid] = useState(false);
+    const [noteEditorSplitView, _setNoteEditorSplitView] = useState(false);
     const setNotesListViewAsGrid = (value) => {
         _setNotesListViewAsGrid(value);
         localStorage.setItem("SettingNotesListViewAsGrid", value);
+    }
+    const setNoteEditorSplitView = (value) => {
+        _setNoteEditorSplitView(value);
+        localStorage.setItem("SettingNoteEditorSplitView", value);
     }
 
     // Reading settings context from local storage.
     useEffect(() => {
         setNotesListViewAsGrid(getNotesListViewAsGrid());
-    }, [_setNotesListViewAsGrid]);
+        _setNoteEditorSplitView(getNoteEditorSplitView());
+    }, [_setNotesListViewAsGrid, _setNoteEditorSplitView]);
 
 
     const settingsContext = {
         // Functions.
         setNotesListViewAsGrid,
+        setNoteEditorSplitView,
         
         // States.
-        notesListViewAsGrid
+        notesListViewAsGrid,
+        noteEditorSplitView
     }
 
     return (
@@ -52,5 +65,7 @@ const useSettings = () => React.useContext(SettingsContext);
 
 export {
     SettingsProvider, useSettings,
-    getNotesListViewAsGrid
+    
+    getNotesListViewAsGrid,
+    getNoteEditorSplitView
 }

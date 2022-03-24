@@ -1,5 +1,5 @@
 // Libraries.
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useState, useEffect, Fragment, useCallback} from 'react';
 import {useTranslation } from 'react-i18next';
 import {Link, useSearchParams} from 'react-router-dom';
 import {t} from 'i18next';
@@ -69,11 +69,11 @@ const PasswordInput = function({password, setPassword}) {
     /// @description Password input with toggle eye icon.
     const [isHidden, setIsHidden] = useState(true);
   
-    const togglePassword = function(e){
+    const togglePassword = useCallback((e) => {
         /// @description Toggles password visibility.
         e.preventDefault();
         setIsHidden(!isHidden);
-    };
+    }, [setIsHidden, isHidden]);
   
     return (
       <div className="input-group">

@@ -1,5 +1,5 @@
 // Libraries.
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useState, useEffect, Fragment, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 
@@ -26,45 +26,45 @@ const NotesList = function({currentNotes, onDeleteNote, onSaveNote, onPinNote, o
         setNotes(currentNotes);
     }, [currentNotes])
 
-    const sortWithOrdering = function(){
+    const sortWithOrdering = useCallback(() => {
         /// @description Returns two arrays, with pinned notes, and unpinned. Should be used as first rendering pinned notes, then unpinned.
 
         // TODO: Later this will be reworked to sortering with custom levels.
         let notesUnpinned = notes.filter((item) => !item.note.sorting.is_pinned);
-        let notesPinned = notes.filter((item) => item.note.sorting.is_pinned)
+        let notesPinned = notes.filter((item) => item.note.sorting.is_pinned);
         return [notesPinned, notesUnpinned];
-    }
+    }, [notes]);
 
     // Popup.
-    const openPopup = function(text, type){
+    const openPopup = useCallback((text, type) => {
         /// @description Opens popup.
         setAlertPopup({
             open: true, text, type
         })
-    }
+    }, [setAlertPopup]);
 
-    const onDeleteNoteWrapper = function(id){
+    const onDeleteNoteWrapper = useCallback((id) => {
         /// @description Delete note handler. Deletes note from lists, and showing popup.
         setNotes(notes.filter((item) => item.note.id !== id));
         if (onDeleteNote) onDeleteNote(id);
         openPopup(t("note-deleted"));
-    }
+    }, [openPopup, onDeleteNote, setNotes, notes]);
 
-    const onPinNoteWrapper = function(id){
+    const onPinNoteWrapper = useCallback((id) => {
         /// @description Pin note handler. Pins note to the top.
         if (onPinNote) onPinNote(id);
-    }
+    }, [onPinNote]);
 
-    const onUnpinNoteWrapper = function(id){
+    const onUnpinNoteWrapper = useCallback((id) => {
         /// @description Unpin note handler. Unpins note from the top.
         if (onUnpinNote) onUnpinNote(id);
-    }
+    }, [onUnpinNote]);
 
-    const onSaveNoteWrapper = function(id, text){
+    const onSaveNoteWrapper = useCallback((id, text) => {
         /// @description Save note handler. Saves note in list, and showing popup.
         if (onSaveNote) onSaveNote(id, text);
         openPopup(t("note-saved"));
-    }
+    }, [openPopup, onSaveNote]);
 
     // Opening note created popup if there is hash link in url.
     useEffect(() => {

@@ -13,3 +13,21 @@ def get_routes(_):
         "/pin", "/unpin"
     ]
     return api_success({"methods": {"api": {"notes": routes}}})
+
+
+@api_view(["GET"])
+def get_routes_upload(_):
+    """ Returns list of all routes releated to this API upload. """
+    routes = [
+        "/server/"
+    ]
+    return api_success({"methods": {"api": {"notes": {"upload": routes}}}})
+
+
+@api_view(["GET"])
+def get_routes_upload_server(_):
+    """ Returns list of all routes releated to this API upload server. """
+    routes = [
+        "/get"
+    ]
+    return api_success({"methods": {"api": {"notes": {"upload": {"server": routes}}}}})

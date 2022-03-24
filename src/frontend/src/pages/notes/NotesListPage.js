@@ -4,10 +4,10 @@ import {Navigate} from 'react-router-dom'
 import {useTranslation} from 'react-i18next';
 
 // Components.
-import NotesListFetched from '../components/NotesListFetched';
+import NotesListFetched from '../../components/NotesListFetched';
 
 // Checking if user is authenticated for redirect.
-import {useAuth} from '../contexts/AuthContext'
+import {useAuth} from '../../contexts/AuthContext'
 
 
 const NotesListPage = function() {
