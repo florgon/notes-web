@@ -11,6 +11,7 @@ import LoadingFallback from './components//LoadingFallback';
 import HomePage        from './pages/HomePage';
 import NotFoundPage    from './pages/NotFoundPage';
 import DevDocsPage     from './pages/DevDocsPage';
+import TermsOfUsePage  from './pages/legal/TermsOfUsePage';
 import NotesListPage   from './pages/notes/NotesListPage';
 import CreateNotePage  from './pages/notes/CreateNotePage';
 import NoteEditorPage  from './pages/notes/NoteEditorPage';
@@ -48,6 +49,7 @@ const PageRoutes = function(){
 
       {/* Other stuff. */}
       <Route path='/dev/docs' element={<DevDocsPage/>} /> 
+      <Route path='/legal/terms-of-use' element={<TermsOfUsePage/>} />
       
       {/* Error handlers. */}
       <Route path='*' element={<NotFoundPage/>} />
