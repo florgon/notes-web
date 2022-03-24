@@ -8,23 +8,25 @@ import Navbar          from './components/Navbar';
 import LoadingFallback from './components//LoadingFallback';
 
 // Import pages.
-import HomePage        from './pages/HomePage';
-import NotFoundPage    from './pages/NotFoundPage';
-import DevDocsPage     from './pages/DevDocsPage';
-import TermsOfUsePage  from './pages/legal/TermsOfUsePage';
-import NotesListPage   from './pages/notes/NotesListPage';
-import CreateNotePage  from './pages/notes/CreateNotePage';
-import NoteEditorPage  from './pages/notes/NoteEditorPage';
-import SettingsPage    from './pages/account/SettingsPage';
-import AuthPage        from './pages/auth/AuthPage';
-import AuthLoginPage   from './pages/auth/AuthLoginPage';
-import AuthLogoutPage  from './pages/auth/AuthLogoutPage';
-import AuthSignupPage  from './pages/auth/AuthSignupPage';
-import AuthConnectPage from './pages/auth/AuthConnectPage'
+import HomePage          from './pages/HomePage';
+import NotFoundPage      from './pages/NotFoundPage';
+import DevDocsPage       from './pages/DevDocsPage';
+import TermsOfUsePage    from './pages/legal/TermsOfUsePage';
+import PrivacyPolicyPage from './pages/legal/PrivacyPolicyPage';
+import NotesListPage     from './pages/notes/NotesListPage';
+import CreateNotePage    from './pages/notes/CreateNotePage';
+import NoteEditorPage    from './pages/notes/NoteEditorPage';
+import SettingsPage      from './pages/account/SettingsPage';
+import AuthPage          from './pages/auth/AuthPage';
+import AuthLoginPage     from './pages/auth/AuthLoginPage';
+import AuthLogoutPage    from './pages/auth/AuthLogoutPage';
+import AuthSignupPage    from './pages/auth/AuthSignupPage';
+import AuthConnectPage   from './pages/auth/AuthConnectPage'
 
 // Importing contexts for global application context.
 import {AuthProvider} from './contexts/AuthContext';
 import {SettingsProvider} from './contexts/SettingsContext';
+
 
 
 const PageRoutes = function(){
@@ -50,6 +52,7 @@ const PageRoutes = function(){
       {/* Other stuff. */}
       <Route path='/dev/docs' element={<DevDocsPage/>} /> 
       <Route path='/legal/terms-of-use' element={<TermsOfUsePage/>} />
+      <Route path='/legal/privacy-policy' element={<PrivacyPolicyPage/>} />
       
       {/* Error handlers. */}
       <Route path='*' element={<NotFoundPage/>} />
