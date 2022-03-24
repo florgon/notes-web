@@ -3,6 +3,11 @@ import React, {Fragment, useCallback, useState} from 'react';
 import {t} from 'i18next';
 import {Link} from 'react-router-dom'
 import {useTranslation} from 'react-i18next';
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+// Settings context for editor split view setting.
+import {getNoteEditorSplitView, useSettings} from '../contexts/SettingsContext'
 
 
 const NoteEditorHeader = function({id, createdAt, updatedAt, t}){
@@ -30,17 +35,28 @@ const NoteEditorHeader = function({id, createdAt, updatedAt, t}){
 
 const NoteEditorBody = function({text, setText, handleDrop}){
     /// @description Body of the not with text.
+    let splitView = getNoteEditorSplitView();
     return (
       <div className="card-body">
           <small className="text-muted">{t("markdown-supported")}</small>
           <br></br>
           <span className="text-danger">{t("editor-wip")}</span>
-          <textarea onDrop={handleDrop} value={text} className="form-control mt-2" rows={10} onChange={(e) => {setText(e.target.value)}}/>
+          {splitView &&
+            <div className="row">
+              <div className="col">
+                <textarea onDrop={handleDrop} value={text} className="form-control mt-2" rows={10} onChange={(e) => {setText(e.target.value)}}/>
+              </div>
+              <div className="col">
+                <ReactMarkdown children={text} remarkPlugins={[remarkGfm]}/>
+              </div>
+            </div>
+          }
+          {!splitView && <textarea onDrop={handleDrop} value={text} className="form-control mt-2" rows={10} onChange={(e) => {setText(e.target.value)}}/>}
       </div>
     )
 }
 
-const NoteEditorFooter = function({text, defaultText, t, saveEdit, cancelEdit}){
+const NoteEditorFooter = function({text, defaultText, t, saveEdit, cancelEdit, settings}){
     /// @description Note footer with buttons.
   
     // May note be saved or not?
@@ -52,7 +68,16 @@ const NoteEditorFooter = function({text, defaultText, t, saveEdit, cancelEdit}){
         {noteMaySaved && <button className="btn btn-primary" onClick={saveEdit}>{t("save-note")}</button>}
         &nbsp;
         <button className="btn btn-warning" onClick={cancelEdit}>{t("cancel-note-edit")}</button>
-        &nbsp;
+        <div className="w-100 mt-1"></div>
+        <button className="btn btn-outline-primary text-right" onClick={() => {
+          settings.setNoteEditorSplitView(!getNoteEditorSplitView())
+        }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-layout-split" viewBox="0 0 16 16">
+            <path d="M0 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3zm8.5-1v12H14a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H8.5zm-1 0H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h5.5V2z"/>
+          </svg>
+        </button>
+
+        <div className="w-100 mt-1"></div>
         <Link className="btn btn-outline-secondary" to="/list">{t("back-to-list")}</Link>
       </div>
     )
@@ -63,6 +88,7 @@ const NoteEditor = function({id, currentText, createdAt, updatedAt, onSaveNote})
 
     // Usings.
     const {t} = useTranslation();
+    const settings = useSettings();
 
       // States.
     const [text, setText] = useState(currentText); // Currenty displayed text.
@@ -124,6 +150,7 @@ const NoteEditor = function({id, currentText, createdAt, updatedAt, onSaveNote})
                 setText={setText} handleDrop={handleDrop}/>
             <NoteEditorFooter t={t} text={text} defaultText={defaultText}
                 saveEdit={saveEdit} cancelEdit={cancelEdit}
+                settings={settings}
             />
         </div>
     </>);
