@@ -5,11 +5,6 @@ from pathlib import Path
 # See root `/src/docker-compose.yml` for service settings!
 # All stuff should be grabben from there!
 
-
-# Mails.
-ADMINS = []
-MANAGERS = []
-
 # Paths.
 APPEND_SLASH = True
 PREPEND_WWW = False
@@ -28,7 +23,8 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # Development.
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG") or False
+DEBUG = os.environ.get("DEBUG", "true")
+DEBUG = (DEBUG == "1" or DEBUG == "true")
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split() or "*"
 FRONTEND_DOMAIN = os.environ.get("FRONTEND_DOMAIN") or "http://localhost:3000"
 
@@ -59,8 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    # 'django.contrib.messages',
-    # 'django.contrib.staticfiles',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -77,20 +71,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
 ]
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

@@ -6,7 +6,8 @@ from django.conf import settings
 
 from web_services import (
     crud,
-    serializers
+    serializers,
+    mail
 )
 from web_services.api.error_code import ApiErrorCode
 from web_services.api.response import (
@@ -149,6 +150,9 @@ def vk_disconnect_auth(request):
     request.user.vk_user_id = None
     request.user.save()
 
+    # Send email message.
+    mail.send_vk_account_unlinked_message()
+
     # OK.
     return api_success({
         "status": "disconnected"
@@ -204,6 +208,9 @@ def vk_callback_auth(request):
             if is_external:
                 return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=error")
             return api_error(ApiErrorCode.AUTH_SERVICE_ACCOUNT_TAKEN, "Given external account already connected to another user!")
+
+        # Send email message.
+        mail.send_vk_account_linked_message()
 
         auth_next_url = f"{REDIRECT_AUTH_CONNECT_URL}?state=confirm&service_user_id={user_id}"
         # Returning redirect or just URL JSON.

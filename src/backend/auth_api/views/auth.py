@@ -7,13 +7,17 @@ from auth_api.models import User
 
 from web_services.api.error_code import ApiErrorCode
 from web_services import (
-    crud, serializers, mail
+    crud, 
+    serializers, 
+    mail
 )
 from web_services.api.response import (
-    api_success, api_error
+    api_success, 
+    api_error
 )
 from web_services.utils import (
-    validate_email, validate_request
+    validate_email, 
+    validate_request
 )
 
 
