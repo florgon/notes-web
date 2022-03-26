@@ -9,15 +9,19 @@ updates:
     directory: "/src/frontend/" # Location of package manifests
     schedule:
       interval: "daily"
+    target-branch: "develop"
   - package-ecosystem: "pip" # See documentation for possible values
     directory: "/src/backend/" # Location of package manifests
     schedule:
       interval: "daily"
+    target-branch: "develop"
   - package-ecosystem: "docker" # See documentation for possible values
     directory: "/src/backend/" # Location of package manifests
     schedule:
       interval: "daily"
+    target-branch: "develop"
   - package-ecosystem: "docker" # See documentation for possible values
     directory: "/src/frontend/" # Location of package manifests
     schedule:
       interval: "daily"
+    target-branch: "develop"
