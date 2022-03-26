@@ -151,7 +151,7 @@ def vk_disconnect_auth(request):
     request.user.save()
 
     # Send email message.
-    mail.send_vk_account_unlinked_message()
+    mail.send_vk_account_unlinked_message(request.user.mail, request.user.username)
 
     # OK.
     return api_success({
@@ -210,7 +210,7 @@ def vk_callback_auth(request):
             return api_error(ApiErrorCode.AUTH_SERVICE_ACCOUNT_TAKEN, "Given external account already connected to another user!")
 
         # Send email message.
-        mail.send_vk_account_linked_message()
+        mail.send_vk_account_linked_message(request.user.mail, request.user.username)
 
         auth_next_url = f"{REDIRECT_AUTH_CONNECT_URL}?state=confirm&service_user_id={user_id}"
         # Returning redirect or just URL JSON.
