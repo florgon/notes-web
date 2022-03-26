@@ -62,5 +62,5 @@ services:
       - backend
     links:
       - backend
-   build: ./frontend/.
-   command: sh -c "npm start"
+    build: ./frontend/.
+    command: sh -c "npm start"
