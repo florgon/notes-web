@@ -113,6 +113,9 @@ def vk_connect_auth(request):
         token.user.vk_user_id = service_user_id
         token.user.save()
 
+        # Send email message.
+        mail.send_vk_account_linked_message(token.user.email, token.user.username)
+
         # Returning success or redirect.
         if is_external:
             return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=success")
@@ -209,9 +212,6 @@ def vk_callback_auth(request):
                 return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_CONNECT_URL}?state=error")
             return api_error(ApiErrorCode.AUTH_SERVICE_ACCOUNT_TAKEN, "Given external account already connected to another user!")
 
-        # Send email message.
-        mail.send_vk_account_linked_message(request.user.email, request.user.username)
-
         auth_next_url = f"{REDIRECT_AUTH_CONNECT_URL}?state=confirm&service_user_id={user_id}"
         # Returning redirect or just URL JSON.
         if is_external:
@@ -231,6 +231,7 @@ def vk_callback_auth(request):
         if is_external:
             return HttpResponseRedirect(redirect_to=f"{REDIRECT_AUTH_LOGIN_URL}?error=unknown")
         return api_error(ApiErrorCode.AUTH_INVALID_CREDENTIALS, "Failed to create new token!")
+
 
     # Return success.
     if is_external:
