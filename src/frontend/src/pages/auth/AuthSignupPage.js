@@ -13,7 +13,7 @@ import {useAuth} from '../../contexts/AuthContext';
 import DissalowAuth from '../../components/DissalowAuth';
 
 // API for requesting API auth methods.
-import {apiRequest} from '../../components/Api';
+import {apiRequest, getErrorMessageFromCode} from '../../components/Api';
 
 // Alert for messages.
 import Alert from '../../components/Alert';
@@ -53,7 +53,7 @@ const AuthSignupForm = function({
                 </div>
             </div>
             <button type="submit" onClick={signupHandler} className="btn btn-primary btn-lg mt-3 w-50 mx-auto">{t("sign-up")}</button><br/>
-            <small className="form-text text-muted">{t("auth-by-continue-you-agree")}</small><br/>
+            <small className="form-text text-muted"><Link to="/legal/terms-of-use">{t("auth-by-continue-you-agree")}</Link></small><br/>
             <small className="form-text text-muted"><Link to="/auth/login">{t("auth-already-have-account")}</Link></small>
         </form>
     )
@@ -98,7 +98,7 @@ const AuthSignupPage = function() {
         /// @description Handler for signup request error.
         setIsLoading(false);
         if ("error" in result){
-            openPopup(result.error.message, "danger");
+            openPopup(t(getErrorMessageFromCode(result.error.code)), "danger");
         }else{
             openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");
         }

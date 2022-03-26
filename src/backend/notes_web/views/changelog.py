@@ -28,4 +28,5 @@ def get_api_changelog(_):
             "Initial release."
         ]
     }
+    
     return api_success({"changelog": changelog})

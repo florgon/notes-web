@@ -5,10 +5,27 @@ from pathlib import Path
 # See root `/src/docker-compose.yml` for service settings!
 # All stuff should be grabben from there!
 
-# Main.
+# Paths.
+APPEND_SLASH = True
+PREPEND_WWW = False
+
+# Email.
+DEFAULT_FROM_EMAIL = os.environ.get("MAIL_FROM")
+# Host.
+EMAIL_HOST = os.environ.get("MAIL_HOST")
+EMAIL_HOST_USER = os.environ.get("MAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("MAIL_HOST_PASSWORD")
+# Auth backend.
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+
+# Development.
 SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG")
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split()
+DEBUG = os.environ.get("DEBUG", "true")
+DEBUG = (DEBUG == "1" or DEBUG == "true")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split() or "*"
 FRONTEND_DOMAIN = os.environ.get("FRONTEND_DOMAIN") or "http://localhost:3000"
 
 # Auth service logic.
@@ -38,8 +55,6 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    # 'django.contrib.messages',
-    # 'django.contrib.staticfiles',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -56,20 +71,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
 ]
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

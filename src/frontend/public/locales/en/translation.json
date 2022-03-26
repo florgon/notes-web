@@ -104,5 +104,20 @@
     "back-to-list": "Back to list",
     "editor-wip": "Fullscale editor still in development yet!",
     "open-in-editor": "Open in editor",
-    "page-title-note-editor": "Editor"
+    "page-title-note-editor": "Editor",
+    "api-error-auth-required": "Auth required",
+    "api-error-auth-invalid-credentials": "Invalid credentials for authentication",
+    "api-error-auth-passwords-not-same": "Passwords not same",
+    "api-error-auth-email-taken": "Email already taken",
+    "api-error-auth-username-taken": "Username already taken",
+    "api-error-auth-service-error": "External auth service error",
+    "api-error-auth-service-account-taken": "External account already linked to other account",
+    "api-error-auth-note-not-exists": "Note does not exists",
+    "api-error-api-field-required": "API error (Field required)",
+    "api-error-api-field-invalid": "API error (Invalid field)",
+    "api-error-api-method-not-found": "This action not implemented on server-side yet",
+    "api-error-api-forbidden": "You do not have required permissions",
+    "api-error-privacy-private-note": "This is private note",
+    "api-error-not-implemented": "This action not implemented on server-side yet",
+    "api-error-server-is-down": "Server unable to process your request."
 }
