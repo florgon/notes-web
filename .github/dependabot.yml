@@ -1,12 +1,12 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/src/"
+    directory: "/"
     target-branch: "develop"
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
-    directory: "/src/"
+    directory: "/"
     target-branch: "develop"
     schedule:
       interval: "daily"
