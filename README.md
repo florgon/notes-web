@@ -1,26 +1,14 @@
-# WARNING. NOTICE!
-### Project is currently being migrated to Florgon from Kirill Zhosul.
-# Migration process still in process!
-
 # Notes website.
-TBD. Gone until migration end.
+This repository contains web page with interface that works with [Notes API](https://github.com/florgon/notes-api). \
+Website built using React as Single-Page-Application (SPA).
 
-### Running.
-To start development server:
-```commandLIne
-npm start
-```
+## Related.
+- [Notes API](https://github.com/florgon/notes-api).
+- [Notes Mobile](https://github.com/florgon/notes-mobile).
+- [Notes Web (This)](https://github.com/florgon/notes-web).
 
-### Deploying production.
-Build project in to the static folder `build/`
-```commandLine
-npm run build
-```
-and serve using static server or Nginx.
-
-
-### Config.
-Config values should be changed under .env file!
+## Configuration.
+Environment variables (Configuration) should be changed under `.env` file!
 
 ## Previews.
 ![Home page](/previews/home.jpg)
