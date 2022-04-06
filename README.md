@@ -1,3 +1,7 @@
+# WARNING. NOTICE!
+### Project is currently being migrated to Florgon from Kirill Zhosul.
+# Migration process still in process!
+
 # Notes website.
 ### [Try it in browser!](https://notes.kirillzhosul.site) / [But how to run?](/docs/HOW_TO_RUN.md)
 
