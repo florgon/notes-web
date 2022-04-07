@@ -1,27 +1,14 @@
 # Notes website.
-### [Try it in browser!](https://notes.kirillzhosul.site) / [But how to run?](/docs/HOW_TO_RUN.md)
+This repository contains web page with interface that works with [Notes API](https://github.com/florgon/notes-api). \
+Website built using React as Single-Page-Application (SPA).
 
-## Description.
-This is monorepository with notes website.
-Website provides web interface for creating *private* user notes and working with them.
-Project uses Python (Django, REST) + React (Boostrap, Router, i18next) + Docker (Compose).
-This is test task for *SimbirSoft* (Web/Backend).
+## Related.
+- [Notes API](https://github.com/florgon/notes-api).
+- [Notes Mobile](https://github.com/florgon/notes-mobile).
+- [Notes Web (This)](https://github.com/florgon/notes-web).
 
-## Specification.
-See [docs/SPECIFICATION.md](/docs/SPECIFICATION.md).
-
-## How to run?
-See [docs/HOW_TO_RUN.md](/docs/HOW_TO_RUN.md) or simply `docker-compose up`.
-
-## Deployment production.
-Warning: Not documented yet (Document Nginx + Static serving).
-See [docs/DEPLOYMENT.md](/docs/DEPLOYMENT.md).
-
-### Technologies.
-See [docs/TECHNOLOGIES.md](/docs/TECHNOLOGIES.md).
-
-### API Methods.
-See [docs/API_METHODS.md](/docs/API_METHODS.md) or `/dev/docs` page.
+## Configuration.
+Environment variables (Configuration) should be changed under `.env` file!
 
 ## Previews.
 ![Home page](/previews/home.jpg)
