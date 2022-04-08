@@ -46,6 +46,10 @@ const HomePage = function() {
                 {!isAuthenticated && <NotAuthenticatedButtons t={t}/>}
 
                 <div className="col-auto">
+                    <Link className="btn btn-lg btn-outline-secondary" to="/download">{t("download-clients")}</Link>
+                </div>
+
+                <div className="col-auto">
                     <LanguageDropdown t={t}/>
                 </div>
             </div>

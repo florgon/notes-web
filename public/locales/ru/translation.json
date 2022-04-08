@@ -1,5 +1,5 @@
 {
-    "brand": "Заметки",
+    "brand": "Florgon Заметки",
     "author-name": "Кирилл Жосул",
     "author-name-by": "Кириллом Жосулом",
     "welcome-there": "Добро пожаловать!",
@@ -119,5 +119,9 @@
     "api-error-api-forbidden": "У вас нет прав доступа",
     "api-error-privacy-private-note": "Это приватная заметка",
     "api-error-not-implemented": "Данное действие ещё не реализовано на стороне сервера",
-    "api-error-server-is-down": "Сервер не может обработать ваш запрос"
+    "api-error-server-is-down": "Сервер не может обработать ваш запрос",
+    "page-title-download": "Загрузить",
+    "download-clients": "Загрузить клиент",
+    "download-clients-wip": "Клиенты находятся в разработке и ещё не существуют!",
+    "download-android-releases": "Открыть релизы Android клиента"
 }

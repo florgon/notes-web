@@ -12,7 +12,7 @@ const FooterButtons = function(){
                 {t("built-with-love")}<a href="https://kirillzhosul.site" className="link-info">{t("author-name-by")}</a>.
             </span>
             <span className="text-muted col">
-                <a href="https://github.com/kirillzhosul/notes" className="text-reset" target="_blank" rel="noreferrer">{t("source-code")}</a>.
+                <a href="https://github.com/florgon/notes-web" className="text-reset" target="_blank" rel="noreferrer">{t("source-code")}</a>.
             </span>
             <span className="text-muted col">
                 <Link to="/dev/docs" className="text-reset">{t("for-developers")}</Link>.
