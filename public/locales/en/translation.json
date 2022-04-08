@@ -1,5 +1,5 @@
 {
-    "brand": "Notes",
+    "brand": "Florgon Notes",
     "author-name": "Kirill Zhosul",
     "author-name-by": "Kirill Zhosul",
     "welcome-there": "Welcome, there!",
@@ -119,5 +119,9 @@
     "api-error-api-forbidden": "You do not have required permissions",
     "api-error-privacy-private-note": "This is private note",
     "api-error-not-implemented": "This action not implemented on server-side yet",
-    "api-error-server-is-down": "Server unable to process your request."
+    "api-error-server-is-down": "Server unable to process your request.",
+    "page-title-download": "Download",
+    "download-clients": "Download client",
+    "download-clients-wip": "Clients currently in development and does not exists yet!",
+    "download-android-releases": "See android client releases"
 }
