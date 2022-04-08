@@ -2,11 +2,11 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    target-branch: "develop"
+    target-branch: "dependabot"
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
     directory: "/"
-    target-branch: "develop"
+    target-branch: "dependabot"
     schedule:
       interval: "daily"
