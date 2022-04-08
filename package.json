@@ -1,7 +1,6 @@
 {
   "name": "notes-web",
   "description": "Notes service web page build with React. Works with Notes API.",
-  "homepage": "https://github.com/florgon/notes-web#readme",
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
