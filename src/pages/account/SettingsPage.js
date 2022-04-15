@@ -76,7 +76,7 @@ class AccountSettings extends ApiComponent{
                     <p className="display-6 mt-3">{this.props.t("external-accounts")}</p>
                     {user.services.vk === false &&
                         <form method="POST" action={API_URL + "auth/service/vk/connect?state=external"} className="inline">
-                            <button type="submit" className="btn btn-lg btn-outline-primary" disabled>
+                            <button type="submit" className="btn btn-lg btn-outline-primary disabled" >
                                 {this.props.t("connect-vk-account")}
                             </button>
                         </form>
@@ -88,7 +88,7 @@ class AccountSettings extends ApiComponent{
                             </div>
                         </div>
                         <div className="col-md-auto">
-                            <button className="btn btn-lg btn-outline-primary" disabled onClick={this.handleVkDisconnect}>
+                            <button className="btn btn-lg btn-outline-primary disabled"  onClick={this.handleVkDisconnect}>
                                 {this.props.t("vk-account-disconnect")}
                             </button>
                         </div>

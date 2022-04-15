@@ -37,7 +37,7 @@ const AuthLoginForm = function({loginHandler, username, password, setUsername, s
                 <button type="submit" onClick={loginHandler} className="btn btn-primary btn-lg">{t("log-in")}</button>
             </div>
             <div className='form-group mx-auto mt-1'>
-                <span><a className="btn btn-outline-primary btn-sm" href={API_AUTH_SERVICE_VK_URL} disabled>{t("auth-via-vk")}</a></span>&nbsp;
+                <span><a className="btn btn-outline-primary btn-sm disabled" href={API_AUTH_SERVICE_VK_URL}>{t("auth-via-vk")}</a></span>&nbsp;
                 <span><Link className="btn btn-outline-secondary btn-sm" to="/auth/signup">{t("auth-not-already-have-account")}</Link></span>
             </div>
         </form>
