@@ -48,7 +48,6 @@ const PageRoutes = function(){
       <Route path='/auth/login' element={<AuthLoginPage/>} /> 
       <Route path='/auth/logout' element={<AuthLogoutPage/>} /> 
       <Route path='/auth/signup' element={<AuthSignupPage/>} />
-      <Route path='/auth/connect' element={<AuthConnectPage/>} />
 
       {/* Other stuff. */}
       <Route path='/download' element={<DownloadPage/>} /> 

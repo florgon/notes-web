@@ -1,5 +1,5 @@
 // Libraries.
-import React, {useState, useEffect, useCallback} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
@@ -12,14 +12,12 @@ import LanguageDropdown from '../../components/LanguageDropdown';
 import SettingsListViewDropdown from '../../components/SettingsListViewDropdown'
 
 // API for fetching / updating.
-import {ApiComponent, apiRequest, API_URL} from '../../components/Api';
+import {ApiComponent} from '../../components/Api';
 import {getAuthToken} from '../../contexts/AuthContext'
 
 // Settings context.
 import {useSettings} from '../../contexts/SettingsContext';
 
-// Alert for messages.
-import Alert from '../../components/Alert';
 
 
 class AccountSettings extends ApiComponent{
@@ -35,26 +33,6 @@ class AccountSettings extends ApiComponent{
         this.error_message = {text: this.props.t("error-occured"), className: "text-danger"};
         this.empty_message = {text: this.props.t("error-unknown"), className: "text-danger"};
         this.loading_message = {text: this.props.t("loading"), className: "text-muted"};
-
-        this.handleVkDisconnect = this.handleVkDisconnect.bind(this);
-    }
-
-    handleVkDisconnect(){
-        /// @descrption Handles VK auth service disconnect.
-        apiRequest("auth/service/vk/disconnect", "", (raw, response) => {
-            if ("status" in response.success){
-                let status = response.success.status;
-                if (status === "disconnected"){
-                    this.props.openPopup(this.props.t("vk-account-success-disconnect"), "success")
-                    this.fetchAgain();
-                    return;
-                }
-
-                this.props.openPopup(this.props.t("vk-account-failed-disconnect"), "danger")
-            }
-        }, () => {
-            this.props.openPopup(this.props.t("vk-account-failed-disconnect"), "danger")
-        })
     }
 
     render_body(result, message){
@@ -73,26 +51,6 @@ class AccountSettings extends ApiComponent{
                         <div>{this.props.t("user-index")} {user.id}</div>
                         <div>{this.props.t("email")} {user.email}</div>
                     </div>
-                    <p className="display-6 mt-3">{this.props.t("external-accounts")}</p>
-                    {user.services.vk === false &&
-                        <form method="POST" action={API_URL + "auth/service/vk/connect?state=external"} className="inline">
-                            <button type="submit" className="btn btn-lg btn-outline-primary disabled" >
-                                {this.props.t("connect-vk-account")}
-                            </button>
-                        </form>
-                    }
-                    {user.services.vk === true && <div className="row justify-content-center">
-                        <div className="col-md-auto">
-                            <div className="btn btn-lg btn-outline-primary disabled">
-                                {this.props.t("vk-account-connected")}
-                            </div>
-                        </div>
-                        <div className="col-md-auto">
-                            <button className="btn btn-lg btn-outline-primary disabled"  onClick={this.handleVkDisconnect}>
-                                {this.props.t("vk-account-disconnect")}
-                            </button>
-                        </div>
-                    </div>}
                 </>}
 
                 {!user && <div className="text-center display-6">
@@ -131,29 +89,6 @@ const SettingsPage = function() {
     const {t} = useTranslation();
     const settings = useSettings()
 
-    // Popup.
-    const [alertPopup, setAlertPopup] = useState({open: false});
-
-    const openPopup = useCallback((text, type) => {
-        /// @description Opens popup.
-        setAlertPopup({
-            open: true,
-            text, type
-        })
-    }, []);
-    
-    // Opening note created popup if there is hash link in url.
-    useEffect(() => {
-        if (window.location.href.includes("#service-connected")){
-            window.history.replaceState(null, "", window.location.href.replace("#service-connected", ""))
-            openPopup(t("service-successfully-connected"), "success");
-        }
-        if (window.location.href.includes("#service-connect-error")){
-            window.history.replaceState(null, "", window.location.href.replace("#service-connect-error", ""))
-            openPopup(t("service-failed-connect"), "danger");
-        }
-    }, [openPopup, t])
-
     document.title = t("page-title-settings");
     return (
         <div className="text-center">
@@ -161,14 +96,8 @@ const SettingsPage = function() {
             <p className="display-1">{t("settings")}</p>
             <hr className="w-25 mx-auto"/>
 
-            <div className="w-50 mx-auto">
-                {alertPopup.open &&
-                    <Alert text={alertPopup.text} type={alertPopup.type}/>
-                }
-            </div>
-
             <div className="row mt-5">
-                <AccountSettings t={t} openPopup={openPopup}/>
+                <AccountSettings t={t}/>
                 <SiteSettings t={t} settings={settings}/>
             </div>
         </div>
