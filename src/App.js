@@ -22,7 +22,6 @@ import AuthPage          from './pages/auth/AuthPage';
 import AuthLoginPage     from './pages/auth/AuthLoginPage';
 import AuthLogoutPage    from './pages/auth/AuthLogoutPage';
 import AuthSignupPage    from './pages/auth/AuthSignupPage';
-import AuthConnectPage   from './pages/auth/AuthConnectPage'
 
 // Importing contexts for global application context.
 import {AuthProvider} from './contexts/AuthContext';
