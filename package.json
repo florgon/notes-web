@@ -28,7 +28,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "remark-gfm": "^3.0.1",
-    "terser": "^5.12.1",
+    "terser": "^5.13.1",
     "validator": "^13.7.0",
     "web-vitals": "^2.1.4"
   },
