@@ -9,8 +9,3 @@ Website built using React as Single-Page-Application (SPA).
 
 ## Configuration.
 Environment variables (Configuration) should be changed under `.env` file!
-
-## Previews.
-![Home page](/previews/home.jpg)
-![Login page](/previews/login.jpg)
-![Notes list page](/previews/list.jpg)
