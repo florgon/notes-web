@@ -6,9 +6,6 @@ import {Link} from 'react-router-dom'
 // Checking if user is authenticated.
 import {useAuth} from '../contexts/AuthContext';
 
-// Components.
-import LanguageDropdown from '../components/LanguageDropdown';
-
 const AuthenticatedButtons = function({t}){
     /// @description Home page buttons when user is authenticated.
     return (
@@ -47,10 +44,6 @@ const HomePage = function() {
 
                 <div className="col-auto">
                     <Link className="btn btn-lg btn-outline-secondary" to="/download">{t("download-clients")}</Link>
-                </div>
-
-                <div className="col-auto">
-                    <LanguageDropdown t={t}/>
                 </div>
             </div>
         </Fragment>

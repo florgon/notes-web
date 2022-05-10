@@ -8,7 +8,6 @@ import {Link} from 'react-router-dom';
 import RequireAuth from '../../components/RequireAuth'
 
 // Language dropdown for settings.
-import LanguageDropdown from '../../components/LanguageDropdown';
 import SettingsListViewDropdown from '../../components/SettingsListViewDropdown'
 
 // API for fetching / updating.
@@ -110,9 +109,6 @@ const SiteSettings = function({t, settings}){
             <p className="display-4 mt-3">{t("site")}</p>
             <hr className="w-50 mx-auto"/>
             <div className="row justify-content-center">
-                <div className="col-md-auto">
-                    <LanguageDropdown t={t}/>
-                </div>
                 <div className="col-md-auto">
                     <Link to="/auth/logout" className="btn btn-lg btn-outline-warning">{t("log-out")}</Link>
                 </div>

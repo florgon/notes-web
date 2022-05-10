@@ -10,7 +10,7 @@ const fallbackLanguageCode = ['en'];
 // List of all languages.
 // Languages should be placed in:
 // public/assets/locals/en/translations
-const availableLanguageCodes = ['en', 'ru'];
+const availableLanguageCodes = ['en'];
 
 
 i18n.use(Backend).use(LanguageDetector).use(initReactI18next).init({
