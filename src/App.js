@@ -12,8 +12,6 @@ import HomePage          from './pages/HomePage';
 import NotFoundPage      from './pages/NotFoundPage';
 import DevDocsPage       from './pages/DevDocsPage';
 import DownloadPage      from './pages/DownloadPage'
-import TermsOfUsePage    from './pages/legal/TermsOfUsePage';
-import PrivacyPolicyPage from './pages/legal/PrivacyPolicyPage';
 import NotesListPage     from './pages/notes/NotesListPage';
 import CreateNotePage    from './pages/notes/CreateNotePage';
 import NoteEditorPage    from './pages/notes/NoteEditorPage';
@@ -53,9 +51,7 @@ const PageRoutes = function(){
       {/* Other stuff. */}
       <Route path='/download' element={<DownloadPage/>} /> 
       <Route path='/dev/docs' element={<DevDocsPage/>} /> 
-      <Route path='/legal/terms-of-use' element={<TermsOfUsePage/>} />
-      <Route path='/legal/privacy-policy' element={<PrivacyPolicyPage/>} />
-      
+
       {/* Error handlers. */}
       <Route path='*' element={<NotFoundPage/>} />
     </Routes>

@@ -53,7 +53,6 @@ const AuthSignupForm = function({
                 </div>
             </div>
             <button type="submit" onClick={signupHandler} className="btn btn-primary btn-lg mt-3 w-50 mx-auto">{t("sign-up")}</button><br/>
-            <small className="form-text text-muted"><Link to="/legal/terms-of-use">{t("auth-by-continue-you-agree")}</Link></small><br/>
             <small className="form-text text-muted"><Link to="/auth/login">{t("auth-already-have-account")}</Link></small>
         </form>
     )
