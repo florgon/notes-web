@@ -17,6 +17,9 @@ import DissalowAuth from '../../components/DissalowAuth';
 // Alert for messages.
 import Alert from '../../components/Alert';
 
+// Settings.
+const API_AUTH_SERVICE_VK_URL = process.env.REACT_APP_API_URL + "auth/service/vk/request?state=external";
+
 
 const AuthLoginForm = function({loginHandler, username, password, setUsername, setPassword, t}) {
     /// @description Login form for auth.
@@ -34,6 +37,7 @@ const AuthLoginForm = function({loginHandler, username, password, setUsername, s
                 <button type="submit" onClick={loginHandler} className="btn btn-primary btn-lg">{t("log-in")}</button>
             </div>
             <div className='form-group mx-auto mt-1'>
+                <span><a className="btn btn-outline-primary btn-sm disabled" href={API_AUTH_SERVICE_VK_URL}>{t("auth-via-vk")}</a></span>&nbsp;
                 <span><Link className="btn btn-outline-secondary btn-sm" to="/auth/signup">{t("auth-not-already-have-account")}</Link></span>
             </div>
         </form>
@@ -102,6 +106,7 @@ const AuthLoginPage = function() {
     // Usings.
     const {t} = useTranslation();
     const {login} = useAuth();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const openPopup = function(text, type){
         /// @description Opens popup.
@@ -109,6 +114,28 @@ const AuthLoginPage = function() {
             open: true,
             text, type
         })
+    }
+    
+    const tryLoginViaExternalTokenProvider = function(){
+        /// @description Tries to query and login with externally given credentials.
+        let token = searchParams.get("token");
+        if (token){
+            setSearchParams("");
+            setIsLoading(true);
+            apiRequest("auth/token/resolve", "token=" + token, () => {
+                openPopup(t("loading"), "success");
+                login(token);
+            }, () => {
+                setIsLoading(false);
+                openPopup(t("auth-external-token-invalid"), "danger");
+            })
+        }else{
+            let error = searchParams.get("error");
+            if (error){
+                setSearchParams("");
+                openPopup(t("auth-service-error-" +error), "danger");
+            }
+        }
     }
 
     const loginOnSuccess = function(raw, result){
@@ -153,6 +180,9 @@ const AuthLoginPage = function() {
         }
     }
 
+    // External token.
+    useEffect(tryLoginViaExternalTokenProvider, [login, searchParams, setSearchParams, t]);
+    
     document.title = t("page-title-auth-login");
     return (
         <Fragment>
