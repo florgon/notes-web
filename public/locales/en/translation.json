@@ -1,7 +1,5 @@
 {
     "brand": "Florgon Notes",
-    "author-name": "Kirill Zhosul",
-    "author-name-by": "Kirill Zhosul",
     "welcome-there": "Welcome, there!",
     "website-desription": "This is notes taking website, that allows you to create private notes and work with them.",
     "website-is-free": "Website is absolutely free for all",
@@ -12,9 +10,6 @@
     "log-in": "Log in",
     "sign-up": "Sign up",
     "log-out": "Log out",
-    "built-with-love": "Built with ❤️ by ",
-    "source-code": "Source code at GitHub",
-    "for-developers": "For developers",
     "authorize": "Authorize",
     "authorize-to-continue": "Authorize to continue",
     "i-already-registered": "I already have account",
