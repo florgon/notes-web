@@ -14,9 +14,6 @@
     "authorize-to-continue": "Authorize to continue",
     "i-already-registered": "I already have account",
     "i-not-already-registered": "No, create new account",
-    "change-language": "Language",
-    "language-ru": "Русский",
-    "language-en": "English",
     "note-id": "Note #",
     "note-created-at": "Created at ",
     "note-updated-at": "Updated at ",
@@ -114,9 +111,5 @@
     "api-error-api-forbidden": "You do not have required permissions",
     "api-error-privacy-private-note": "This is private note",
     "api-error-not-implemented": "This action not implemented on server-side yet",
-    "api-error-server-is-down": "Server unable to process your request.",
-    "page-title-download": "Download",
-    "download-clients": "Download client",
-    "download-clients-wip": "Clients currently in development and does not exists yet!",
-    "download-android-releases": "See android client releases"
+    "api-error-server-is-down": "Server unable to process your request."
 }

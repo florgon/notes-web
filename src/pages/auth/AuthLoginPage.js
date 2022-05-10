@@ -147,7 +147,7 @@ const AuthLoginPage = function() {
     const loginOnError = function(raw, result){
         /// @description Handler for login request error.
         setIsLoading(false);
-        if ("error" in result){
+        if (result && "error" in result){
             openPopup(t(getErrorMessageFromCode(result.error.code)), "danger");
         }else{
             openPopup(t("error-unknown") + " Server returned: " + raw.status + " " + raw.statusText, "danger");

@@ -67,7 +67,7 @@ class ApiComponent extends React.Component{
     getErrorMessage(raw, result){
         /// @description Returns error message for error.
 
-        if (result !== undefined && "error" in result){
+        if (result && "error" in result){
             let error_message = getErrorMessageFromCode(result.error.code);
             if (error_message) return this.props.t(error_message);
             return result.error.message;

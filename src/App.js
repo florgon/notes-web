@@ -10,7 +10,6 @@ import LoadingFallback from './components//LoadingFallback';
 // Import pages.
 import HomePage          from './pages/HomePage';
 import NotFoundPage      from './pages/NotFoundPage';
-import DevDocsPage       from './pages/DevDocsPage';
 import NotesListPage     from './pages/notes/NotesListPage';
 import CreateNotePage    from './pages/notes/CreateNotePage';
 import NoteEditorPage    from './pages/notes/NoteEditorPage';
@@ -46,9 +45,6 @@ const PageRoutes = function(){
       <Route path='/auth/logout' element={<AuthLogoutPage/>} /> 
       <Route path='/auth/signup' element={<AuthSignupPage/>} />
       <Route path='/auth/connect' element={<AuthConnectPage/>} />
-
-      {/* Other stuff. */}
-      <Route path='/dev/docs' element={<DevDocsPage/>} /> 
 
       {/* Error handlers. */}
       <Route path='*' element={<NotFoundPage/>} />
