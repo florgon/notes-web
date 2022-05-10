@@ -194,6 +194,10 @@ const AuthLoginPage = function() {
                         {t("log-in")}
                     </p>
                     <hr className="w-25 mx-auto"/>
+                    <p className="text-warning">
+                        Notice! For now notes does not supports Florgon SSO. Later all accounts
+                        within notes will be <span className='text-danger'>DELETED!</span> Take this in mind!
+                    </p>
                     <div className='mt-5 row'>
                         <div className="col-lg-3 col-sm-8 col-md-6 mx-auto">
                             <div className="text-center">
