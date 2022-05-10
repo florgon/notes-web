@@ -41,10 +41,6 @@ const HomePage = function() {
             <div className="row text-center justify-content-center">
                 {isAuthenticated && <AuthenticatedButtons t={t}/>}
                 {!isAuthenticated && <NotAuthenticatedButtons t={t}/>}
-
-                <div className="col-auto">
-                    <Link className="btn btn-lg btn-outline-secondary" to="/download">{t("download-clients")}</Link>
-                </div>
             </div>
         </Fragment>
     )
