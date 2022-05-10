@@ -1,18 +1,8 @@
 {
-  "name": "notes-web",
-  "description": "Notes service web page build with React. Works with Notes API.",
-  "version": "1.0.0",
+  "name": "florgon-notes-web",
+  "version": "0.0.0",
   "license": "MIT",
   "private": true,
-  "author": "Kirill Zhosul <kirillzhosul@yandex.com> (https://kirillzhosul.site/)",
-  "bugs": {
-    "url" : "https://github.com/florgon/notes-web/issues",
-    "email" : "support@florgon.space"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/florgon/notes-web.git"
-  },
   "dependencies": {
     "bootstrap": "^5.1.3",
     "i18next": "^21.6.16",
